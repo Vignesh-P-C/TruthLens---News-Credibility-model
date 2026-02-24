@@ -140,3 +140,68 @@ Models evaluated using:
 Transformer models outperform traditional ML baselines.
 
 ---
+
+## 🚫 Dataset Notice
+
+The dataset is not included in this repository due to size limitations.
+
+To reproduce results:
+1. Download dataset from original source
+2. Place it inside the `data/` folder
+3. Run notebooks sequentially
+
+The `.gitignore` file excludes dataset files while preserving folder structure.
+
+---
+
+## 🏗️ Backend (Planned Architecture)
+
+The trained model will be served using FastAPI.
+
+### Backend Structure
+```
+fake-news-web/
+│
+└── backend/
+    ├── app.py
+    ├── final_model/
+    └── requirements.txt
+```
+### API Endpoint
+
+`POST /predict`
+
+#### Request Body
+```
+{
+  "text": "News article content..."
+}
+```
+#### Response
+```
+{
+  "prediction": "Fake",
+  "confidence": 0.93
+}
+```
+The model will be loaded once at server startup for efficient inference.
+
+---
+
+## 🎨 Frontend (Planned)
+
+The frontend will include:
+- Textarea for article input
+- “Check News” button
+- POST request to backend
+- Display of:
+  1. Fake / Real result
+  2. Confidence percentage
+  3. Visual indicator (green/red)
+
+Built using:
+- HTML
+- CSS
+- JavaScript (Fetch API)
+
+---
