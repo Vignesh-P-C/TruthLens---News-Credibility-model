@@ -88,3 +88,55 @@ fake-news-detection-transformers/
 ```
 
 ---
+
+## 🧪 Model Development Pipeline
+### 1. Environment Setup
+- Library installation
+- GPU configuration
+- Dependency management
+
+### 2️. Dataset Exploration
+- Label distribution analysis
+- Data inspection
+- Preprocessing validation
+
+### 3️. Tokenization Analysis
+- Sequence length study
+- Padding & truncation
+- Attention masks
+
+### 4️. Data Pipeline Construction
+- HuggingFace Dataset integration
+- PyTorch DataLoader setup
+
+### 5. Baseline Models
+- Logistic Regression
+- Naive Bayes
+- TF-IDF Vectorization
+- These models establish performance benchmarks.
+
+### 6. Transformer Fine-Tuning
+- Pretrained BERT / DistilBERT
+- Cross-Entropy Loss
+- AdamW Optimizer
+- GPU-based training
+
+### 7. Final Model Export
+- Model saved for deployment
+- Tokenizer exported
+- Inference tested
+
+---
+
+##📊 Evaluation Metrics
+
+Models evaluated using:
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+- Confusion Matrix
+
+Transformer models outperform traditional ML baselines.
+
+---
