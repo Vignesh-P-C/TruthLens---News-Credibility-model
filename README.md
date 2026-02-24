@@ -128,7 +128,7 @@ fake-news-detection-transformers/
 
 ---
 
-##📊 Evaluation Metrics
+## 📊 Evaluation Metrics
 
 Models evaluated using:
 - Accuracy
