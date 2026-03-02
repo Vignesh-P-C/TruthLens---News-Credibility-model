@@ -17,7 +17,7 @@ It evolves from a structured research pipeline into a deployable full-stack ML s
 
 ---
 
-## 📊 Project Scope Presentation
+## 📊 Project Scope Presentation:
 
 A presentation explaining the problem statement, motivation, scope, and planned methodology for fake news detection.
 
