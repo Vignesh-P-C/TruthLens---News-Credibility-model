@@ -6,18 +6,18 @@ from transformers import DistilBertForSequenceClassification, AutoTokenizer
 
 app = FastAPI()
 
-# 🔥 ADD THIS BLOCK
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # frontend origin
+    allow_origins=["*"],  # allow all for now
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Load model once at startup
-model = DistilBertForSequenceClassification.from_pretrained("final_model")
-tokenizer = AutoTokenizer.from_pretrained("final_model")
+MODEL_NAME = "V1gnesh/fake-news-model"
+
+model = DistilBertForSequenceClassification.from_pretrained(MODEL_NAME)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
 model.eval()
 
