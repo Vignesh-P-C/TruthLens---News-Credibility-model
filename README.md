@@ -16,7 +16,7 @@ A detailed presentation explaining:
 - System design
 - Implementation roadmap
 
-👉 [Download here](presentation/Fake-News-Credibility-System-Project-Scope.pptx)
+👉 [Download here]((presentation/Fake-News-Credibility-System-Project-Scope.pptx?raw=true))
 
 ---
 
