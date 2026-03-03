@@ -1,4 +1,4 @@
-const API_BASE = "https://fake-news-detection-transformers-2.onrender.com/predict";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE!;
 
 export interface PredictionResult {
   label: "REAL" | "FAKE";
