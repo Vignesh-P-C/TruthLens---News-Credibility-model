@@ -1,9 +1,16 @@
-# 📰 News Credibility System
+# 📰 News Credibility System [TruthLens]
+![Frontend](https://img.shields.io/badge/Frontend-Vercel-black)
+![Backend](https://img.shields.io/badge/Backend-Render-blue)
+![Model](https://img.shields.io/badge/Model-DistilBERT-orange)
+![Framework](https://img.shields.io/badge/FastAPI-Production-green)
+![Monitoring](https://img.shields.io/badge/Monitoring-UptimeRobot-purple)
 
 > **End-to-End Fake News Detection using Transformers**
+>
 > A Production-Ready Distributed AI System
 
 A complete news credibility pipeline — from research experimentation to a fully deployed, cloud-based AI application — powered by fine-tuned **DistilBERT** and served through a scalable full-stack architecture.
+Unlike simple notebook-based ML demos, this project implements a complete research-to-production pipeline, including model training, API serving, frontend integration, cloud deployment, and uptime monitoring.
 
 ---
 
@@ -13,7 +20,7 @@ A complete news credibility pipeline — from research experimentation to a full
 |---|---|
 | 🔗 **Frontend** | [https://fake-news-detection-transformers.vercel.app/](https://fake-news-detection-transformers.vercel.app/) |
 | 🔗 **Backend API** | [https://fake-news-detection-transformers-2.onrender.com](https://fake-news-detection-transformers-2.onrender.com) |
-| 📊 **Presentation** | [Download here](./presentation/) |
+| 📊 **Presentation** | [Download here](./presentation/Fake-News-Credibility-System-Project-Scope.pptx) |
 
 > ⚠️ **Note:** Backend runs on Render's free tier. Initial requests after inactivity may take up to ~60 seconds due to cold starts.
 
@@ -165,6 +172,14 @@ Models are evaluated across the following:
 - **F1-Score** — Harmonic mean of precision & recall
 - **Confusion Matrix** — Full error breakdown
 
+### 🔢 Performance Snapshot
+
+| Model | Accuracy | F1-Score |
+|--------|----------|----------|
+| Logistic Regression | 0.xx | 0.xx |
+| Naive Bayes | 0.xx | 0.xx |
+| **DistilBERT (Fine-Tuned)** | **0.xx** | **0.xx** |
+
 > ✨ Transformer-based models significantly outperform traditional ML baselines.
 
 ---
@@ -196,6 +211,7 @@ Frontend available at → `http://localhost:3000`
 ## 📡 API Reference
 
 ### `POST /predict`
+Predicts whether a news article is REAL or FAKE using the fine-tuned DistilBERT model.
 
 **Request**
 ```json
@@ -211,6 +227,39 @@ Frontend available at → `http://localhost:3000`
   "confidence": 0.94
 }
 ```
+- `label` → Prediction result (`REAL` or `FAKE`)
+- `confidence` → Probability score (0–1)
+
+---
+
+### 🧪 Example (cURL)
+```
+curl -X POST https://fake-news-detection-transformers-2.onrender.com/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Scientists confirm new climate policy impact..."}'
+```
+
+---
+
+### 🌐 Example (JavaScript Fetch)
+```
+fetch("https://fake-news-detection-transformers-2.onrender.com/predict", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    text: "Scientists confirm new climate policy impact..."
+  })
+})
+.then(res => res.json())
+.then(data => console.log(data));
+```
+
+### ⚠️ Notes
+- Backend supports both GET and HEAD at / for health monitoring.
+- Cold starts may occur after inactivity (Render free tier).
+- Confidence is returned as a probability (0–1), not percentage.
 
 ---
 
