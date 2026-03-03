@@ -2,28 +2,52 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import torch
+import os
 from transformers import DistilBertForSequenceClassification, AutoTokenizer
 
 app = FastAPI()
 
+# ---------------------------
+# CORS Configuration
+# ---------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow all for now
+    allow_origins=["*"],  # Change this to frontend domain later
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# ---------------------------
+# Model Configuration
+# ---------------------------
 MODEL_NAME = "V1gnesh/fake-news-model"
+HF_TOKEN = os.getenv("HF_TOKEN")
 
-model = DistilBertForSequenceClassification.from_pretrained("V1gnesh/fake-news-model")
-tokenizer = AutoTokenizer.from_pretrained("V1gnesh/fake-news-model")
+device = torch.device("cpu")
 
+model = DistilBertForSequenceClassification.from_pretrained(
+    MODEL_NAME,
+    token=HF_TOKEN
+)
+
+tokenizer = AutoTokenizer.from_pretrained(
+    MODEL_NAME,
+    token=HF_TOKEN
+)
+
+model.to(device)
 model.eval()
 
+# ---------------------------
+# Request Schema
+# ---------------------------
 class NewsRequest(BaseModel):
     text: str
 
+# ---------------------------
+# Prediction Endpoint
+# ---------------------------
 @app.post("/predict")
 def predict(news: NewsRequest):
     inputs = tokenizer(
@@ -33,6 +57,8 @@ def predict(news: NewsRequest):
         max_length=256,
         return_tensors="pt"
     )
+
+    inputs = {k: v.to(device) for k, v in inputs.items()}
 
     with torch.no_grad():
         outputs = model(**inputs)
@@ -46,6 +72,10 @@ def predict(news: NewsRequest):
         "label": label,
         "confidence": confidence
     }
+
+# ---------------------------
+# Health Check Route
+# ---------------------------
 @app.get("/")
 def home():
     return {"status": "Fake News Detection API is running"}
