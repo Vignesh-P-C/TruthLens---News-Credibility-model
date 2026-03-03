@@ -1,107 +1,81 @@
-# 📰 News Credibility System
+# News Credibility System
+### End-to-End Fake News Detection using Transformers
 
-> **End-to-End Fake News Detection using Transformers**
-
-A complete news credibility pipeline — from research experimentation to a deployable full-stack AI application — powered by fine-tuned **DistilBERT** and served through a modern web interface.
-
----
-
-## 📊 Project Scope Presentation
-
-A detailed presentation explaining:
--Problem statement
-- Motivation
-- Research background
-- Methodology
-- System design
-- Implementation roadmap
-
-👉 [Download here](presentation/Fake-News-Credibility-System-Project-Scope.pptx)
+A project that started as a research notebook and ended up as a fully deployed web app. It uses a fine-tuned DistilBERT model to classify news articles as real or fake, with a FastAPI backend and a Next.js frontend — both live in the cloud.
 
 ---
 
-## 🚀 Project Status
+## Live Links
 
-| Task | Status |
-|------|--------|
-| Transformer model trained | ✅ Complete |
-| Evaluation completed | ✅ Complete |
-| FastAPI backend implemented | ✅ Complete |
-| Next.js frontend implemented | ✅ Complete |
-| Cloud deployment | 🔄 In Progress |
+- **Frontend:** https://your-vercel-url.vercel.app
+- **Backend API:** https://fake-news-detection-transformers-2.onrender.com
+- **Presentation:** [Download here](./presentation/)
+
+> The backend is on Render's free tier, so the first request after a period of inactivity can take up to ~60 seconds to wake up. The frontend handles this with an extended timeout.
 
 ---
 
+## What's been done
 
+- [x] Trained and evaluated a DistilBERT classifier
+- [x] Built a FastAPI backend that loads the model at startup
+- [x] Built a Next.js frontend with animated predictions
+- [x] Deployed everything (Vercel + Render)
+- [x] Set up uptime monitoring via UptimeRobot
 
-## 🌐 Full-Stack Web Application
+---
 
-This project includes a complete, working web interface for real-time news credibility prediction.
+## How it works
+
+The user pastes a news article into the frontend. It hits a `/predict` endpoint on the backend, which runs the text through the fine-tuned model and returns a label (REAL or FAKE) and a confidence score.
 
 ```
-User → Next.js Frontend → FastAPI Backend → Transformer Model → Prediction
+Next.js (Vercel)  →  POST /predict  →  FastAPI (Render)  →  DistilBERT  →  JSON response
 ```
 
-### Features
-
-- 🎨 **Interactive UI** with animated results
-- ⚡ **Real-time prediction** using fine-tuned DistilBERT
-- 📊 **Confidence score visualization**
-- 🔌 **REST API** endpoint (`POST /predict`)
-- 🧩 **Modular backend** serving model at startup
-
----
-
-## 🏗️ System Architecture
+Full flow if you want the detail:
 
 ```
-User Input (Text)
-        │
-        ▼
+User Input
+    │
+    ▼
 Next.js Frontend
-(TypeScript + Tailwind + Framer Motion)
-        │
-        ▼ POST /predict
-        │
-        ▼
+    │
+    ▼  POST /predict
+    │
+    ▼
 FastAPI Backend
-        │
-        ▼
-    Tokenizer
-        │
-        ▼
-Fine-Tuned DistilBERT Model
-        │
-        ▼
- Softmax → Label + Confidence
-        │
-        ▼
-    JSON Response
-        │
-        ▼
-Rendered Result  →  🟢 REAL  /  🔴 FAKE
+    │
+    ▼
+Tokenizer → DistilBERT → Softmax
+    │
+    ▼
+{ label: "REAL", confidence: 0.94 }
+    │
+    ▼
+Rendered result
 ```
 
 ---
 
-## 📂 Repository Structure
+## Repo structure
 
 ```
 fake-news-detection-transformers/
 │
-├── data/                        # Dataset placeholder
-├── models/                      # Trained model checkpoints
-├── notebooks/                   # Research + training pipeline
-├── presentation/                # Project documentation
-├── results/                     # Evaluation metrics
+├── data/                    # dataset goes here (not committed, see below)
+├── models/                  # saved model checkpoints
+├── notebooks/               # all training and evaluation code
+├── presentation/            # project writeup / slides
+├── results/                 # evaluation outputs
 │
 ├── fake-news-web/
-│   ├── backend/                 # FastAPI inference server
+│   ├── backend/             # FastAPI app
 │   │   ├── app.py
 │   │   ├── requirements.txt
-│   │   └── final_model/         # ⚠️ Ignored from Git
+│   │   └── final_model/     # not in git (too large)
 │   │
-│   └── frontend/                # Next.js 15 web app
+│   └── frontend/            # Next.js 15
 │       ├── app/
 │       ├── components/
 │       ├── lib/
@@ -112,112 +86,99 @@ fake-news-detection-transformers/
 
 ---
 
-## 🧠 Model Development Pipeline
+## Model development
 
-### 1️⃣ Environment Setup
-- Library installation, GPU configuration, dependency management
+The notebooks walk through the full pipeline:
 
-### 2️⃣ Dataset Exploration
-- Label distribution analysis, data inspection, preprocessing validation
-
-### 3️⃣ Tokenization Study
-- Sequence length optimization, padding & truncation strategy
-
-### 4️⃣ Baseline Models
-- Logistic Regression, Naive Bayes, TF-IDF benchmarks
-
-### 5️⃣ Transformer Fine-Tuning
-- Pretrained BERT / DistilBERT
-- Cross-Entropy Loss + AdamW Optimizer
-- GPU-accelerated training
-
-### 6️⃣ Model Export
-- Model + tokenizer saved, inference tested, integrated into FastAPI
+1. **Environment setup** — installs, GPU config, reproducibility
+2. **Data exploration** — label distribution, cleaning, validation
+3. **Tokenization** — figuring out sequence lengths, padding strategy
+4. **Baselines** — Logistic Regression, Naive Bayes, TF-IDF (spoiler: transformers win)
+5. **Fine-tuning** — DistilBERT with AdamW + Cross-Entropy, trained on GPU
+6. **Export** — model and tokenizer saved, tested standalone, then plugged into FastAPI
 
 ---
 
-## 📊 Evaluation Metrics
+## Results
 
-Transformer models are evaluated against traditional ML baselines across the following:
-
-- **Accuracy** — Overall correctness
-- **Precision** — Positive predictive value
-- **Recall** — Sensitivity / true positive rate
-- **F1-Score** — Harmonic mean of precision & recall
-- **Confusion Matrix** — Full error breakdown
-
-> ✨ Transformer models significantly outperform traditional ML baselines.
+Evaluated on accuracy, precision, recall, F1, and confusion matrix. DistilBERT significantly outperforms the baseline models. Full numbers are in `results/`.
 
 ---
 
-## 🖥️ Running Locally
+## Running locally
 
-### 1️⃣ Start the Backend
-
+**Backend:**
 ```bash
 cd fake-news-web/backend
-python -m uvicorn app:app --reload
+pip install -r requirements.txt
+uvicorn app:app --reload
+# runs at http://127.0.0.1:8000
 ```
 
-Backend available at → `http://127.0.0.1:8000`
-
-### 2️⃣ Start the Frontend
-
+**Frontend:**
 ```bash
 cd fake-news-web/frontend
 npm install
 npm run dev
-```
-
-Frontend available at → `http://localhost:3000`
-
----
-
-## 📡 API Reference
-
-### `POST /predict`
-
-**Request**
-```json
-{
-  "text": "News article content..."
-}
-```
-
-**Response**
-```json
-{
-  "label": "REAL",
-  "confidence": 0.94
-}
+# runs at http://localhost:3000
 ```
 
 ---
 
-## ⚠️ Dataset Notice
+## API
 
-The dataset is **excluded from this repository** due to size constraints.
+**`POST /predict`**
 
-To reproduce training:
+```json
+// request
+{ "text": "article content here..." }
+
+// response
+{ "label": "REAL", "confidence": 0.94 }
+```
+
+---
+
+## Dataset
+
+Not included in the repo (too large). To retrain:
 1. Download the dataset
-2. Place it inside `data/`
-3. Run the notebooks sequentially
+2. Drop it in `data/`
+3. Run the notebooks in order
 
 ---
 
-## 🧩 Technologies Used
+## A few notes on decisions made
 
-| Layer | Technology |
-|-------|------------|
-| NLP Model | DistilBERT (HuggingFace Transformers) |
+- Went with **DistilBERT** over full BERT — good accuracy, much faster to train and serve
+- Kept the frontend and backend separate so they can be deployed and scaled independently
+- Extended the frontend request timeout to handle Render cold starts gracefully
+- Added a monitoring endpoint (`GET /`) so UptimeRobot can ping it and reduce sleep frequency
+
+---
+
+## Things I'd do differently / next steps
+
+- [ ] Move to a paid backend tier to avoid cold starts
+- [ ] Add attention visualization for explainability
+- [ ] Batch prediction endpoint
+- [ ] Log predictions to a database
+- [ ] Proper CI/CD pipeline
+
+---
+
+## Stack
+
+| | |
+|---|---|
+| Model | DistilBERT via HuggingFace |
 | Backend | FastAPI + PyTorch |
-| Frontend | Next.js 15 + TypeScript |
-| Styling | Tailwind CSS |
-| Animations | Framer Motion |
-| Deployment *(Planned)* | Vercel + Render |
+| Frontend | Next.js 15, TypeScript, Tailwind, Framer Motion |
+| Hosting | Vercel (frontend), Render (backend) |
+| Monitoring | UptimeRobot |
 
 ---
 
 <div align="center">
-  <sub>Built with 🤗 Transformers · FastAPI · Next.js</sub>
+  <sub>Built with HuggingFace Transformers · FastAPI · Next.js</sub>
 </div>
