@@ -16,8 +16,7 @@ A detailed presentation explaining:
 - System design
 - Implementation roadmap
 
-👉 Download here:
-presentation/Understanding-Fake-News-Cassification-System-and-Project-Scope-of-my-Model.pptx
+👉 [Download here](presentation/Fake-News-Credibility-System-Project-Scope.pptx)
 
 ---
 
