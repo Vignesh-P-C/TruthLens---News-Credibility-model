@@ -16,8 +16,8 @@ app.add_middleware(
 
 MODEL_NAME = "V1gnesh/fake-news-model"
 
-model = DistilBertForSequenceClassification.from_pretrained(MODEL_NAME)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+model = DistilBertForSequenceClassification.from_pretrained("V1gnesh/fake-news-model")
+tokenizer = AutoTokenizer.from_pretrained("V1gnesh/fake-news-model")
 
 model.eval()
 

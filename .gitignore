@@ -1,6 +1,5 @@
 # Ignore trained model folder
 final_model/
-
 # Python
 __pycache__/
 *.pyc
