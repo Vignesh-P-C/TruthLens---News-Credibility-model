@@ -46,3 +46,6 @@ def predict(news: NewsRequest):
         "label": label,
         "confidence": confidence
     }
+    @app.get("/")
+def home():
+    return {"status": "Fake News Detection API is running"}
