@@ -76,6 +76,8 @@ def predict(news: NewsRequest):
 # ---------------------------
 # Health Check Route
 # ---------------------------
-@app.get("/")
-def home():
+from fastapi import Request
+
+@app.api_route("/", methods=["GET", "HEAD"])
+async def home(request: Request):
     return {"status": "Fake News Detection API is running"}
