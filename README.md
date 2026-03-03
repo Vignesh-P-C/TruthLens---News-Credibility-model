@@ -1,207 +1,224 @@
 # 📰 News Credibility System
-End-to-End Fake News Detection using Transformers
 
-This project implements a complete **News Credibility System** using Transformer-based models such as **BERT / DistilBERT**.
+> **End-to-End Fake News Detection using Transformers**
 
-It evolves from a structured research pipeline into a deployable full-stack ML system.
-
----
-
-## Project Status
-
-✅ Transformer model trained
-✅ Evaluation completed
-🔄 Backend (FastAPI) in development
-🔄 Frontend integration pending
-🔄 Deployment planned
+A complete news credibility pipeline — from research experimentation to a deployable full-stack AI application — powered by fine-tuned **DistilBERT** and served through a modern web interface.
 
 ---
 
-## 📊 Project Scope Presentation:
+## 📊 Project Scope Presentation
 
-A presentation explaining the problem statement, motivation, scope, and planned methodology for fake news detection.
+A detailed presentation explaining:
+-Problem statement
+- Motivation
+- Research background
+- Methodology
+- System design
+- Implementation roadmap
 
-👉 [Download Presentation](presentation/Understanding-Fake-News-Cassification-System-and-Project-Scope-of-my-Model.pptx)
-
----
-
-## 🎯 Goal
-
-Binary classification of news articles into:
-0 → Real News
-1 → Fake News
-
-The system takes raw article text as input and outputs:
-Prediction (Fake / Real)
-Confidence score
+👉 Download here:
+presentation/Understanding-Fake-News-Cassification-System-and-Project-Scope-of-my-Model.pptx
 
 ---
 
-## 🧠 Problem Statement
+## 🚀 Project Status
 
-Misinformation spreads rapidly across digital platforms.
-This project aims to detect fake news using Transformer-based deep learning models capable of contextual text understanding.
+| Task | Status |
+|------|--------|
+| Transformer model trained | ✅ Complete |
+| Evaluation completed | ✅ Complete |
+| FastAPI backend implemented | ✅ Complete |
+| Next.js frontend implemented | ✅ Complete |
+| Cloud deployment | 🔄 In Progress |
+
+---
+
+
+
+## 🌐 Full-Stack Web Application
+
+This project includes a complete, working web interface for real-time news credibility prediction.
+
+```
+User → Next.js Frontend → FastAPI Backend → Transformer Model → Prediction
+```
+
+### Features
+
+- 🎨 **Interactive UI** with animated results
+- ⚡ **Real-time prediction** using fine-tuned DistilBERT
+- 📊 **Confidence score visualization**
+- 🔌 **REST API** endpoint (`POST /predict`)
+- 🧩 **Modular backend** serving model at startup
 
 ---
 
 ## 🏗️ System Architecture
+
 ```
 User Input (Text)
-↓
-Frontend (HTML / CSS / JavaScript)
-↓
-POST Request → /predict
-↓
+        │
+        ▼
+Next.js Frontend
+(TypeScript + Tailwind + Framer Motion)
+        │
+        ▼ POST /predict
+        │
+        ▼
 FastAPI Backend
-↓
-Tokenizer
-↓
-Fine-Tuned Transformer Model
-↓
-Prediction + Confidence
-↓
-JSON Response
-↓
-Displayed in UI
+        │
+        ▼
+    Tokenizer
+        │
+        ▼
+Fine-Tuned DistilBERT Model
+        │
+        ▼
+ Softmax → Label + Confidence
+        │
+        ▼
+    JSON Response
+        │
+        ▼
+Rendered Result  →  🟢 REAL  /  🔴 FAKE
 ```
 
 ---
 
 ## 📂 Repository Structure
+
 ```
 fake-news-detection-transformers/
 │
-├── data/                       # Dataset placeholder (.gitkeep used)
-├── models/                     # Saved trained models
-├── notebooks/                  # Step-by-step ML development
-│   ├── 01_environment_setup.ipynb
-│   ├── 02_dataset_exploration.ipynb
-│   ├── 03_tokenization_exploration.ipynb
-│   ├── 04_data_pipeline.ipynb
-│   ├── 05_first_training_run.ipynb
-│   └── 06_final_training_and_inference.ipynb
+├── data/                        # Dataset placeholder
+├── models/                      # Trained model checkpoints
+├── notebooks/                   # Research + training pipeline
+├── presentation/                # Project documentation
+├── results/                     # Evaluation metrics
 │
-├── presentation/               # Project documentation slides
-├── results/                    # Evaluation outputs
+├── fake-news-web/
+│   ├── backend/                 # FastAPI inference server
+│   │   ├── app.py
+│   │   ├── requirements.txt
+│   │   └── final_model/         # ⚠️ Ignored from Git
+│   │
+│   └── frontend/                # Next.js 15 web app
+│       ├── app/
+│       ├── components/
+│       ├── lib/
+│       └── package.json
 │
 └── README.md
 ```
 
 ---
 
-## 🧪 Model Development Pipeline
-### 1. Environment Setup
-- Library installation
-- GPU configuration
-- Dependency management
+## 🧠 Model Development Pipeline
 
-### 2️. Dataset Exploration
-- Label distribution analysis
-- Data inspection
-- Preprocessing validation
+### 1️⃣ Environment Setup
+- Library installation, GPU configuration, dependency management
 
-### 3️. Tokenization Analysis
-- Sequence length study
-- Padding & truncation
-- Attention masks
+### 2️⃣ Dataset Exploration
+- Label distribution analysis, data inspection, preprocessing validation
 
-### 4️. Data Pipeline Construction
-- HuggingFace Dataset integration
-- PyTorch DataLoader setup
+### 3️⃣ Tokenization Study
+- Sequence length optimization, padding & truncation strategy
 
-### 5. Baseline Models
-- Logistic Regression
-- Naive Bayes
-- TF-IDF Vectorization
-- These models establish performance benchmarks.
+### 4️⃣ Baseline Models
+- Logistic Regression, Naive Bayes, TF-IDF benchmarks
 
-### 6. Transformer Fine-Tuning
+### 5️⃣ Transformer Fine-Tuning
 - Pretrained BERT / DistilBERT
-- Cross-Entropy Loss
-- AdamW Optimizer
-- GPU-based training
+- Cross-Entropy Loss + AdamW Optimizer
+- GPU-accelerated training
 
-### 7. Final Model Export
-- Model saved for deployment
-- Tokenizer exported
-- Inference tested
+### 6️⃣ Model Export
+- Model + tokenizer saved, inference tested, integrated into FastAPI
 
 ---
 
 ## 📊 Evaluation Metrics
 
-Models evaluated using:
-- Accuracy
-- Precision
-- Recall
-- F1-Score
-- Confusion Matrix
+Transformer models are evaluated against traditional ML baselines across the following:
 
-Transformer models outperform traditional ML baselines.
+- **Accuracy** — Overall correctness
+- **Precision** — Positive predictive value
+- **Recall** — Sensitivity / true positive rate
+- **F1-Score** — Harmonic mean of precision & recall
+- **Confusion Matrix** — Full error breakdown
 
----
-
-## 🚫 Dataset Notice
-
-The dataset is not included in this repository due to size limitations.
-
-To reproduce results:
-1. Download dataset from original source
-2. Place it inside the `data/` folder
-3. Run notebooks sequentially
-
-The `.gitignore` file excludes dataset files while preserving folder structure.
+> ✨ Transformer models significantly outperform traditional ML baselines.
 
 ---
 
-## 🏗️ Backend (Planned Architecture)
+## 🖥️ Running Locally
 
-The trained model will be served using FastAPI.
+### 1️⃣ Start the Backend
 
-### Backend Structure
+```bash
+cd fake-news-web/backend
+python -m uvicorn app:app --reload
 ```
-fake-news-web/
-│
-└── backend/
-    ├── app.py
-    ├── final_model/
-    └── requirements.txt
-```
-### API Endpoint
 
-`POST /predict`
+Backend available at → `http://127.0.0.1:8000`
 
-#### Request Body
+### 2️⃣ Start the Frontend
+
+```bash
+cd fake-news-web/frontend
+npm install
+npm run dev
 ```
+
+Frontend available at → `http://localhost:3000`
+
+---
+
+## 📡 API Reference
+
+### `POST /predict`
+
+**Request**
+```json
 {
   "text": "News article content..."
 }
 ```
-#### Response
-```
+
+**Response**
+```json
 {
-  "prediction": "Fake",
-  "confidence": 0.93
+  "label": "REAL",
+  "confidence": 0.94
 }
 ```
-The model will be loaded once at server startup for efficient inference.
 
 ---
 
-## 🎨 Frontend (Planned)
+## ⚠️ Dataset Notice
 
-The frontend will include:
-- Textarea for article input
-- “Check News” button
-- POST request to backend
-- Display of:
-  1. Fake / Real result
-  2. Confidence percentage
-  3. Visual indicator (green/red)
+The dataset is **excluded from this repository** due to size constraints.
 
-Built using:
-- HTML
-- CSS
-- JavaScript (Fetch API)
+To reproduce training:
+1. Download the dataset
+2. Place it inside `data/`
+3. Run the notebooks sequentially
 
 ---
+
+## 🧩 Technologies Used
+
+| Layer | Technology |
+|-------|------------|
+| NLP Model | DistilBERT (HuggingFace Transformers) |
+| Backend | FastAPI + PyTorch |
+| Frontend | Next.js 15 + TypeScript |
+| Styling | Tailwind CSS |
+| Animations | Framer Motion |
+| Deployment *(Planned)* | Vercel + Render |
+
+---
+
+<div align="center">
+  <sub>Built with 🤗 Transformers · FastAPI · Next.js</sub>
+</div>
