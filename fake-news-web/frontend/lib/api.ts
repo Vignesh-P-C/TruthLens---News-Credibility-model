@@ -29,7 +29,8 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     return {
       success: false,
       error: {
-        message: "Text is too short. Please provide at least a sentence or two for accurate analysis.",
+        message:
+          "Text is too short. Please provide at least a sentence or two for accurate analysis.",
         type: "empty_text",
       },
     };
@@ -37,7 +38,9 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
+    // 🔥 Increased timeout to 90 seconds (for Render cold starts)
+    const timeoutId = setTimeout(() => controller.abort(), 90000);
 
     const response = await fetch(`${API_BASE}/predict`, {
       method: "POST",
@@ -53,12 +56,16 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
 
     if (!response.ok) {
       let errorMessage = `Server error: ${response.status} ${response.statusText}`;
+
       try {
         const errorData = await response.json();
-        if (errorData.detail) errorMessage = errorData.detail;
+        if (errorData?.detail) {
+          errorMessage = String(errorData.detail);
+        }
       } catch {
-        // ignore json parse error on error response
+        // ignore parsing error
       }
+
       return {
         success: false,
         error: {
@@ -69,6 +76,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     }
 
     let data: unknown;
+
     try {
       data = await response.json();
     } catch {
@@ -124,7 +132,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
       success: true,
       data: {
         label: label as "REAL" | "FAKE",
-        confidence: Math.round(confidence * 10000) / 100, // convert to percentage with 2 decimal places
+        confidence: Math.round(confidence * 10000) / 100, // convert to %
       },
     };
   } catch (err) {
@@ -133,11 +141,13 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
         return {
           success: false,
           error: {
-            message: "Request timed out. Please check that the backend server is running.",
+            message:
+              "The server is waking up. This can take up to a minute on first use. Please try again shortly.",
             type: "network",
           },
         };
       }
+
       if (
         err.message.includes("fetch") ||
         err.message.includes("network") ||
@@ -147,7 +157,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
           success: false,
           error: {
             message:
-              "Cannot connect to the analysis server. Make sure the FastAPI backend is running at http://127.0.0.1:8000",
+              "Unable to connect to the analysis server. Please try again in a moment.",
             type: "network",
           },
         };
@@ -164,7 +174,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
   }
 }
 
-// Example texts for demonstration
+// Example texts
 export const EXAMPLE_TEXTS = {
   real: `Scientists at the Johns Hopkins Bloomberg School of Public Health have published new research in the journal Nature Medicine showing that consistent aerobic exercise for at least 150 minutes per week significantly reduces inflammation markers in adults over 50. The study, which followed 2,400 participants over five years, found that those who maintained regular cardiovascular activity had 34% lower levels of C-reactive protein compared to sedentary individuals. The findings align with previous research from the Mayo Clinic and support current guidelines from the American Heart Association.`,
 
