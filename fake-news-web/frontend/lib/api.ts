@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE!;
+const API_BASE = "http://127.0.0.1:8000";
 
 export interface PredictionResult {
   label: "REAL" | "FAKE";
@@ -29,8 +29,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     return {
       success: false,
       error: {
-        message:
-          "Text is too short. Please provide at least a sentence or two for accurate analysis.",
+        message: "Text is too short. Please provide at least a sentence or two for accurate analysis.",
         type: "empty_text",
       },
     };
@@ -38,9 +37,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
 
   try {
     const controller = new AbortController();
-
-    // 🔥 Increased timeout to 90 seconds (for Render cold starts)
-    const timeoutId = setTimeout(() => controller.abort(), 90000);
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
     const response = await fetch(`${API_BASE}/predict`, {
       method: "POST",
@@ -56,16 +53,12 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
 
     if (!response.ok) {
       let errorMessage = `Server error: ${response.status} ${response.statusText}`;
-
       try {
         const errorData = await response.json();
-        if (errorData?.detail) {
-          errorMessage = String(errorData.detail);
-        }
+        if (errorData.detail) errorMessage = errorData.detail;
       } catch {
-        // ignore parsing error
+        // ignore json parse error on error response
       }
-
       return {
         success: false,
         error: {
@@ -76,7 +69,6 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     }
 
     let data: unknown;
-
     try {
       data = await response.json();
     } catch {
@@ -132,7 +124,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
       success: true,
       data: {
         label: label as "REAL" | "FAKE",
-        confidence: Math.round(confidence * 10000) / 100, // convert to %
+        confidence: Math.round(confidence * 10000) / 100, // convert to percentage with 2 decimal places
       },
     };
   } catch (err) {
@@ -141,13 +133,11 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
         return {
           success: false,
           error: {
-            message:
-              "The server is waking up. This can take up to a minute on first use. Please try again shortly.",
+            message: "Request timed out. Please check that the backend server is running.",
             type: "network",
           },
         };
       }
-
       if (
         err.message.includes("fetch") ||
         err.message.includes("network") ||
@@ -157,7 +147,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
           success: false,
           error: {
             message:
-              "Unable to connect to the analysis server. Please try again in a moment.",
+              "Cannot connect to the analysis server. Make sure the FastAPI backend is running at http://127.0.0.1:8000",
             type: "network",
           },
         };
@@ -174,7 +164,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
   }
 }
 
-// Example texts
+// Example texts for demonstration
 export const EXAMPLE_TEXTS = {
   real: `Scientists at the Johns Hopkins Bloomberg School of Public Health have published new research in the journal Nature Medicine showing that consistent aerobic exercise for at least 150 minutes per week significantly reduces inflammation markers in adults over 50. The study, which followed 2,400 participants over five years, found that those who maintained regular cardiovascular activity had 34% lower levels of C-reactive protein compared to sedentary individuals. The findings align with previous research from the Mayo Clinic and support current guidelines from the American Heart Association.`,
 
