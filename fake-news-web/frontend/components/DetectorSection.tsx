@@ -1,304 +1,495 @@
+// BEFORE: GlowingEffect wrapper, glassmorphism textarea, gradient submit button,
+//         LoadingSpinner with orbital neon rings, rounded-3xl containers
+//
+// AFTER:  flat white card with 1px border, sharp textarea, monospaced button,
+//         typographic loading indicator, no rounded corners
+
 'use client';
 
-import { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Send, AlertCircle, Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { checkNews, EXAMPLE_TEXTS, type PredictionResult } from '@/lib/api';
-import ResultCard from './ResultCard';
-import LoadingSpinner from './LoadingSpinner';
-import GlowingEffect from './GlowingEffect';
-import DropdownMenu from './DropdownMenu';
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, AlertCircle } from "lucide-react";
+import { checkNews, EXAMPLE_TEXTS, type PredictionResult } from "@/lib/api";
+import ResultCard from "./ResultCard";
+import DropdownMenu from "./DropdownMenu";
 
-type Status = 'idle' | 'loading' | 'success' | 'error';
+type Status = "idle" | "loading" | "success" | "error";
 
 export default function DetectorSection() {
-  const [text, setText] = useState('');
-  const [status, setStatus] = useState<Status>('idle');
+  const [text, setText] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<PredictionResult | null>(null);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [charCount, setCharCount] = useState(0);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-    setCharCount(e.target.value.length);
-  };
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const isReady = text.trim().length >= 20;
 
   const handleSubmit = useCallback(async () => {
-    if (!text.trim() || status === 'loading') return;
-
-    setStatus('loading');
+    if (!isReady || status === "loading") return;
+    setStatus("loading");
     setResult(null);
-    setErrorMsg('');
+    setErrorMsg("");
 
     const response = await checkNews(text);
-
     if (response.success) {
       setResult(response.data);
-      setStatus('success');
+      setStatus("success");
     } else {
       setErrorMsg(response.error.message);
-      setStatus('error');
+      setStatus("error");
     }
-  }, [text, status]);
+  }, [text, status, isReady]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
       e.preventDefault();
       handleSubmit();
     }
   };
 
-  const handleClear = () => {
-    setText('');
-    setCharCount(0);
-    setStatus('idle');
-    setResult(null);
-    setErrorMsg('');
-  };
-
-  const handleLoadReal = () => {
-    setText(EXAMPLE_TEXTS.real);
-    setCharCount(EXAMPLE_TEXTS.real.length);
-    setStatus('idle');
-    setResult(null);
-  };
-
-  const handleLoadFake = () => {
-    setText(EXAMPLE_TEXTS.fake);
-    setCharCount(EXAMPLE_TEXTS.fake.length);
-    setStatus('idle');
-    setResult(null);
-  };
-
-  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
-  const isReady = text.trim().length >= 20;
-
   return (
     <section
       id="detector"
-      className="relative py-32 px-4 min-h-screen flex items-start justify-center"
+      style={{
+        // BEFORE: dark background with cyber-grid overlay
+        // AFTER:  pure paper white — the form IS the focus
+        background: "#f5f4f0",
+        borderTop: "1px solid #d8d4ce",
+      }}
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 cyber-grid-bg opacity-30" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-
-      {/* Ambient orb */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none opacity-20"
-        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)', filter: 'blur(60px)' }}
-      />
-
-      <div className="relative z-10 w-full max-w-3xl mx-auto">
-        {/* Section heading */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      {/* Section header — newspaper-style column layout */}
+      <div
+        className="flex items-start"
+        style={{ borderBottom: "1px solid #d8d4ce" }}
+      >
+        {/* Left column: section number */}
+        <div
+          className="flex-none flex flex-col justify-end"
+          style={{
+            width: "80px",
+            borderRight: "1px solid #d8d4ce",
+            padding: "40px 24px",
+            alignSelf: "stretch",
+          }}
         >
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/5 text-xs font-mono text-violet-300 uppercase tracking-wider">
-            <Sparkles className="w-3 h-3" />
-            Real-time Inference
-          </div>
-          <h2 className="font-display text-4xl md:text-5xl font-800 tracking-tight mb-4">
-            Credibility{' '}
-            <span className="gradient-text">Analyzer</span>
-          </h2>
-          <p className="text-muted-foreground font-body text-lg max-w-xl mx-auto">
-            Paste any news article, tweet, or online content below. Our BERT-based model
-            returns a verdict in under a second.
-          </p>
-        </motion.div>
-
-        {/* Main card */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <GlowingEffect
-            glowColor="cyan"
-            className="rounded-3xl border border-border glass shadow-glass"
+          <span
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: "0.6rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#7a766f",
+              writingMode: "vertical-lr",
+              transform: "rotate(180deg)",
+            }}
           >
-            <div className="p-6 md:p-8">
-              {/* Textarea header */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-sm font-mono text-muted-foreground">
-                  news_content.txt
-                </div>
-                <DropdownMenu
-                  onClear={handleClear}
-                  onLoadReal={handleLoadReal}
-                  onLoadFake={handleLoadFake}
-                />
-              </div>
-
-              {/* Textarea */}
-              <div className="relative">
-                <textarea
-                  value={text}
-                  onChange={handleTextChange}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Paste news content here for analysis...&#10;&#10;You can enter an article headline, body text, or social media post.&#10;Press Ctrl+Enter to submit."
-                  className={cn(
-                    'w-full min-h-52 resize-none rounded-2xl p-5',
-                    'bg-background/40 border text-foreground',
-                    'font-body text-base leading-relaxed placeholder:text-muted-foreground/40',
-                    'focus:outline-none focus:ring-0 transition-all duration-300',
-                    'scrollbar-thin',
-                    status === 'loading' && 'opacity-60 pointer-events-none',
-                    isReady
-                      ? 'border-cyan-400/20 focus:border-cyan-400/40'
-                      : 'border-border focus:border-border/80'
-                  )}
-                  disabled={status === 'loading'}
-                />
-
-                {/* Character/word counter */}
-                <div className="absolute bottom-3 right-3 flex items-center gap-3 text-xs font-mono text-muted-foreground/50 pointer-events-none">
-                  <span>{wordCount}w</span>
-                  <span>{charCount}c</span>
-                </div>
-              </div>
-
-              {/* Footer: tip + submit */}
-              <div className="flex items-center justify-between mt-4 gap-4 flex-wrap">
-                <p className="text-xs font-mono text-muted-foreground/60">
-                  {isReady ? (
-                    <span className="text-cyan-400/70">✓ Ready to analyze</span>
-                  ) : (
-                    <span>Min. 20 characters required</span>
-                  )}
-                  <span className="ml-2 hidden sm:inline">· ⌘+Enter to submit</span>
-                </p>
-
-                <motion.button
-                  onClick={handleSubmit}
-                  disabled={!isReady || status === 'loading'}
-                  className={cn(
-                    'relative flex items-center gap-2.5 px-6 py-3 rounded-full',
-                    'font-body font-medium text-sm overflow-hidden',
-                    'transition-all duration-200',
-                    isReady && status !== 'loading'
-                      ? 'cursor-pointer'
-                      : 'cursor-not-allowed opacity-50'
-                  )}
-                  whileHover={isReady && status !== 'loading' ? { scale: 1.02 } : {}}
-                  whileTap={isReady && status !== 'loading' ? { scale: 0.97 } : {}}
-                >
-                  {/* Button background */}
-                  <div
-                    className={cn(
-                      'absolute inset-0 transition-opacity duration-300',
-                      isReady && status !== 'loading'
-                        ? 'opacity-100'
-                        : 'opacity-40',
-                      'bg-gradient-to-r from-cyan-400 to-violet-500'
-                    )}
-                  />
-                  {/* Shine */}
-                  {isReady && status !== 'loading' && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"
-                      initial={{ x: '-100%' }}
-                      whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.5 }}
-                    />
-                  )}
-                  <span className="relative text-background flex items-center gap-2">
-                    {status === 'loading' ? (
-                      <>
-                        <motion.div
-                          className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-                        />
-                        Analyzing...
-                      </>
-                    ) : (
-                      <>
-                        Analyze
-                        <Send className="w-3.5 h-3.5" />
-                      </>
-                    )}
-                  </span>
-                </motion.button>
-              </div>
-            </div>
-          </GlowingEffect>
-        </motion.div>
-
-        {/* Results area */}
-        <div className="mt-8">
-          <AnimatePresence mode="wait">
-            {status === 'loading' && (
-              <motion.div
-                key="loading"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <div className="glass border border-border rounded-3xl">
-                  <LoadingSpinner />
-                </div>
-              </motion.div>
-            )}
-
-            {status === 'error' && (
-              <motion.div
-                key="error"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                className="flex items-start gap-3 p-5 rounded-2xl glass border border-red-400/20 bg-red-400/5"
-              >
-                <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-red-300 mb-0.5">Analysis Failed</p>
-                  <p className="text-sm text-muted-foreground font-mono">{errorMsg}</p>
-                </div>
-              </motion.div>
-            )}
-
-            {status === 'success' && result && (
-              <motion.div
-                key="result"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <ResultCard result={result} />
-              </motion.div>
-            )}
-          </AnimatePresence>
+            §02
+          </span>
         </div>
 
-        {/* Info cards row */}
-        <motion.div
-          className="grid grid-cols-3 gap-4 mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {[
-            { label: 'Model', value: 'BERT-Base', sub: 'Uncased' },
-            { label: 'Dataset', value: 'LIAR + WELFake', sub: '44K articles' },
-            { label: 'F1 Score', value: '0.941', sub: 'Weighted avg' },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="glass border border-border rounded-2xl p-4 text-center"
+        {/* Right column: heading */}
+        <div className="flex-1 px-16 py-12">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span
+              style={{
+                display: "block",
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.65rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "#7a766f",
+                marginBottom: "16px",
+              }}
             >
-              <div className="text-xs font-mono text-muted-foreground mb-1">{stat.label}</div>
-              <div className="font-display font-700 text-base gradient-text">{stat.value}</div>
-              <div className="text-xs font-mono text-muted-foreground/60 mt-0.5">{stat.sub}</div>
-            </div>
-          ))}
-        </motion.div>
+              {/* BEFORE: <Sparkles> icon + "Real-time Inference" neon badge
+                  AFTER:  plain monospaced eyebrow, no icon */}
+              Real-time Inference Engine
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontWeight: 400,
+                fontSize: "clamp(2rem, 4vw, 3rem)",
+                lineHeight: 1.05,
+                color: "#1a1a18",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Credibility{" "}
+              <em style={{ fontStyle: "italic" }}>Analyzer</em>
+            </h2>
+          </motion.div>
+        </div>
       </div>
+
+      {/* Main form area */}
+      <div
+        className="grid"
+        style={{
+          // Two-column: form left, result right
+          gridTemplateColumns: "1fr 420px",
+          minHeight: "70vh",
+        }}
+      >
+        {/* ── Form column ──────────────────────────────── */}
+        <div
+          style={{
+            borderRight: "1px solid #d8d4ce",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Toolbar */}
+          <div
+            className="flex items-center justify-between px-16 py-4"
+            style={{ borderBottom: "1px solid #d8d4ce" }}
+          >
+            <span
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.65rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#7a766f",
+              }}
+            >
+              {/* BEFORE: "news_content.txt" in muted font — fine but kept */}
+              Input — Article or excerpt
+            </span>
+            {/* BEFORE: DropdownMenu with glassmorphism popup
+                AFTER:  same dropdown but flat styling (see DropdownMenu.tsx) */}
+            <DropdownMenu
+              onClear={() => {
+                setText("");
+                setStatus("idle");
+                setResult(null);
+              }}
+              onLoadReal={() => {
+                setText(EXAMPLE_TEXTS.real);
+                setStatus("idle");
+                setResult(null);
+              }}
+              onLoadFake={() => {
+                setText(EXAMPLE_TEXTS.fake);
+                setStatus("idle");
+                setResult(null);
+              }}
+            />
+          </div>
+
+          {/* Textarea — BEFORE: glass/blur, rounded-2xl, cyan focus ring
+                        AFTER:  plain white, 1px border, sharp, ink focus */}
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            disabled={status === "loading"}
+            placeholder="Paste news content here for analysis…&#10;&#10;Any article, headline, or social media post.&#10;Press ⌘+Enter to submit."
+            style={{
+              flex: 1,
+              resize: "none",
+              background: "#ffffff",
+              border: "none",
+              // BEFORE: border border-cyan-400/20 focus:border-cyan-400/40 rounded-2xl
+              // AFTER:  no border on textarea itself — container provides it
+              outline: "none",
+              padding: "40px 64px",
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontWeight: 300,
+              fontSize: "1.05rem",
+              lineHeight: 1.8,
+              color: "#1a1a18",
+              opacity: status === "loading" ? 0.5 : 1,
+            }}
+          />
+
+          {/* Footer bar */}
+          <div
+            className="flex items-center justify-between px-16 py-4"
+            style={{ borderTop: "1px solid #d8d4ce" }}
+          >
+            <span
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.62rem",
+                letterSpacing: "0.06em",
+                color: "#7a766f",
+              }}
+            >
+              {isReady ? (
+                <span style={{ color: "#1e4d36" }}>Ready · </span>
+              ) : null}
+              {wordCount} words · ⌘+Enter to submit
+            </span>
+
+            {/* Submit button — BEFORE: gradient pill with glow and shine
+                              AFTER: flat solid, sharp, monospaced */}
+            <button
+              onClick={handleSubmit}
+              disabled={!isReady || status === "loading"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "10px 24px",
+                // BEFORE: bg-gradient-to-r from-cyan to-violet, rounded-full
+                // AFTER:  ink fill, no radius
+                background: isReady && status !== "loading" ? "#1a1a18" : "#d8d4ce",
+                color: isReady && status !== "loading" ? "#f5f4f0" : "#7a766f",
+                border: "none",
+                borderRadius: 0,
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.68rem",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                cursor: isReady && status !== "loading" ? "pointer" : "not-allowed",
+                transition: "background 0.15s",
+              }}
+            >
+              {status === "loading" ? (
+                <>
+                  {/* BEFORE: orbital neon spinner animation
+                      AFTER:  text cursor blink — editorial, typographic */}
+                  <span>Analyzing</span>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      animation: "blink 1s step-start infinite",
+                    }}
+                  >
+                    ▋
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>Analyze</span>
+                  <ArrowRight size={12} />
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* ── Results column ───────────────────────────── */}
+        <div
+          style={{
+            background: "#eeede8",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Column header */}
+          <div
+            className="px-8 py-4 flex items-center"
+            style={{ borderBottom: "1px solid #d8d4ce" }}
+          >
+            <span
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.65rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#7a766f",
+              }}
+            >
+              Verdict
+            </span>
+          </div>
+
+          {/* Result area */}
+          <div className="flex-1 p-8 flex flex-col justify-center">
+            <AnimatePresence mode="wait">
+
+              {/* Idle state */}
+              {status === "idle" && (
+                <motion.div
+                  key="idle"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ textAlign: "center", padding: "40px 20px" }}
+                >
+                  {/* Decorative element — not a spinner, a rule */}
+                  <div
+                    style={{
+                      width: "40px",
+                      height: "1px",
+                      background: "#c0bbb4",
+                      margin: "0 auto 24px",
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontStyle: "italic",
+                      fontSize: "1rem",
+                      color: "#7a766f",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Awaiting content
+                    <br />
+                    for analysis
+                  </p>
+                </motion.div>
+              )}
+
+              {/* Loading */}
+              {status === "loading" && (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ textAlign: "center", padding: "40px 20px" }}
+                >
+                  {/* BEFORE: orbital neon spinner (three rings)
+                      AFTER:  a simple animated rule — typographic */}
+                  <motion.div
+                    style={{
+                      width: "0%",
+                      height: "1px",
+                      background: "#1a1a18",
+                      margin: "0 auto 24px",
+                    }}
+                    animate={{ width: "60%" }}
+                    transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+                  />
+                  <p
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#7a766f",
+                    }}
+                  >
+                    Processing
+                  </p>
+                </motion.div>
+              )}
+
+              {/* Error */}
+              {status === "error" && (
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  style={{
+                    // BEFORE: glass border-red-400/20 bg-red-400/5 rounded-2xl
+                    // AFTER:  flat, 1px border, sharp
+                    background: "#f5ecea",
+                    border: "1px solid #d4a09a",
+                    padding: "24px",
+                    borderRadius: 0,
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <AlertCircle size={16} color="#8b2318" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <div>
+                      <p
+                        style={{
+                          fontFamily: "'IBM Plex Mono', monospace",
+                          fontSize: "0.65rem",
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          color: "#8b2318",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        Analysis Failed
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "'IBM Plex Sans', sans-serif",
+                          fontWeight: 300,
+                          fontSize: "0.85rem",
+                          color: "#4a4a46",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        {errorMsg}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Success */}
+              {status === "success" && result && (
+                <motion.div
+                  key="result"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <ResultCard result={result} />
+                </motion.div>
+              )}
+
+            </AnimatePresence>
+          </div>
+
+          {/* Model stats — BEFORE: three glass cards with gradient bars
+                          AFTER:  simple text list, no cards */}
+          <div style={{ borderTop: "1px solid #d8d4ce" }}>
+            {[
+              { label: "Model",    value: "BERT-Base Uncased" },
+              { label: "Corpus",   value: "LIAR + WELFake · 44K" },
+              { label: "Accuracy", value: "94.2% F1 weighted" },
+            ].map(({ label, value }, i) => (
+              <div
+                key={label}
+                className="flex items-center justify-between px-8 py-3"
+                style={{
+                  borderBottom: i < 2 ? "1px solid #d8d4ce" : "none",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "#7a766f",
+                  }}
+                >
+                  {label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "'IBM Plex Sans', sans-serif",
+                    fontWeight: 300,
+                    fontSize: "0.8rem",
+                    color: "#1a1a18",
+                  }}
+                >
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Responsive: stack columns on mobile */}
+      <style>{`
+        @media (max-width: 900px) {
+          #detector > div:last-child {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 }

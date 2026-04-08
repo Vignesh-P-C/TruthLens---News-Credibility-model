@@ -1,0 +1,221 @@
+// New section: editorial two-column text layout
+// Reference: museum "about" placard — structured, measured
+
+'use client';
+
+import { motion } from "framer-motion";
+
+export default function AboutSection() {
+  return (
+    <section
+      id="about"
+      style={{
+        background: "#0a0a0a",
+        borderTop: "1px solid #1e1e1e",
+      }}
+    >
+      {/* Section header bar */}
+      <div
+        className="flex items-center"
+        style={{
+          borderBottom: "1px solid #1e1e1e",
+          padding: "20px 64px",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: "0.6rem",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "#4a4a46",
+          }}
+        >
+          §03 — Technology
+        </span>
+      </div>
+
+      {/* Two-column body */}
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: "1fr 1fr",
+          gap: 0,
+          padding: "80px 64px",
+        }}
+      >
+        {/* Left: Heading */}
+        <motion.div
+          style={{ paddingRight: "64px", borderRight: "1px solid #1e1e1e" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <h2
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontWeight: 400,
+              fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
+              lineHeight: 1.05,
+              color: "#f0ede8",
+              letterSpacing: "-0.02em",
+              marginBottom: "32px",
+            }}
+          >
+            How the model{" "}
+            <em style={{ fontStyle: "italic", color: "#c8b89a" }}>
+              works
+            </em>
+          </h2>
+
+          {/* Stats — plain text, no cards */}
+          <div style={{ borderTop: "1px solid #1e1e1e", paddingTop: "32px" }}>
+            {[
+              { label: "Architecture",  value: "BERT-Base Uncased" },
+              { label: "Training data", value: "LIAR + WELFake combined" },
+              { label: "Articles",      value: "44,000+" },
+              { label: "F1 Score",      value: "0.942 weighted avg" },
+              { label: "Inference",     value: "< 1 second" },
+            ].map(({ label, value }, i) => (
+              <div
+                key={label}
+                className="flex justify-between"
+                style={{
+                  padding: "14px 0",
+                  borderBottom: "1px solid #1e1e1e",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: "0.62rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "#4a4a46",
+                  }}
+                >
+                  {label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "'IBM Plex Sans', sans-serif",
+                    fontWeight: 300,
+                    fontSize: "0.85rem",
+                    color: "#f0ede8",
+                  }}
+                >
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Right: Body text */}
+        <motion.div
+          style={{ paddingLeft: "64px" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+        >
+          {[
+            {
+              title: "Fine-tuned Classification",
+              body: "The model is a BERT-Base Uncased transformer pre-trained on BookCorpus and Wikipedia, fine-tuned on a balanced dataset of verified and fabricated news articles. Classification head outputs a binary label with a softmax confidence score.",
+            },
+            {
+              title: "Dataset Composition",
+              body: "Training data combines LIAR (politifact.com, 12K statements) and WELFake (Kaggle, 72K articles fused to 44K after deduplication). Both REAL and FAKE classes are balanced at approximately 50/50 to prevent label bias.",
+            },
+            {
+              title: "Limitations",
+              body: "The model performs best on English-language political and social news. It has reduced sensitivity to satire, opinion pieces, and highly technical domains. AI analysis is a signal, not a verdict — human editorial judgment remains essential.",
+            },
+          ].map(({ title, body }) => (
+            <div key={title} style={{ marginBottom: "36px" }}>
+              <h4
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontWeight: 400,
+                  fontSize: "1rem",
+                  color: "#f0ede8",
+                  marginBottom: "12px",
+                  fontStyle: "italic",
+                }}
+              >
+                {title}
+              </h4>
+              <p
+                style={{
+                  fontFamily: "'IBM Plex Sans', sans-serif",
+                  fontWeight: 300,
+                  fontSize: "0.9rem",
+                  lineHeight: 1.8,
+                  color: "rgba(240,237,232,0.5)",
+                }}
+              >
+                {body}
+              </p>
+            </div>
+          ))}
+
+          {/* Footer note */}
+          <div
+            style={{
+              borderTop: "1px solid #1e1e1e",
+              paddingTop: "24px",
+              marginTop: "8px",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.06em",
+                color: "#4a4a46",
+                lineHeight: 1.7,
+              }}
+            >
+              Open source · Apache 2.0 License · Model weights available on HuggingFace
+            </p>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Footer */}
+      <div
+        style={{
+          borderTop: "1px solid #1e1e1e",
+          padding: "24px 64px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            fontStyle: "italic",
+            fontSize: "0.9rem",
+            color: "#4a4a46",
+          }}
+        >
+          TruthLens · News Credibility Analysis
+        </span>
+        <span
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: "0.58rem",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "#3a3a36",
+          }}
+        >
+          Next.js · BERT · FastAPI
+        </span>
+      </div>
+    </section>
+  );
+}

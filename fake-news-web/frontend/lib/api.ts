@@ -18,18 +18,14 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
   if (!text || text.trim().length === 0) {
     return {
       success: false,
-      error: {
-        message: "Please enter some text to analyze.",
-        type: "empty_text",
-      },
+      error: { message: "Please enter some text to analyze.", type: "empty_text" },
     };
   }
-
   if (text.trim().length < 20) {
     return {
       success: false,
       error: {
-        message: "Text is too short. Please provide at least a sentence or two for accurate analysis.",
+        message: "Text is too short. Please provide at least a sentence or two.",
         type: "empty_text",
       },
     };
@@ -37,14 +33,11 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     const response = await fetch(`${API_BASE}/predict`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({ text: text.trim() }),
       signal: controller.signal,
     });
@@ -52,20 +45,12 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      let errorMessage = `Server error: ${response.status} ${response.statusText}`;
+      let msg = `Server error: ${response.status} ${response.statusText}`;
       try {
-        const errorData = await response.json();
-        if (errorData.detail) errorMessage = errorData.detail;
-      } catch {
-        // ignore json parse error on error response
-      }
-      return {
-        success: false,
-        error: {
-          message: errorMessage,
-          type: "server",
-        },
-      };
+        const err = await response.json();
+        if (err.detail) msg = err.detail;
+      } catch {}
+      return { success: false, error: { message: msg, type: "server" } };
     }
 
     let data: unknown;
@@ -74,10 +59,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     } catch {
       return {
         success: false,
-        error: {
-          message: "Received an invalid response from the server.",
-          type: "invalid_response",
-        },
+        error: { message: "Invalid response from server.", type: "invalid_response" },
       };
     }
 
@@ -89,10 +71,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     ) {
       return {
         success: false,
-        error: {
-          message: "Unexpected response format from the API.",
-          type: "invalid_response",
-        },
+        error: { message: "Unexpected response format.", type: "invalid_response" },
       };
     }
 
@@ -103,20 +82,13 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
     if (label !== "REAL" && label !== "FAKE") {
       return {
         success: false,
-        error: {
-          message: `Invalid label received: "${label}". Expected REAL or FAKE.`,
-          type: "invalid_response",
-        },
+        error: { message: `Invalid label: "${label}".`, type: "invalid_response" },
       };
     }
-
     if (typeof confidence !== "number" || confidence < 0 || confidence > 1) {
       return {
         success: false,
-        error: {
-          message: "Invalid confidence value received from the API.",
-          type: "invalid_response",
-        },
+        error: { message: "Invalid confidence value.", type: "invalid_response" },
       };
     }
 
@@ -124,47 +96,35 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
       success: true,
       data: {
         label: label as "REAL" | "FAKE",
-        confidence: Math.round(confidence * 10000) / 100, // convert to percentage with 2 decimal places
+        confidence: Math.round(confidence * 10000) / 100,
       },
     };
   } catch (err) {
     if (err instanceof Error) {
-      if (err.name === "AbortError") {
+      if (err.name === "AbortError")
         return {
           success: false,
           error: {
-            message: "Request timed out. Please check that the backend server is running.",
+            message: "Request timed out. Is the backend running?",
             type: "network",
           },
         };
-      }
-      if (
-        err.message.includes("fetch") ||
-        err.message.includes("network") ||
-        err.message.includes("Failed to fetch")
-      ) {
+      if (err.message.includes("fetch") || err.message.includes("Failed to fetch"))
         return {
           success: false,
           error: {
-            message:
-              "Cannot connect to the analysis server. Make sure the FastAPI backend is running at http://127.0.0.1:8000",
+            message: "Cannot reach http://127.0.0.1:8000 — start the FastAPI server.",
             type: "network",
           },
         };
-      }
     }
-
     return {
       success: false,
-      error: {
-        message: "An unexpected error occurred. Please try again.",
-        type: "network",
-      },
+      error: { message: "Unexpected error. Please try again.", type: "network" },
     };
   }
 }
 
-// Example texts for demonstration
 export const EXAMPLE_TEXTS = {
   real: `Scientists at the Johns Hopkins Bloomberg School of Public Health have published new research in the journal Nature Medicine showing that consistent aerobic exercise for at least 150 minutes per week significantly reduces inflammation markers in adults over 50. The study, which followed 2,400 participants over five years, found that those who maintained regular cardiovascular activity had 34% lower levels of C-reactive protein compared to sedentary individuals. The findings align with previous research from the Mayo Clinic and support current guidelines from the American Heart Association.`,
 

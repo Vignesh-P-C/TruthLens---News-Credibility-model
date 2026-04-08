@@ -1,205 +1,228 @@
+// BEFORE: box-shadow glow-green / glow-red, gradient progress bar,
+//         rounded-2xl, CheckCircle/XCircle icons with color
+//
+// AFTER:  flat bordered card, 2px progress line, muted semantic colors,
+//         typographic verdict label, shake animation kept (has meaning)
+
 'use client';
 
-import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, TrendingUp, AlertTriangle } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import type { PredictionResult } from '@/lib/api';
+import { motion } from "framer-motion";
+import type { PredictionResult } from "@/lib/api";
 
 interface ResultCardProps {
   result: PredictionResult;
 }
 
 export default function ResultCard({ result }: ResultCardProps) {
-  const isReal = result.label === 'REAL';
-  const confidence = result.confidence; // already percentage
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.97 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
-
-  const shakeVariants = {
-    hidden: { opacity: 0, x: 0 },
-    visible: {
-      opacity: 1,
-      x: [0, -6, 6, -4, 4, -2, 2, 0],
-      transition: {
-        opacity: { duration: 0.3 },
-        x: { duration: 0.5, delay: 0.2, ease: 'easeInOut' },
-      },
-    },
-  };
+  const isReal = result.label === "REAL";
+  const confidence = result.confidence; // already %
 
   return (
     <motion.div
-      variants={isReal ? cardVariants : shakeVariants}
-      initial="hidden"
-      animate="visible"
-      className={cn(
-        'relative rounded-2xl border overflow-hidden',
-        'glass transition-all duration-500',
+      // BEFORE: rounded-2xl glass shadow-glow-green / shadow-glow-red
+      // AFTER:  sharp corners, flat border, muted semantic background
+      initial={{ opacity: 0, y: 16 }}
+      animate={
         isReal
-          ? 'border-green-400/30 shadow-glow-green'
-          : 'border-red-400/30 shadow-glow-red'
-      )}
+          ? { opacity: 1, y: 0 }
+          : {
+              opacity: 1,
+              y: 0,
+              // KEPT: shake animation for FAKE — it's meaningful, not decorative
+              x: [0, -6, 6, -4, 4, -2, 2, 0],
+            }
+      }
+      transition={
+        isReal
+          ? { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+          : {
+              opacity: { duration: 0.3 },
+              x: { duration: 0.5, delay: 0.2, ease: "easeInOut" },
+            }
+      }
+      style={{
+        // BEFORE: glass background (rgba + blur), glow box-shadow
+        // AFTER:  flat, muted semantic palette
+        background: isReal ? "#eaf2ec" : "#f5ecea",
+        border: `1px solid ${isReal ? "#a3c4ab" : "#d4a09a"}`,
+        borderRadius: 0,
+        overflow: "hidden",
+      }}
     >
-      {/* Top gradient bar */}
+      {/* Top accent rule — thin line, not a gradient glow */}
       <div
-        className={cn(
-          'absolute top-0 left-0 right-0 h-0.5',
-          isReal
-            ? 'bg-gradient-to-r from-transparent via-green-400 to-transparent'
-            : 'bg-gradient-to-r from-transparent via-red-400 to-transparent'
-        )}
+        style={{
+          height: "2px",
+          // BEFORE: bg-gradient-to-r from-transparent via-green-400 to-transparent
+          // AFTER:  solid flat color strip
+          background: isReal ? "#1e4d36" : "#8b2318",
+        }}
       />
 
-      {/* Background glow */}
-      <div
-        className={cn(
-          'absolute inset-0 opacity-5',
-          isReal
-            ? 'bg-gradient-to-br from-green-400/20 to-transparent'
-            : 'bg-gradient-to-br from-red-400/20 to-transparent'
-        )}
-      />
-
-      <div className="relative p-6">
-        {/* Header */}
-        <div className="flex items-start justify-between mb-6">
+      <div style={{ padding: "28px" }}>
+        {/* Verdict header */}
+        <div
+          className="flex items-start justify-between"
+          style={{ marginBottom: "24px" }}
+        >
           <div>
-            <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1.5">
-              Analysis Result
-            </div>
-            <div className="flex items-center gap-3">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
-              >
-                {isReal ? (
-                  <CheckCircle className="w-7 h-7 text-green-400" />
-                ) : (
-                  <XCircle className="w-7 h-7 text-red-400" />
-                )}
-              </motion.div>
-              <h3
-                className={cn(
-                  'font-display text-3xl font-800 tracking-tight',
-                  isReal ? 'text-green-400' : 'text-red-400'
-                )}
-              >
-                {result.label}
-              </h3>
-            </div>
+            {/* BEFORE: "Analysis Result" in font-mono text-muted-foreground
+                AFTER:  same pattern, editorial placement */}
+            <span
+              style={{
+                display: "block",
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#7a766f",
+                marginBottom: "8px",
+              }}
+            >
+              Verdict
+            </span>
+            {/* BEFORE: CheckCircle / XCircle icon + gradient text
+                AFTER:  pure serif label — the font weight IS the statement */}
+            <h3
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontWeight: 400,
+                fontSize: "2.8rem",
+                lineHeight: 1,
+                letterSpacing: "-0.02em",
+                // BEFORE: text-green-400 / text-red-400 (neon)
+                // AFTER:  muted forest green / muted red
+                color: isReal ? "#1e4d36" : "#8b2318",
+              }}
+            >
+              {/* BEFORE: just "REAL" or "FAKE" in all-caps
+                  AFTER:  more editorial presentation */}
+              {isReal ? "Real" : "Fake"}
+            </h3>
           </div>
 
-          {/* Verdict badge */}
-          <motion.div
-            className={cn(
-              'px-3 py-1.5 rounded-full text-xs font-mono font-medium border',
-              isReal
-                ? 'bg-green-400/10 border-green-400/30 text-green-300'
-                : 'bg-red-400/10 border-red-400/30 text-red-300'
-            )}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
+          {/* Status badge — BEFORE: rounded-full colored badge
+                           AFTER:  square monospaced stamp */}
+          <div
+            style={{
+              padding: "6px 12px",
+              background: isReal ? "#1e4d36" : "#8b2318",
+              color: "#f5f4f0",
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: "0.6rem",
+              fontWeight: 500,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              borderRadius: 0,
+              alignSelf: "flex-start",
+            }}
           >
-            {isReal ? '✓ Credible' : '⚠ Suspicious'}
-          </motion.div>
+            {isReal ? "Credible" : "Suspicious"}
+          </div>
         </div>
 
         {/* Confidence section */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground font-mono">
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>Model confidence</span>
-            </div>
+        <div style={{ marginBottom: "20px" }}>
+          <div
+            className="flex items-center justify-between"
+            style={{ marginBottom: "10px" }}
+          >
+            <span
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#7a766f",
+              }}
+            >
+              {/* BEFORE: TrendingUp icon + "Model confidence" */}
+              Model confidence
+            </span>
             <motion.span
-              className={cn(
-                'font-display text-2xl font-700',
-                isReal ? 'text-green-400' : 'text-red-400'
-              )}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.4 }}
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "1.6rem",
+                fontWeight: 400,
+                color: isReal ? "#1e4d36" : "#8b2318",
+                lineHeight: 1,
+              }}
             >
               {confidence.toFixed(1)}%
             </motion.span>
           </div>
 
-          {/* Animated progress bar */}
-          <div className="relative h-2.5 rounded-full bg-muted overflow-hidden">
+          {/* Progress bar — BEFORE: h-2.5 rounded-full gradient with shimmer
+                           AFTER:  2px rule, flat fill */}
+          <div
+            style={{
+              height: "2px",
+              background: "#d8d4ce",
+              width: "100%",
+            }}
+          >
             <motion.div
-              className={cn(
-                'absolute inset-y-0 left-0 rounded-full',
-                isReal
-                  ? 'bg-gradient-to-r from-green-500 to-teal-400'
-                  : 'bg-gradient-to-r from-red-500 to-orange-400'
-              )}
-              initial={{ width: '0%' }}
+              initial={{ width: "0%" }}
               animate={{ width: `${confidence}%` }}
-              transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            />
-            {/* Shimmer on bar */}
-            <motion.div
-              className="absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full"
-              initial={{ left: '-10%' }}
-              animate={{ left: '110%' }}
-              transition={{ delay: 1.2, duration: 1, ease: 'easeOut' }}
+              transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                height: "100%",
+                // BEFORE: bg-gradient-to-r from-green-500 to-teal-400
+                // AFTER:  solid flat semantic color
+                background: isReal ? "#1e4d36" : "#8b2318",
+              }}
             />
           </div>
-
-          {/* Confidence interpretation */}
-          <p className="text-xs font-mono text-muted-foreground pt-1">
-            {confidence >= 90
-              ? isReal
-                ? '🟢 Very high confidence this content is reliable.'
-                : '🔴 Very high confidence this content contains misinformation.'
-              : confidence >= 70
-              ? isReal
-                ? '🟡 Likely reliable, but cross-reference recommended.'
-                : '🟡 Likely misleading. Verify with reputable sources.'
-              : '⚪ Low confidence — insufficient signal for definitive verdict.'}
-          </p>
         </div>
 
-        {/* Disclaimer */}
-        {!isReal && (
-          <motion.div
-            className="mt-5 flex items-start gap-2.5 p-3 rounded-xl bg-red-400/5 border border-red-400/15"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            transition={{ delay: 0.7 }}
-          >
-            <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-red-300/80 font-mono leading-relaxed">
-              This content shows patterns commonly associated with misinformation.
-              Always verify claims with trusted news organizations before sharing.
-            </p>
-          </motion.div>
-        )}
+        {/* Confidence interpretation */}
+        <p
+          style={{
+            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontWeight: 300,
+            fontSize: "0.82rem",
+            lineHeight: 1.65,
+            color: "#4a4a46",
+            fontStyle: "italic",
+          }}
+        >
+          {confidence >= 90
+            ? isReal
+              ? "High confidence. Cross-referencing with additional sources is still recommended for editorial purposes."
+              : "High confidence that this content contains misinformation. Verify any claims before sharing."
+            : confidence >= 70
+            ? isReal
+              ? "Likely credible. Some signals are ambiguous — verify with primary sources."
+              : "Likely misleading. Seek corroboration from established outlets."
+            : "Low model confidence. Insufficient linguistic signal for a definitive verdict."}
+        </p>
 
-        {isReal && (
-          <motion.div
-            className="mt-5 flex items-start gap-2.5 p-3 rounded-xl bg-green-400/5 border border-green-400/15"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            transition={{ delay: 0.7 }}
-          >
-            <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-green-300/80 font-mono leading-relaxed">
-              Content appears credible. The model identified patterns consistent
-              with factual journalism. Note: AI analysis should supplement, not replace, critical reading.
-            </p>
-          </motion.div>
-        )}
+        {/* Separator rule */}
+        <div
+          style={{
+            height: "1px",
+            background: isReal ? "#a3c4ab" : "#d4a09a",
+            margin: "20px 0",
+          }}
+        />
+
+        {/* Contextual note */}
+        <p
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: "0.6rem",
+            letterSpacing: "0.05em",
+            color: "#7a766f",
+            lineHeight: 1.6,
+          }}
+        >
+          {isReal
+            ? "Note — AI analysis augments, not replaces, editorial judgment."
+            : "Patterns associated with fabricated or misleading content were detected."}
+        </p>
       </div>
     </motion.div>
   );

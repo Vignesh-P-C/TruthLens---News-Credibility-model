@@ -1,64 +1,55 @@
-/* Fonts: swap Syne + DM Sans → Playfair Display + IBM Plex Sans */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+/* ============================================================
+   TruthLens — Editorial Redesign
+   BEFORE: neon/glass/gradient AI SaaS
+   AFTER:  museum/print editorial, restraint over effect
+   ============================================================ */
+
+/* Google Fonts — Playfair Display + IBM Plex Sans + IBM Plex Mono */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── CSS Variables ─────────────────────────────────────────── */
+/* ============================================================
+   CSS CUSTOM PROPERTIES — the entire palette lives here
+   ============================================================ */
 :root {
-  /* BEFORE: dark navy + neon cyan/violet */
-  /* AFTER:  warm off-white paper + near-black ink */
-  --background:         210 20% 97%;   /* #f5f4f0 — off-white paper */
-  --foreground:         30 5% 10%;     /* #1a1a18 — near-black ink */
-  --card:               0 0% 100%;     /* #ffffff — pure white cards */
-  --card-foreground:    30 5% 10%;
-  --primary:            30 5% 10%;     /* #1a1a18 — ink replaces neon cyan */
-  --primary-foreground: 210 20% 97%;   /* paper on ink */
-  --secondary:          30 10% 92%;    /* #eeede8 — warm light gray */
-  --secondary-foreground: 30 5% 28%;
-  --muted:              30 8% 90%;     /* #e8e5e0 */
-  --muted-foreground:   30 5% 47%;     /* #7a766f — warm gray */
-  --accent:             35 25% 70%;    /* #c8b89a — sand, the ONE warm accent */
-  --accent-foreground:  30 5% 10%;
-  --border:             30 10% 84%;    /* #d8d4ce — warm rule */
-  --input:              0 0% 100%;
-  --ring:               30 5% 10%;     /* ink focus ring, not cyan */
+  /* Core palette */
+  --paper:       #f5f4f0;   /* warm off-white — uncoated paper */
+  --paper-dark:  #eeede8;   /* slightly darker for section contrast */
+  --ink:         #1a1a18;   /* near-black, not pure — more human */
+  --ink-light:   #4a4a46;   /* secondary text */
+  --sidebar:     #0a0a0a;   /* sidebar background */
+  --sidebar-text:#f0ede8;   /* text on dark sidebar */
+  --rule:        #d8d4ce;   /* borders, dividers */
+  --rule-dark:   #c0bbb4;   /* stronger border */
+  --muted:       #7a766f;   /* tertiary text, labels */
+  --accent:      #c8b89a;   /* warm sand — used sparingly */
 
-  /* Sidebar specific */
-  --sidebar-bg:         0 0% 4%;       /* #0a0a0a */
-  --sidebar-fg:         30 15% 94%;    /* #f0ede8 */
+  /* Semantic */
+  --real-fg:     #1e4d36;   /* verified/real — forest green */
+  --real-bg:     #eaf2ec;   /* real card tint */
+  --real-border: #a3c4ab;
+  --fake-fg:     #8b2318;   /* misinformation — muted red */
+  --fake-bg:     #f5ecea;
+  --fake-border: #d4a09a;
+  --error:       #8b2318;
 
-  /* Result semantics — muted, not neon */
-  --real-fg:            150 43% 21%;   /* #1e4d36 forest green */
-  --real-bg:            138 25% 93%;   /* #eaf2ec */
-  --real-border:        138 22% 70%;   /* #a3c4ab */
-  --fake-fg:            5 58% 31%;     /* #8b2318 muted red */
-  --fake-bg:            5 35% 95%;     /* #f5ecea */
-  --fake-border:        5 42% 73%;     /* #d4a09a */
+  /* Typography scale */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:    'IBM Plex Sans', -apple-system, Helvetica, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Spacing */
+  --sidebar-w:   260px;
+  --content-pad: 64px;
 }
 
-/* Light mode override — same palette (single theme) */
-.light {
-  --background:         210 20% 97%;
-  --foreground:         30 5% 10%;
-  --card:               0 0% 100%;
-  --card-foreground:    30 5% 10%;
-  --primary:            30 5% 10%;
-  --primary-foreground: 210 20% 97%;
-  --secondary:          30 10% 92%;
-  --secondary-foreground: 30 5% 28%;
-  --muted:              30 8% 90%;
-  --muted-foreground:   30 5% 47%;
-  --accent:             35 25% 70%;
-  --accent-foreground:  30 5% 10%;
-  --border:             30 10% 84%;
-  --input:              0 0% 100%;
-  --ring:               30 5% 10%;
-}
-
-/* ─── Base Reset ────────────────────────────────────────────── */
-* {
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -66,120 +57,410 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: 'IBM Plex Sans', Helvetica, sans-serif; /* was: DM Sans */
-  font-weight: 300;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+
+  /* REMOVED: noise overlay, gradient backgrounds */
+  /* REMOVED: backdrop-filter global defaults */
 }
 
-/* BEFORE: h1-h6 used Syne (geometric sans), font-weight 700-800
-   AFTER:  Playfair Display (editorial serif), weight 400 */
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-weight: 400;      /* BEFORE: 700-800. Serifs read better at normal weight */
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  color: var(--ink);
+  letter-spacing: -0.01em;
 }
 
-/* ─── Scrollbar ─────────────────────────────────────────────── */
+/* BEFORE: gradient-text animation on h1
+   AFTER:  plain ink on paper — the typography IS the design */
+h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+
+p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: var(--ink-light);
+  line-height: 1.75;
+}
+
+/* Label / eyebrow text — editorial pattern */
+.label-caps {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Serif italic for accent text */
+.serif-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ============================================================
+   SCROLLBAR — minimal
+   ============================================================ */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: hsl(var(--background)); }
-::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--paper-dark); }
+::-webkit-scrollbar-thumb { background: var(--rule-dark); border-radius: 2px; }
 
-/* ─── Selection ─────────────────────────────────────────────── */
+/* ============================================================
+   SELECTION
+   ============================================================ */
 ::selection {
-  /* BEFORE: cyan tint bg, cyan text */
-  /* AFTER:  ink on paper — high contrast, print-like */
-  background: hsl(var(--foreground));
-  color: hsl(var(--background));
+  background: var(--ink);
+  color: var(--paper);
 }
 
-/* ─── Focus ring ────────────────────────────────────────────── */
-*:focus-visible {
-  /* BEFORE: 2px solid cyan glow ring */
-  /* AFTER:  1px solid ink — no glow */
-  outline: 1px solid hsl(var(--foreground));
-  outline-offset: 3px;
+/* ============================================================
+   LAYOUT — sidebar + content shell
+   ============================================================ */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
 }
 
-/* ─── Glass utility ─────────────────────────────────────────── */
-/* BEFORE: backdrop-filter blur(20px) + rgba background + glowing border
-   AFTER:  flat white surface with 1px warm border — no blur, no glow */
-.glass {
-  background: hsl(var(--card));
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border: 1px solid hsl(var(--border));
+/* BEFORE: no sidebar, all centered
+   AFTER: fixed 260px sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--sidebar);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-right: 1px solid #1e1e1e;
 }
 
-.light .glass {
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
+.main-content {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+  width: calc(100vw - var(--sidebar-w));
+  background: var(--paper);
 }
 
-/* ─── Gradient text ─────────────────────────────────────────── */
-/* BEFORE: animated cyan→violet shimmer gradient
-   AFTER:  plain ink — the serif does the work */
-.gradient-text {
-  /* Keep selector intact so existing JSX doesn't break */
-  background: none;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: hsl(var(--foreground));
-  background-clip: unset;
-  animation: none;
-  font-style: italic; /* use italic instead of gradient for emphasis */
+/* Mobile: sidebar collapses to top bar */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 0px; }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    flex-direction: row;
+    padding: 16px 24px;
+  }
+  .sidebar-nav { display: none; }
+  .sidebar-social { display: none; }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
-/* ─── Noise overlay ─────────────────────────────────────────── */
-/* BEFORE: .noise::after added a grain texture via SVG filter
-   AFTER:  removed — no digital texture effects */
-.noise::after {
-  display: none;
+/* ============================================================
+   SECTION DIVIDERS
+   ============================================================ */
+.section-rule {
+  height: 1px;
+  background: var(--rule);
+  width: 100%;
 }
 
-/* ─── Canvas (Three.js) ─────────────────────────────────────── */
-canvas {
-  display: block;
+/* ============================================================
+   CARDS — BEFORE: glass + blur + glow. AFTER: flat + border
+   ============================================================ */
+
+/* REMOVED: .glass { backdrop-filter: blur(20px); ... } */
+
+.card-flat {
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  /* REMOVED: box-shadow: 0 0 20px rgba(cyan, 0.3) */
+  /* REMOVED: backdrop-filter: blur(20px) */
 }
 
-/* ─── Animated border glow ──────────────────────────────────── */
-/* BEFORE: cyan↔violet pulsing glow animation
-   AFTER:  simple border-color transition, no glow */
-@keyframes border-glow {
-  0%, 100% { border-color: hsl(var(--border)); }
-  50%       { border-color: hsl(var(--foreground) / 0.4); }
+.card-paper {
+  background: var(--paper);
+  border: 1px solid var(--rule);
 }
 
-.animate-border-glow {
-  animation: border-glow 3s ease-in-out infinite;
+/* ============================================================
+   BUTTONS — BEFORE: pill-shaped gradient glow. AFTER: flat outlines
+   ============================================================ */
+
+/* Primary: solid black */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  border-radius: 0;          /* BEFORE: rounded-full. AFTER: sharp */
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  /* REMOVED: bg-gradient-to-r from-cyan to-violet */
+  /* REMOVED: box-shadow: 0 0 20px rgba(cyan) */
 }
 
-/* ─── Cyber grid background ─────────────────────────────────── */
-/* BEFORE: neon cyan grid lines (rgba cyan)
-   AFTER:  warm rule-colored grid — subtle structure, not tech */
-.cyber-grid-bg {
-  background-image:
-    linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
-  background-size: 60px 60px;
+.btn-primary:hover {
+  background: transparent;
+  color: var(--ink);
 }
 
-.light .cyber-grid-bg {
-  background-image:
-    linear-gradient(hsl(var(--border) / 0.6) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--border) / 0.6) 1px, transparent 1px);
+/* Secondary: outlined */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-/* ─── Shimmer (gradient text animation) ─────────────────────── */
-/* BEFORE: shimmer ran on gradient-text continuously
-   AFTER:  kept for compatibility but won't trigger (gradient-text has animation:none) */
-@keyframes shimmer {
-  0%   { background-position: 0% center; }
-  100% { background-position: 200% center; }
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--paper);
 }
+
+/* Ghost / minimal on dark background */
+.btn-ghost-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--sidebar-text);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(240, 237, 232, 0.2);
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.btn-ghost-dark:hover {
+  border-color: rgba(240, 237, 232, 0.6);
+  background: rgba(240, 237, 232, 0.05);
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+textarea, input {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid var(--rule-dark);
+  border-radius: 0;         /* BEFORE: rounded-2xl. AFTER: sharp */
+  padding: 20px;
+  width: 100%;
+  transition: border-color 0.15s ease;
+
+  /* REMOVED: backdrop-filter, glassmorphism, glow ring */
+}
+
+textarea:focus, input:focus {
+  outline: none;
+  border-color: var(--ink);
+  /* BEFORE: box-shadow: 0 0 0 2px rgba(cyan, 0.4) */
+  /* AFTER:  no glow, just border color change */
+}
+
+textarea::placeholder {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   RESULT STATES
+   BEFORE: neon green/red glow
+   AFTER: muted, culturally legible
+   ============================================================ */
+.result-real {
+  background: var(--real-bg);
+  border: 1px solid var(--real-border);
+  /* REMOVED: shadow-glow-green */
+}
+
+.result-fake {
+  background: var(--fake-bg);
+  border: 1px solid var(--fake-border);
+  /* REMOVED: shadow-glow-red */
+}
+
+/* ============================================================
+   PROGRESS BAR — editorial
+   ============================================================ */
+.progress-track {
+  height: 2px;                  /* BEFORE: h-2.5 (10px). AFTER: 2px — a line */
+  background: var(--rule);
+  width: 100%;
+}
+
+.progress-fill-real {
+  height: 100%;
+  background: var(--real-fg);   /* BEFORE: gradient cyan→teal. AFTER: flat forest green */
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-fill-fake {
+  height: 100%;
+  background: var(--fake-fg);   /* BEFORE: gradient red→orange. AFTER: flat muted red */
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 80px var(--content-pad);
+  overflow: hidden;
+  background: #1c1c1a;         /* BEFORE: Three.js aurora. AFTER: dark neutral */
+}
+
+/* Newspaper-style column rule */
+.column-rule {
+  width: 1px;
+  background: var(--rule);
+  align-self: stretch;
+}
+
+/* ============================================================
+   NAV LINK — sidebar style
+   ============================================================ */
+.nav-link {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1rem;
+  color: rgba(240, 237, 232, 0.55);
+  text-decoration: none;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1e1e1e;
+  transition: color 0.15s ease;
+  letter-spacing: 0.01em;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--sidebar-text);
+}
+
+/* ============================================================
+   LOADING STATE — editorial
+   BEFORE: orbital neon spinner
+   AFTER: simple typographic indicator
+   ============================================================ */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.loading-cursor::after {
+  content: '▋';
+  display: inline-block;
+  animation: blink 1s step-start infinite;
+  color: var(--ink);
+  margin-left: 2px;
+}
+
+/* ============================================================
+   ANIMATIONS — restrained, purposeful
+   BEFORE: shimmer, glow-pulse, aurora, float, bounce
+   AFTER: fade-up only, used sparingly
+   ============================================================ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* One-time page reveal — not looping */
+.reveal {
+  opacity: 0;
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.35s; }
+.reveal-delay-4 { animation-delay: 0.5s; }
+
+/* Shake for FAKE result — kept, it has meaning */
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+.animate-shake { animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both; }
+
+/* ============================================================
+   UTILITY — editorial specifics
+   ============================================================ */
+.text-muted   { color: var(--muted); }
+.text-ink     { color: var(--ink); }
+.border-rule  { border-color: var(--rule); }
+.bg-paper     { background-color: var(--paper); }
+.bg-paper-dark{ background-color: var(--paper-dark); }
+.bg-sidebar   { background-color: var(--sidebar); }
+.font-serif   { font-family: var(--font-display); }
+.font-sans    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }

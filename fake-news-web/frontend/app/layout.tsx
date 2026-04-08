@@ -1,27 +1,38 @@
-'use client';
+// BEFORE: ThemeProvider, dark default, noise::after overlay, gradient fonts
+// AFTER:  No theme switching (single editorial light theme), clean body
 
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
+
+export const metadata: Metadata = {
+  title: "TruthLens — News Credibility Analysis",
+  description:
+    "BERT-based transformer model for detecting misinformation. Paste any article for instant credibility analysis.",
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    // BEFORE: suppressHydrationWarning for dark/light theme switching
+    // AFTER:  single light theme, no suppression needed
+    <html lang="en">
       <head>
-        <title>TruthLens — AI News Credibility Detection</title>
-        <meta name="description" content="AI-powered fake news detection using transformer-based NLP models. Paste any article and get instant credibility analysis." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Preconnect for Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="noise">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      {/* BEFORE: className="noise" (grain overlay pseudo-element)
+          AFTER:  clean body, no filter effects */}
+      <body style={{ background: "#f5f4f0" }}>
+        {children}
       </body>
     </html>
   );
