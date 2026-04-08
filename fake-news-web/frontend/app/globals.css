@@ -1,50 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@300;400;500&display=swap');
+/* Fonts: swap Syne + DM Sans → Playfair Display + IBM Plex Sans */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─── CSS Variables ─────────────────────────────────────────── */
 :root {
-  --font-syne: 'Syne', sans-serif;
-  --font-dm-sans: 'DM Sans', sans-serif;
-  --font-jetbrains: 'JetBrains Mono', monospace;
+  /* BEFORE: dark navy + neon cyan/violet */
+  /* AFTER:  warm off-white paper + near-black ink */
+  --background:         210 20% 97%;   /* #f5f4f0 — off-white paper */
+  --foreground:         30 5% 10%;     /* #1a1a18 — near-black ink */
+  --card:               0 0% 100%;     /* #ffffff — pure white cards */
+  --card-foreground:    30 5% 10%;
+  --primary:            30 5% 10%;     /* #1a1a18 — ink replaces neon cyan */
+  --primary-foreground: 210 20% 97%;   /* paper on ink */
+  --secondary:          30 10% 92%;    /* #eeede8 — warm light gray */
+  --secondary-foreground: 30 5% 28%;
+  --muted:              30 8% 90%;     /* #e8e5e0 */
+  --muted-foreground:   30 5% 47%;     /* #7a766f — warm gray */
+  --accent:             35 25% 70%;    /* #c8b89a — sand, the ONE warm accent */
+  --accent-foreground:  30 5% 10%;
+  --border:             30 10% 84%;    /* #d8d4ce — warm rule */
+  --input:              0 0% 100%;
+  --ring:               30 5% 10%;     /* ink focus ring, not cyan */
 
-  /* Dark theme (default) */
-  --background: 220 20% 5%;
-  --foreground: 210 40% 98%;
-  --card: 220 20% 8%;
-  --card-foreground: 210 40% 98%;
-  --primary: 190 100% 50%;
-  --primary-foreground: 220 20% 5%;
-  --secondary: 270 80% 60%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 220 20% 14%;
-  --muted-foreground: 215 20% 55%;
-  --accent: 190 100% 50%;
-  --accent-foreground: 220 20% 5%;
-  --border: 220 20% 16%;
-  --input: 220 20% 12%;
-  --ring: 190 100% 50%;
+  /* Sidebar specific */
+  --sidebar-bg:         0 0% 4%;       /* #0a0a0a */
+  --sidebar-fg:         30 15% 94%;    /* #f0ede8 */
+
+  /* Result semantics — muted, not neon */
+  --real-fg:            150 43% 21%;   /* #1e4d36 forest green */
+  --real-bg:            138 25% 93%;   /* #eaf2ec */
+  --real-border:        138 22% 70%;   /* #a3c4ab */
+  --fake-fg:            5 58% 31%;     /* #8b2318 muted red */
+  --fake-bg:            5 35% 95%;     /* #f5ecea */
+  --fake-border:        5 42% 73%;     /* #d4a09a */
 }
 
+/* Light mode override — same palette (single theme) */
 .light {
-  --background: 210 40% 97%;
-  --foreground: 220 20% 8%;
-  --card: 0 0% 100%;
-  --card-foreground: 220 20% 8%;
-  --primary: 200 100% 40%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 270 60% 55%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 210 40% 93%;
-  --muted-foreground: 215 20% 45%;
-  --accent: 200 100% 40%;
-  --accent-foreground: 0 0% 100%;
-  --border: 210 30% 85%;
-  --input: 210 40% 93%;
-  --ring: 200 100% 40%;
+  --background:         210 20% 97%;
+  --foreground:         30 5% 10%;
+  --card:               0 0% 100%;
+  --card-foreground:    30 5% 10%;
+  --primary:            30 5% 10%;
+  --primary-foreground: 210 20% 97%;
+  --secondary:          30 10% 92%;
+  --secondary-foreground: 30 5% 28%;
+  --muted:              30 8% 90%;
+  --muted-foreground:   30 5% 47%;
+  --accent:             35 25% 70%;
+  --accent-foreground:  30 5% 10%;
+  --border:             30 10% 84%;
+  --input:              0 0% 100%;
+  --ring:               30 5% 10%;
 }
 
+/* ─── Base Reset ────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -58,113 +71,115 @@ html {
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: var(--font-dm-sans);
+  font-family: 'IBM Plex Sans', Helvetica, sans-serif; /* was: DM Sans */
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
+/* BEFORE: h1-h6 used Syne (geometric sans), font-weight 700-800
+   AFTER:  Playfair Display (editorial serif), weight 400 */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-syne);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 2px; }
+
+/* ─── Selection ─────────────────────────────────────────────── */
+::selection {
+  /* BEFORE: cyan tint bg, cyan text */
+  /* AFTER:  ink on paper — high contrast, print-like */
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
 }
 
-/* Glass morphism utility */
+/* ─── Focus ring ────────────────────────────────────────────── */
+*:focus-visible {
+  /* BEFORE: 2px solid cyan glow ring */
+  /* AFTER:  1px solid ink — no glow */
+  outline: 1px solid hsl(var(--foreground));
+  outline-offset: 3px;
+}
+
+/* ─── Glass utility ─────────────────────────────────────────── */
+/* BEFORE: backdrop-filter blur(20px) + rgba background + glowing border
+   AFTER:  flat white surface with 1px warm border — no blur, no glow */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: hsl(var(--card));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid hsl(var(--border));
 }
 
 .light .glass {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
 }
 
-/* Gradient text */
+/* ─── Gradient text ─────────────────────────────────────────── */
+/* BEFORE: animated cyan→violet shimmer gradient
+   AFTER:  plain ink — the serif does the work */
 .gradient-text {
-  background: linear-gradient(135deg, #22d3ee 0%, #8b5cf6 50%, #22d3ee 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
+  /* Keep selector intact so existing JSX doesn't break */
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: hsl(var(--foreground));
+  background-clip: unset;
+  animation: none;
+  font-style: italic; /* use italic instead of gradient for emphasis */
 }
 
-/* Noise texture overlay */
+/* ─── Noise overlay ─────────────────────────────────────────── */
+/* BEFORE: .noise::after added a grain texture via SVG filter
+   AFTER:  removed — no digital texture effects */
 .noise::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0.4;
+  display: none;
 }
 
-/* Selection highlight */
-::selection {
-  background: rgba(34, 211, 238, 0.2);
-  color: #22d3ee;
-}
-
-/* Focus ring override */
-*:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
-/* Three.js canvas */
+/* ─── Canvas (Three.js) ─────────────────────────────────────── */
 canvas {
   display: block;
 }
 
-/* Animated border */
+/* ─── Animated border glow ──────────────────────────────────── */
+/* BEFORE: cyan↔violet pulsing glow animation
+   AFTER:  simple border-color transition, no glow */
 @keyframes border-glow {
-  0%, 100% {
-    border-color: rgba(34, 211, 238, 0.3);
-    box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
-  }
-  50% {
-    border-color: rgba(139, 92, 246, 0.5);
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
-  }
+  0%, 100% { border-color: hsl(var(--border)); }
+  50%       { border-color: hsl(var(--foreground) / 0.4); }
 }
 
 .animate-border-glow {
   animation: border-glow 3s ease-in-out infinite;
 }
 
-/* Cyber grid background */
+/* ─── Cyber grid background ─────────────────────────────────── */
+/* BEFORE: neon cyan grid lines (rgba cyan)
+   AFTER:  warm rule-colored grid — subtle structure, not tech */
 .cyber-grid-bg {
-  background-image: 
-    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+  background-image:
+    linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
 .light .cyber-grid-bg {
-  background-image: 
-    linear-gradient(rgba(6, 182, 212, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(6, 182, 212, 0.06) 1px, transparent 1px);
+  background-image:
+    linear-gradient(hsl(var(--border) / 0.6) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border) / 0.6) 1px, transparent 1px);
 }
 
+/* ─── Shimmer (gradient text animation) ─────────────────────── */
+/* BEFORE: shimmer ran on gradient-text continuously
+   AFTER:  kept for compatibility but won't trigger (gradient-text has animation:none) */
 @keyframes shimmer {
-  0% { background-position: 0% center; }
+  0%   { background-position: 0% center; }
   100% { background-position: 200% center; }
 }
