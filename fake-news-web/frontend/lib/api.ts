@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://fake-news-detection-transformers-2.onrender.com";
 
 export interface PredictionResult {
   label: "REAL" | "FAKE";
