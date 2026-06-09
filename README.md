@@ -1,300 +1,113 @@
-# 📰 News Credibility System [TruthLens]
-![Frontend](https://img.shields.io/badge/Frontend-Vercel-black)
-![Backend](https://img.shields.io/badge/Backend-Render-blue)
-![Model](https://img.shields.io/badge/Model-DistilBERT-orange)
-![Framework](https://img.shields.io/badge/FastAPI-Production-green)
-![Monitoring](https://img.shields.io/badge/Monitoring-UptimeRobot-purple)
+# TruthLens — News Credibility System
 
-> **End-to-End Fake News Detection using Transformers**
->
-> A Production-Ready Distributed AI System
+[![Frontend](https://img.shields.io/badge/FRONTEND-VERCEL-black?style=for-the-badge&logo=vercel)](https://fake-news-detection-transformers.vercel.app/)
+[![Backend](https://img.shields.io/badge/BACKEND-RENDER-blue?style=for-the-badge)](https://fake-news-detection-transformers-2.onrender.com)
+![Model](https://img.shields.io/badge/MODEL-DISTILBERT-orange?style=for-the-badge&logo=huggingface)
+![Framework](https://img.shields.io/badge/FASTAPI-PRODUCTION-green?style=for-the-badge&logo=fastapi)
+![Monitoring](https://img.shields.io/badge/MONITORING-UPTIMEROBOT-purple?style=for-the-badge)
 
-A complete news credibility pipeline — from research experimentation to a fully deployed, cloud-based AI application — powered by fine-tuned **DistilBERT** and served through a scalable full-stack architecture.
-Unlike simple notebook-based ML demos, this project implements a complete research-to-production pipeline, including model training, API serving, frontend integration, cloud deployment, and uptime monitoring.
-
----
-
-## 🌍 Live Deployment
+> End-to-end fake news detection using fine-tuned DistilBERT — from research experimentation to a fully deployed, cloud-based AI application.
 
 | | Link |
 |---|---|
-| 🔗 **Frontend** | [https://fake-news-detection-transformers.vercel.app/](https://fake-news-detection-transformers.vercel.app/) |
-| 🔗 **Backend API** | [https://fake-news-detection-transformers-2.onrender.com](https://fake-news-detection-transformers-2.onrender.com) |
-| 📊 **Presentation** | [Download here](./presentation/Fake-News-Credibility-System-Project-Scope.pptx) |
+| 🔗 Frontend | [fake-news-detection-transformers.vercel.app](https://fake-news-detection-transformers.vercel.app/) |
+| 🔗 Backend API | [fake-news-detection-transformers-2.onrender.com](https://fake-news-detection-transformers-2.onrender.com) |
+| 📊 Presentation | [Download](./presentation/Fake-News-Credibility-System-Project-Scope.pptx) |
 
-> ⚠️ **Note:** Backend runs on Render's free tier. Initial requests after inactivity may take up to ~60 seconds due to cold starts.
-
----
-
-## 🚀 Project Status
-
-| Task | Status |
-|------|--------|
-| Transformer model trained | ✅ Complete |
-| Evaluation completed | ✅ Complete |
-| FastAPI backend implemented | ✅ Complete |
-| Next.js frontend implemented | ✅ Complete |
-| Production deployment (Vercel + Render) | ✅ Complete |
-| Monitoring (UptimeRobot) | ✅ Active |
+> ⚠️ Backend runs on Render's free tier. First request after inactivity may take ~60 seconds due to cold start.
 
 ---
 
-## 🌐 Full-Stack Web Application
+## 📸 Screenshots
 
-This project includes a complete, production-ready web interface for real-time news credibility prediction.
-
-```
-User → Vercel Frontend → Render Backend → Transformer Model → Prediction
-```
-
-### ✨ Features
-
-- 🎨 **Interactive UI** with animated results
-- ⚡ **Real-time prediction** using fine-tuned DistilBERT
-- 📊 **Confidence score visualization**
-- 🔌 **REST API** endpoint (`POST /predict`)
-- 🧠 **Model loaded at startup** for low-latency inference
-- 🌍 **Fully deployed** cloud infrastructure
-- 🟢 **Uptime monitoring** via UptimeRobot
+### Prediction UI
+![Prediction UI](./screenshots/prediction-ui.png)
 
 ---
 
-## 🏗️ System Architecture
+## Overview
+
+Most ML projects stop at a notebook. TruthLens goes further — a complete research-to-production pipeline covering model training, API serving, frontend integration, cloud deployment, and uptime monitoring.
+
+A user pastes a news article. The frontend sends it to a FastAPI backend on Render, which runs it through a fine-tuned DistilBERT model and returns a prediction with a confidence score. The whole round trip takes under a second on a warm instance.
+
+---
+
+## System Architecture
 
 ```
 User Input (Text)
-        │
-        ▼
+       │
+       ▼
 Next.js Frontend  (Vercel)
 TypeScript + Tailwind + Framer Motion
-        │
-        ▼ POST /predict
-        │
-        ▼
+       │
+       ▼  POST /predict
+       │
+       ▼
 FastAPI Backend  (Render)
-        │
-        ▼
-    Tokenizer
-        │
-        ▼
-Fine-Tuned DistilBERT Model
-        │
-        ▼
- Softmax → Label + Confidence
-        │
-        ▼
-    JSON Response
-        │
-        ▼
-Rendered Result  →  🟢 REAL  /  🔴 FAKE
+       │
+       ▼
+   Tokenizer
+       │
+       ▼
+Fine-Tuned DistilBERT
+       │
+       ▼
+Softmax → Label + Confidence
+       │
+       ▼
+   JSON Response
+       │
+       ▼
+  🟢 REAL  /  🔴 FAKE
 ```
 
 ---
 
-## ☁️ Production Infrastructure
+## Features
 
-| Layer | Platform |
-|-------|----------|
-| Frontend Hosting | Vercel |
-| Backend Hosting | Render |
-| Monitoring | UptimeRobot |
-| Model Framework | HuggingFace Transformers |
-| Deep Learning | PyTorch |
-
-### Deployment Characteristics
-
-- 🔐 Environment variables secured via Vercel
-- 🩺 Backend supports `GET` and `HEAD` for health monitoring
-- ⏱️ Cold-start resilient frontend (90s timeout handling)
-- 🔀 Distributed architecture with frontend/API separation
+- Real-time prediction via fine-tuned DistilBERT
+- Confidence score visualization with animated results
+- REST API with `POST /predict` endpoint
+- Model loaded at startup for low-latency inference
+- Cold-start resilient frontend with 90s timeout handling
+- Uptime monitoring via UptimeRobot
 
 ---
 
-## 📂 Repository Structure
+## Model Development Pipeline
 
-```
-fake-news-detection-transformers/
-│
-├── data/                        # Dataset placeholder
-├── models/                      # Trained model checkpoints
-├── notebooks/                   # Research + training pipeline
-├── presentation/                # Project documentation
-├── results/                     # Evaluation metrics
-│
-├── fake-news-web/
-│   ├── backend/                 # FastAPI inference server
-│   │   ├── app.py
-│   │   ├── requirements.txt
-│   │   └── final_model/         # ⚠️ Ignored from Git
-│   │
-│   └── frontend/                # Next.js 15 web app
-│       ├── app/
-│       ├── components/
-│       ├── lib/
-│       └── package.json
-│
-└── README.md
-```
+**1. Dataset Exploration**
+Label distribution analysis, data validation, cleaning, and preprocessing.
+
+**2. Tokenization Strategy**
+Sequence length tuning, padding and truncation optimization for DistilBERT input constraints.
+
+**3. Baseline Models**
+Logistic Regression, Naive Bayes, and TF-IDF benchmarks established before fine-tuning.
+
+**4. Transformer Fine-Tuning**
+DistilBERT fine-tuned using Cross-Entropy Loss + AdamW optimizer with GPU-accelerated training via HuggingFace Transformers and PyTorch.
+
+**5. Export & Integration**
+Model and tokenizer serialized, inference validated locally, then integrated into FastAPI for production serving.
 
 ---
 
-## 🧠 Model Development Pipeline
-
-### 1️⃣ Environment Setup
-- Dependency management, GPU configuration, reproducible notebook structure
-
-### 2️⃣ Dataset Exploration
-- Label distribution analysis, data validation, cleaning & preprocessing
-
-### 3️⃣ Tokenization Strategy
-- Sequence length tuning, padding & truncation optimization
-
-### 4️⃣ Baseline Models
-- Logistic Regression, Naive Bayes, TF-IDF benchmarks
-
-### 5️⃣ Transformer Fine-Tuning
-- DistilBERT from HuggingFace
-- Cross-Entropy Loss + AdamW Optimizer
-- GPU-accelerated training
-
-### 6️⃣ Model Export & Integration
-- Model + tokenizer serialized, inference validated, integrated into FastAPI
-
----
-
-## 📊 Evaluation Metrics
-
-Models are evaluated across the following:
-
-- **Accuracy** — Overall correctness
-- **Precision** — Positive predictive value
-- **Recall** — Sensitivity / true positive rate
-- **F1-Score** — Harmonic mean of precision & recall
-- **Confusion Matrix** — Full error breakdown
-
-### 🔢 Performance Snapshot
+## Evaluation
 
 | Model | Accuracy | F1-Score |
-|--------|----------|----------|
+|-------|----------|----------|
 | Logistic Regression | 0.xx | 0.xx |
 | Naive Bayes | 0.xx | 0.xx |
 | **DistilBERT (Fine-Tuned)** | **0.xx** | **0.xx** |
 
-> ✨ Transformer-based models significantly outperform traditional ML baselines.
+Transformer fine-tuning significantly outperforms traditional ML baselines across all metrics.
 
 ---
 
-## 🖥️ Running Locally
-
-### 1️⃣ Start the Backend
-
-```bash
-cd fake-news-web/backend
-pip install -r requirements.txt
-uvicorn app:app --reload
-```
-
-Backend available at → `http://127.0.0.1:8000`
-
-### 2️⃣ Start the Frontend
-
-```bash
-cd fake-news-web/frontend
-npm install
-npm run dev
-```
-
-Frontend available at → `http://localhost:3000`
-
----
-
-## 📡 API Reference
-
-### `POST /predict`
-Predicts whether a news article is REAL or FAKE using the fine-tuned DistilBERT model.
-
-**Request**
-```json
-{
-  "text": "News article content..."
-}
-```
-
-**Response**
-```json
-{
-  "label": "REAL",
-  "confidence": 0.94
-}
-```
-- `label` → Prediction result (`REAL` or `FAKE`)
-- `confidence` → Probability score (0–1)
-
----
-
-### 🧪 Example (cURL)
-```
-curl -X POST https://fake-news-detection-transformers-2.onrender.com/predict \
-  -H "Content-Type: application/json" \
-  -d '{"text":"Scientists confirm new climate policy impact..."}'
-```
-
----
-
-### 🌐 Example (JavaScript Fetch)
-```
-fetch("https://fake-news-detection-transformers-2.onrender.com/predict", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    text: "Scientists confirm new climate policy impact..."
-  })
-})
-.then(res => res.json())
-.then(data => console.log(data));
-```
-
-### ⚠️ Notes
-- Backend supports both GET and HEAD at / for health monitoring.
-- Cold starts may occur after inactivity (Render free tier).
-- Confidence is returned as a probability (0–1), not percentage.
-
----
-
-## ⚠️ Dataset Notice
-
-The dataset is **excluded from this repository** due to size constraints.
-
-To reproduce training:
-1. Download the dataset
-2. Place it inside `data/`
-3. Run the notebooks sequentially
-
----
-
-## 📌 Key Engineering Decisions
-
-- **DistilBERT** chosen for its efficiency-performance tradeoff
-- **Separate frontend/backend** architecture for scalability and independent deployment
-- **Cloud-native deployment** with secured environment variables
-- **Cold-start mitigation** via extended timeout handling on the frontend
-- **Monitoring integration** for uptime reliability via UptimeRobot
-
----
-
-## 📈 Future Improvements
-
-- [ ] Switch to non-sleeping backend hosting tier
-- [ ] Add explainability via attention visualization
-- [ ] Add batch prediction endpoint
-- [ ] Add database logging for predictions
-- [ ] Implement model versioning & CI/CD automation
-
----
-
-## 🧩 Technologies Used
+## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
@@ -309,6 +122,108 @@ To reproduce training:
 
 ---
 
-<div align="center">
-  <sub>Built with 🤗 Transformers · FastAPI · Next.js · Cloud Deployment</sub>
-</div>
+## Repository Structure
+
+```
+fake-news-detection-transformers/
+├── data/                        # Dataset placeholder
+├── models/                      # Trained model checkpoints
+├── notebooks/                   # Research + training pipeline
+├── presentation/                # Project documentation
+├── results/                     # Evaluation metrics
+│
+└── fake-news-web/
+    ├── backend/                 # FastAPI inference server
+    │   ├── app.py
+    │   ├── requirements.txt
+    │   └── final_model/         # ⚠️ Git-ignored — download separately
+    │
+    └── frontend/                # Next.js 15 web app
+        ├── app/
+        ├── components/
+        ├── lib/
+        └── package.json
+```
+
+---
+
+## API Reference
+
+### `POST /predict`
+
+**Request**
+```json
+{ "text": "News article content..." }
+```
+
+**Response**
+```json
+{ "label": "REAL", "confidence": 0.94 }
+```
+
+**cURL**
+```bash
+curl -X POST https://fake-news-detection-transformers-2.onrender.com/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Scientists confirm new climate policy impact..."}'
+```
+
+**JavaScript**
+```js
+const res = await fetch("https://fake-news-detection-transformers-2.onrender.com/predict", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ text: "Scientists confirm new climate policy impact..." })
+});
+const data = await res.json();
+```
+
+---
+
+## Run Locally
+
+**Backend**
+```bash
+cd fake-news-web/backend
+pip install -r requirements.txt
+uvicorn app:app --reload
+# http://127.0.0.1:8000
+```
+
+**Frontend**
+```bash
+cd fake-news-web/frontend
+npm install
+npm run dev
+# http://localhost:3000
+```
+
+> Dataset excluded from repo due to size. To reproduce training: download the dataset, place it in `data/`, and run the notebooks sequentially.
+
+---
+
+## Key Engineering Decisions
+
+**DistilBERT over full BERT** — 40% smaller, 60% faster, retains 97% of BERT's performance. Right tradeoff for a free-tier deployment target.
+
+**Separate frontend/backend deployment** — Vercel for the frontend and Render for the backend allows independent scaling, separate environment variable management, and zero-downtime frontend updates while the model server restarts.
+
+**Cold-start mitigation** — The frontend implements a 90-second timeout with a user-facing loading state rather than failing silently. UptimeRobot pings the backend periodically to reduce cold start frequency.
+
+**Model loaded at startup** — DistilBERT is loaded once when FastAPI starts rather than per-request, keeping inference latency low on warm instances.
+
+---
+
+## Roadmap
+
+- [ ] Upgrade to a non-sleeping backend tier
+- [ ] Add attention visualization for explainability
+- [ ] Batch prediction endpoint
+- [ ] Prediction logging with database
+- [ ] Model versioning and CI/CD pipeline
+
+---
+
+## Contact
+
+**Vignesh P C** — [GitHub](https://github.com/Vignesh-P-C) · [LinkedIn](https://www.linkedin.com/in/vignesh-p-c/)
