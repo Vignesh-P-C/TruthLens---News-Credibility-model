@@ -227,3 +227,6 @@ npm run dev
 ## Contact
 
 **Vignesh P C** — [GitHub](https://github.com/Vignesh-P-C) · [LinkedIn](https://www.linkedin.com/in/vignesh-p-c/)
+<div align="center">
+  <sub>Built with 🤗 Transformers · FastAPI · Next.js · Cloud Deployment</sub>
+</div>
