@@ -11,8 +11,8 @@ const navItems = [
 ];
 
 const socialLinks = [
-  { icon: Twitter, href: "https://twitter.com",             label: "Twitter" },
-  { icon: Github,  href: "https://github.com/Vignesh-P-C",  label: "GitHub"  },
+  { icon: Twitter, href: "https://twitter.com",            label: "Twitter" },
+  { icon: Github,  href: "https://github.com/Vignesh-P-C", label: "GitHub"  },
 ];
 
 export default function Sidebar() {
@@ -36,95 +36,134 @@ export default function Sidebar() {
           transition: "background 0.3s ease, border-color 0.3s ease",
         }}
       >
-        {/* Logo */}
+        {/* ── Logo block ── */}
         <div
           className="px-8 py-8"
           style={{ borderBottom: "1px solid var(--sidebar-border)" }}
         >
-          <div className="mb-1">
-            {/* Sigil — fill matches sidebar bg for contrast */}
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" fill="#f5f4f0" />
-              <rect x="6"  y="6"  width="10" height="24" fill="#1a1a18" />
-              <rect x="20" y="6"  width="10" height="10" fill="#1a1a18" />
-              <rect x="20" y="22" width="10" height="8"  fill="#1a1a18" />
-            </svg>
-          </div>
+          {/* Sigil — cream bg, fill matches sidebar so it feels native */}
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <rect width="36" height="36" fill="#f5f0e8" />
+            <rect x="6"  y="6"  width="10" height="24" fill="var(--sidebar-bg)" />
+            <rect x="20" y="6"  width="10" height="10" fill="var(--sidebar-bg)" />
+            <rect x="20" y="22" width="10" height="8"  fill="var(--sidebar-bg)" />
+          </svg>
+
           <div className="mt-4">
-            <span
-              className="block text-lg leading-tight"
+            {/* Wordmark — Truth plain, Lens amber italic */}
+            <div
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 400,
-                color: "var(--sidebar-text)",
+                fontSize: "1.2rem",
                 letterSpacing: "-0.01em",
+                lineHeight: 1,
+                color: "#f5f0e8",
               }}
             >
               Truth
-              <span style={{ fontStyle: "italic", color: "var(--accent)" }}>
-                Lens
-              </span>
-            </span>
-            <span
-              className="block mt-1"
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.6rem",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--sidebar-muted)",
-              }}
-            >
-              News Analysis Engine
-            </span>
-          </div>
-        </div>
+              <em style={{ fontStyle: "italic", color: "#c8a06a" }}>Lens</em>
+            </div>
 
-        {/* Nav */}
-        <nav className="flex-1 flex flex-col pt-4">
-          {navItems.map((item, i) => (
-            <motion.button
-              key={item.label}
-              onClick={() => {
-                setActiveItem(item.label);
-                scrollTo(item.href);
-              }}
-              className="text-left w-full flex items-center px-8 py-3"
-              style={{
-                borderBottom: "1px solid var(--sidebar-nav-border)",
-                color: activeItem === item.label
-                  ? "var(--sidebar-text)"
-                  : "var(--sidebar-dim)",
-                fontFamily: "var(--font-body)",
-                fontWeight: activeItem === item.label ? 400 : 300,
-                fontSize: "0.95rem",
-                letterSpacing: "0.005em",
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-              }}
-              whileHover={{ color: "var(--sidebar-text)" }}
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.06, duration: 0.4 }}
-            >
-              {item.label}
-            </motion.button>
-          ))}
-
-          {/* Tech stack note */}
-          <div
-            className="px-8 py-6"
-            style={{ borderBottom: "1px solid var(--sidebar-nav-border)" }}
-          >
-            <p
+            {/* Subline — eyebrow caps */}
+            <div
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.58rem",
-                letterSpacing: "0.08em",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--sidebar-muted)",
+                marginTop: "6px",
+              }}
+            >
+              News Analysis Engine
+            </div>
+          </div>
+        </div>
+
+        {/* ── Nav links ── */}
+        <nav className="flex-1 flex flex-col" style={{ paddingTop: "8px" }}>
+          {navItems.map((item, i) => {
+            const isActive = activeItem === item.label;
+            return (
+              <motion.button
+                key={item.label}
+                onClick={() => {
+                  setActiveItem(item.label);
+                  scrollTo(item.href);
+                }}
+                className="text-left w-full"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "12px 32px",
+                  paddingLeft: isActive ? "30px" : "32px",
+                  borderLeft: isActive
+                    ? "2px solid #c8a06a"
+                    : "2px solid transparent",
+                  borderBottom: "1px solid var(--sidebar-nav-border)",
+                  color: isActive ? "#f5f0e8" : "rgba(240,230,210,0.4)",
+                  fontFamily: "var(--font-body)",
+                  fontWeight: isActive ? 400 : 300,
+                  fontSize: "0.95rem",
+                  letterSpacing: "0.01em",
+                  background: isActive
+                    ? "rgba(200,160,106,0.06)"
+                    : "transparent",
+                  cursor: "pointer",
+                  transition: "color 0.15s, background 0.15s",
+                }}
+                whileHover={{
+                  color: "#f5f0e8",
+                  backgroundColor: "rgba(200,160,106,0.04)",
+                }}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.07, duration: 0.4 }}
+              >
+                {/* Active dot indicator */}
+                {isActive && (
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: "4px",
+                      height: "4px",
+                      borderRadius: "50%",
+                      background: "#c8a06a",
+                      marginRight: "10px",
+                      flexShrink: 0,
+                    }}
+                  />
+                )}
+                {item.label}
+              </motion.button>
+            );
+          })}
+
+          {/* Tech stack — small print */}
+          <div
+            style={{
+              padding: "20px 32px",
+              borderBottom: "1px solid var(--sidebar-nav-border)",
+              marginTop: "8px",
+            }}
+          >
+            <div
+              style={{
+                width: "24px",
+                height: "1px",
+                background: "var(--sidebar-border)",
+                marginBottom: "12px",
+              }}
+            />
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.56rem",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "var(--sidebar-stack)",
-                lineHeight: 1.8,
+                lineHeight: 2,
               }}
             >
               DistilBERT · FastAPI<br />
@@ -133,12 +172,17 @@ export default function Sidebar() {
           </div>
         </nav>
 
-        {/* Bottom row — social + theme toggle */}
+        {/* ── Bottom row — social + theme toggle ── */}
         <div
-          className="px-8 py-6 flex items-center justify-between"
-          style={{ borderTop: "1px solid var(--sidebar-border)" }}
+          style={{
+            padding: "20px 32px",
+            borderTop: "1px solid var(--sidebar-border)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          <div className="flex items-center gap-5">
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
             {socialLinks.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
@@ -147,17 +191,18 @@ export default function Sidebar() {
                 rel="noopener noreferrer"
                 aria-label={label}
                 style={{
-                  color: "var(--sidebar-icon)",
+                  color: "rgba(240,230,210,0.3)",
                   transition: "color 0.15s",
+                  display: "flex",
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "var(--sidebar-icon-hover)")
+                  (e.currentTarget.style.color = "rgba(240,230,210,0.85)")
                 }
                 onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "var(--sidebar-icon)")
+                  (e.currentTarget.style.color = "rgba(240,230,210,0.3)")
                 }
               >
-                <Icon size={15} />
+                <Icon size={14} />
               </a>
             ))}
           </div>
@@ -174,17 +219,16 @@ export default function Sidebar() {
           transition: "background 0.3s ease",
         }}
       >
-        <span
+        <div
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "1.1rem",
-            color: "var(--sidebar-text)",
-            fontStyle: "italic",
+            color: "#f5f0e8",
           }}
         >
-          TruthLens
-        </span>
-        <div className="flex items-center gap-3">
+          Truth<em style={{ fontStyle: "italic", color: "#c8a06a" }}>Lens</em>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <ThemeToggle forceDark />
           <button
             onClick={() => scrollTo("#detector")}
@@ -193,12 +237,19 @@ export default function Sidebar() {
               fontSize: "0.65rem",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "var(--sidebar-text)",
+              color: "#f5f0e8",
               padding: "8px 16px",
-              border: "1px solid var(--sidebar-icon)",
+              border: "1px solid rgba(240,230,210,0.25)",
               background: "transparent",
               cursor: "pointer",
+              transition: "border-color 0.15s",
             }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.borderColor = "rgba(240,230,210,0.6)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.borderColor = "rgba(240,230,210,0.25)")
+            }
           >
             Analyze
           </button>

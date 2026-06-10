@@ -30,18 +30,18 @@
   --accent:         #c8b89a;
 
   /* Sidebar — light mode: warm brown */
-  --sidebar-bg:         #2c2318;
-  --sidebar-border:     #3d3228;
-  --sidebar-text:       #f0ede8;
-  --sidebar-muted:      #8a7a68;
-  --sidebar-dim:        rgba(240,237,232,0.4);
-  --sidebar-stack:      #4a3c2e;
-  --sidebar-nav-border: #3d3228;
-  --sidebar-icon:       rgba(240,237,232,0.3);
+  --sidebar-bg:     #72583c;
+--sidebar-border:     #4a3828;
+--sidebar-text:       #0a0a0a;        /* brighter cream, was #f0ede8 */
+--sidebar-muted:      #d2a4a4;        /* warmer, more visible tan */
+  --sidebar-dim:        rgba(141, 126, 100, 0.4);
+--sidebar-stack:      #fffbf7;        /* visible but subtle */
+--sidebar-nav-border: #4a3828;
+--sidebar-icon:       rgba(240,230,210,0.45);
   --sidebar-icon-hover: rgba(240,237,232,0.9);
 
   /* Hero — light mode: warm brown matching sidebar */
-  --hero-bg:             #2c2318;
+  --hero-bg:        #4e3c29;
   --hero-text:           #f0ede8;
   --hero-text-em:        #e8d8c0;
   --hero-subtitle:       rgba(240,237,232,0.5);

@@ -22,8 +22,9 @@ HF_TOKEN = os.getenv("HF_TOKEN")
 
 device = torch.device("cpu")
 
-model = AutoModelForSequenceClassification.from_pretrained(  # ← changed
-    MODEL_NAME,
+# This line stays exactly the same — AutoModel handles RoBERTa automatically
+model = AutoModelForSequenceClassification.from_pretrained(
+    MODEL_NAME,  # "V1gnesh/fake-news-model"
     token=HF_TOKEN
 )
 
