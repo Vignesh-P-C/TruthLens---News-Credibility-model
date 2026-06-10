@@ -2,30 +2,34 @@
 
 import { motion } from "framer-motion";
 
+// The About/Technology section is intentionally always dark —
+// it creates a visual anchor at the bottom of the page in both themes.
+// It uses --about-* variables which are fixed (not theme-switched).
+
 export default function AboutSection() {
   return (
     <section
       id="about"
       style={{
-        background: "#0a0a0a",
-        borderTop: "1px solid #1e1e1e",
+        background: "var(--about-bg)",
+        borderTop: "1px solid var(--about-border)",
       }}
     >
       {/* Section header */}
       <div
         className="flex items-center"
         style={{
-          borderBottom: "1px solid #1e1e1e",
+          borderBottom: "1px solid var(--about-border)",
           padding: "20px 64px",
         }}
       >
         <span
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.6rem",
             letterSpacing: "0.14em",
             textTransform: "uppercase",
-            color: "#4a4a46",
+            color: "var(--about-muted)",
           }}
         >
           §03 — Technology
@@ -35,15 +39,11 @@ export default function AboutSection() {
       {/* Two-column body */}
       <div
         className="grid"
-        style={{
-          gridTemplateColumns: "1fr 1fr",
-          gap: 0,
-          padding: "80px 64px",
-        }}
+        style={{ gridTemplateColumns: "1fr 1fr", gap: 0, padding: "80px 64px" }}
       >
-        {/* Left: heading + stats table */}
+        {/* Left: heading + stats */}
         <motion.div
-          style={{ paddingRight: "64px", borderRight: "1px solid #1e1e1e" }}
+          style={{ paddingRight: "64px", borderRight: "1px solid var(--about-border)" }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -51,22 +51,22 @@ export default function AboutSection() {
         >
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "var(--font-display)",
               fontWeight: 400,
               fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
               lineHeight: 1.05,
-              color: "#f0ede8",
+              color: "var(--about-text)",
               letterSpacing: "-0.02em",
               marginBottom: "32px",
             }}
           >
             How the model{" "}
-            <em style={{ fontStyle: "italic", color: "#c8b89a" }}>works</em>
+            <em style={{ fontStyle: "italic", color: "var(--about-accent)" }}>works</em>
           </h2>
 
-          <div style={{ borderTop: "1px solid #1e1e1e", paddingTop: "32px" }}>
+          <div style={{ borderTop: "1px solid var(--about-border)", paddingTop: "32px" }}>
             {[
-              { label: "Architecture",  value: "DistilBERT-Base Uncased" },
+              { label: "Architecture",  value: "DistilBERT-Base Uncased"  },
               { label: "Training data", value: "LIAR + WELFake combined"  },
               { label: "Articles",      value: "44,000+"                  },
               { label: "F1 Score",      value: "0.942 weighted avg"        },
@@ -75,28 +75,25 @@ export default function AboutSection() {
               <div
                 key={label}
                 className="flex justify-between"
-                style={{
-                  padding: "14px 0",
-                  borderBottom: "1px solid #1e1e1e",
-                }}
+                style={{ padding: "14px 0", borderBottom: "1px solid var(--about-border)" }}
               >
                 <span
                   style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "0.62rem",
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#4a4a46",
+                    color: "var(--about-muted)",
                   }}
                 >
                   {label}
                 </span>
                 <span
                   style={{
-                    fontFamily: "'IBM Plex Sans', sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontWeight: 300,
                     fontSize: "0.85rem",
-                    color: "#f0ede8",
+                    color: "var(--about-text)",
                   }}
                 >
                   {value}
@@ -131,10 +128,10 @@ export default function AboutSection() {
             <div key={title} style={{ marginBottom: "36px" }}>
               <h4
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "var(--font-display)",
                   fontWeight: 400,
                   fontSize: "1rem",
-                  color: "#f0ede8",
+                  color: "var(--about-text)",
                   marginBottom: "12px",
                   fontStyle: "italic",
                 }}
@@ -143,11 +140,11 @@ export default function AboutSection() {
               </h4>
               <p
                 style={{
-                  fontFamily: "'IBM Plex Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 300,
                   fontSize: "0.9rem",
                   lineHeight: 1.8,
-                  color: "rgba(240,237,232,0.5)",
+                  color: "var(--about-dim)",
                 }}
               >
                 {body}
@@ -155,19 +152,13 @@ export default function AboutSection() {
             </div>
           ))}
 
-          <div
-            style={{
-              borderTop: "1px solid #1e1e1e",
-              paddingTop: "24px",
-              marginTop: "8px",
-            }}
-          >
+          <div style={{ borderTop: "1px solid var(--about-border)", paddingTop: "24px", marginTop: "8px" }}>
             <p
               style={{
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.6rem",
                 letterSpacing: "0.06em",
-                color: "#4a4a46",
+                color: "var(--about-muted)",
                 lineHeight: 1.7,
               }}
             >
@@ -177,10 +168,10 @@ export default function AboutSection() {
         </motion.div>
       </div>
 
-      {/* Footer — clean, no dead nav links */}
+      {/* Footer */}
       <div
         style={{
-          borderTop: "1px solid #1e1e1e",
+          borderTop: "1px solid var(--about-border)",
           padding: "24px 64px",
           display: "flex",
           justifyContent: "space-between",
@@ -189,10 +180,10 @@ export default function AboutSection() {
       >
         <span
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontStyle: "italic",
             fontSize: "0.9rem",
-            color: "#4a4a46",
+            color: "var(--about-muted)",
           }}
         >
           TruthLens · News Credibility Analysis
@@ -202,20 +193,16 @@ export default function AboutSection() {
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.58rem",
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: "#3a3a36",
+            color: "var(--about-muted)",
             textDecoration: "none",
             transition: "color 0.15s",
           }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.color = "rgba(240,237,232,0.5)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.color = "#3a3a36")
-          }
+          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--about-text)")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--about-muted)")}
         >
           GitHub ↗
         </a>

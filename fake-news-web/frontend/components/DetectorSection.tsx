@@ -45,32 +45,32 @@ export default function DetectorSection() {
     <section
       id="detector"
       style={{
-        background: "#f5f4f0",
-        borderTop: "1px solid #d8d4ce",
+        background: "var(--paper)",
+        borderTop: "1px solid var(--rule)",
       }}
     >
       {/* Section header */}
       <div
         className="flex items-start"
-        style={{ borderBottom: "1px solid #d8d4ce" }}
+        style={{ borderBottom: "1px solid var(--rule)" }}
       >
-        {/* Left column: section number */}
+        {/* Section number */}
         <div
           className="flex-none flex flex-col justify-end"
           style={{
             width: "80px",
-            borderRight: "1px solid #d8d4ce",
+            borderRight: "1px solid var(--rule)",
             padding: "40px 24px",
             alignSelf: "stretch",
           }}
         >
           <span
             style={{
-              fontFamily: "'IBM Plex Mono', monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.6rem",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
-              color: "#7a766f",
+              color: "var(--muted)",
               writingMode: "vertical-lr",
               transform: "rotate(180deg)",
             }}
@@ -79,7 +79,7 @@ export default function DetectorSection() {
           </span>
         </div>
 
-        {/* Right column: heading */}
+        {/* Heading */}
         <div className="flex-1 px-16 py-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -90,11 +90,11 @@ export default function DetectorSection() {
             <span
               style={{
                 display: "block",
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.65rem",
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "#7a766f",
+                color: "var(--muted)",
                 marginBottom: "16px",
               }}
             >
@@ -102,11 +102,11 @@ export default function DetectorSection() {
             </span>
             <h2
               style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: "var(--font-display)",
                 fontWeight: 400,
                 fontSize: "clamp(2rem, 4vw, 3rem)",
                 lineHeight: 1.05,
-                color: "#1a1a18",
+                color: "var(--ink)",
                 letterSpacing: "-0.02em",
               }}
             >
@@ -117,7 +117,7 @@ export default function DetectorSection() {
         </div>
       </div>
 
-      {/* Main form area */}
+      {/* Main two-column layout */}
       <div
         className="grid"
         style={{
@@ -128,7 +128,7 @@ export default function DetectorSection() {
         {/* ── Form column ──────────────────────────────── */}
         <div
           style={{
-            borderRight: "1px solid #d8d4ce",
+            borderRight: "1px solid var(--rule)",
             display: "flex",
             flexDirection: "column",
           }}
@@ -136,35 +136,23 @@ export default function DetectorSection() {
           {/* Toolbar */}
           <div
             className="flex items-center justify-between px-16 py-4"
-            style={{ borderBottom: "1px solid #d8d4ce" }}
+            style={{ borderBottom: "1px solid var(--rule)" }}
           >
             <span
               style={{
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.65rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "#7a766f",
+                color: "var(--muted)",
               }}
             >
               Input — Article or excerpt
             </span>
             <DropdownMenu
-              onClear={() => {
-                setText("");
-                setStatus("idle");
-                setResult(null);
-              }}
-              onLoadReal={() => {
-                setText(EXAMPLE_TEXTS.real);
-                setStatus("idle");
-                setResult(null);
-              }}
-              onLoadFake={() => {
-                setText(EXAMPLE_TEXTS.fake);
-                setStatus("idle");
-                setResult(null);
-              }}
+              onClear={() => { setText(""); setStatus("idle"); setResult(null); }}
+              onLoadReal={() => { setText(EXAMPLE_TEXTS.real); setStatus("idle"); setResult(null); }}
+              onLoadFake={() => { setText(EXAMPLE_TEXTS.fake); setStatus("idle"); setResult(null); }}
             />
           </div>
 
@@ -180,15 +168,15 @@ export default function DetectorSection() {
             style={{
               flex: 1,
               resize: "none",
-              background: "#ffffff",
+              background: "var(--surface)",
               border: "none",
               outline: "none",
               padding: "40px 64px",
-              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: "1.05rem",
               lineHeight: 1.8,
-              color: "#1a1a18",
+              color: "var(--ink)",
               opacity: status === "loading" ? 0.5 : 1,
             }}
           />
@@ -196,19 +184,19 @@ export default function DetectorSection() {
           {/* Footer bar */}
           <div
             className="flex items-center justify-between px-16 py-4"
-            style={{ borderTop: "1px solid #d8d4ce" }}
+            style={{ borderTop: "1px solid var(--rule)" }}
           >
             <span
               style={{
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.62rem",
                 letterSpacing: "0.06em",
-                color: "#7a766f",
+                color: "var(--muted)",
               }}
             >
-              {isReady ? (
-                <span style={{ color: "#1e4d36" }}>Ready · </span>
-              ) : null}
+              {isReady && (
+                <span style={{ color: "var(--real-fg)" }}>Ready · </span>
+              )}
               {wordCount} words · Ctrl/⌘+Enter to submit
             </span>
 
@@ -220,31 +208,23 @@ export default function DetectorSection() {
                 alignItems: "center",
                 gap: "8px",
                 padding: "10px 24px",
-                background:
-                  isReady && status !== "loading" ? "#1a1a18" : "#d8d4ce",
-                color:
-                  isReady && status !== "loading" ? "#f5f4f0" : "#7a766f",
+                background: isReady && status !== "loading" ? "var(--ink)" : "var(--rule)",
+                color: isReady && status !== "loading" ? "var(--paper)" : "var(--muted)",
                 border: "none",
                 borderRadius: 0,
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.68rem",
                 fontWeight: 500,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                cursor:
-                  isReady && status !== "loading" ? "pointer" : "not-allowed",
+                cursor: isReady && status !== "loading" ? "pointer" : "not-allowed",
                 transition: "background 0.15s",
               }}
             >
               {status === "loading" ? (
                 <>
                   <span>Analyzing</span>
-                  <span
-                    style={{
-                      display: "inline-block",
-                      animation: "blink 1s step-start infinite",
-                    }}
-                  >
+                  <span style={{ display: "inline-block", animation: "blink 1s step-start infinite" }}>
                     ▋
                   </span>
                 </>
@@ -261,23 +241,23 @@ export default function DetectorSection() {
         {/* ── Results column ───────────────────────────── */}
         <div
           style={{
-            background: "#eeede8",
+            background: "var(--paper-dark)",
             display: "flex",
             flexDirection: "column",
           }}
         >
           {/* Column header */}
           <div
-            className="px-8 py-4 flex items-center"
-            style={{ borderBottom: "1px solid #d8d4ce" }}
+            className="px-8 py-4"
+            style={{ borderBottom: "1px solid var(--rule)" }}
           >
             <span
               style={{
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.65rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "#7a766f",
+                color: "var(--muted)",
               }}
             >
               Verdict
@@ -288,7 +268,6 @@ export default function DetectorSection() {
           <div className="flex-1 p-8 flex flex-col justify-center">
             <AnimatePresence mode="wait">
 
-              {/* Idle */}
               {status === "idle" && (
                 <motion.div
                   key="idle"
@@ -297,31 +276,13 @@ export default function DetectorSection() {
                   exit={{ opacity: 0 }}
                   style={{ textAlign: "center", padding: "40px 20px" }}
                 >
-                  <div
-                    style={{
-                      width: "40px",
-                      height: "1px",
-                      background: "#c0bbb4",
-                      margin: "0 auto 24px",
-                    }}
-                  />
-                  <p
-                    style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontStyle: "italic",
-                      fontSize: "1rem",
-                      color: "#7a766f",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    Awaiting content
-                    <br />
-                    for analysis
+                  <div style={{ width: "40px", height: "1px", background: "var(--rule-dark)", margin: "0 auto 24px" }} />
+                  <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "1rem", color: "var(--muted)", lineHeight: 1.6 }}>
+                    Awaiting content<br />for analysis
                   </p>
                 </motion.div>
               )}
 
-              {/* Loading */}
               {status === "loading" && (
                 <motion.div
                   key="loading"
@@ -331,76 +292,31 @@ export default function DetectorSection() {
                   style={{ textAlign: "center", padding: "40px 20px" }}
                 >
                   <motion.div
-                    style={{
-                      width: "0%",
-                      height: "1px",
-                      background: "#1a1a18",
-                      margin: "0 auto 24px",
-                    }}
+                    style={{ width: "0%", height: "1px", background: "var(--ink)", margin: "0 auto 24px" }}
                     animate={{ width: "60%" }}
-                    transition={{
-                      duration: 1.5,
-                      ease: "easeInOut",
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                    }}
+                    transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
                   />
-                  <p
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: "0.65rem",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: "#7a766f",
-                    }}
-                  >
+                  <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)" }}>
                     Processing
                   </p>
                 </motion.div>
               )}
 
-              {/* Error */}
               {status === "error" && (
                 <motion.div
                   key="error"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  style={{
-                    background: "#f5ecea",
-                    border: "1px solid #d4a09a",
-                    padding: "24px",
-                    borderRadius: 0,
-                  }}
+                  style={{ background: "var(--fake-bg)", border: "1px solid var(--fake-border)", padding: "24px", borderRadius: 0 }}
                 >
                   <div className="flex items-start gap-3">
-                    <AlertCircle
-                      size={16}
-                      color="#8b2318"
-                      style={{ flexShrink: 0, marginTop: 2 }}
-                    />
+                    <AlertCircle size={16} style={{ color: "var(--fake-fg)", flexShrink: 0, marginTop: 2 }} />
                     <div>
-                      <p
-                        style={{
-                          fontFamily: "'IBM Plex Mono', monospace",
-                          fontSize: "0.65rem",
-                          letterSpacing: "0.08em",
-                          textTransform: "uppercase",
-                          color: "#8b2318",
-                          marginBottom: "8px",
-                        }}
-                      >
+                      <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fake-fg)", marginBottom: "8px" }}>
                         Analysis Failed
                       </p>
-                      <p
-                        style={{
-                          fontFamily: "'IBM Plex Sans', sans-serif",
-                          fontWeight: 300,
-                          fontSize: "0.85rem",
-                          color: "#4a4a46",
-                          lineHeight: 1.6,
-                        }}
-                      >
+                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 300, fontSize: "0.85rem", color: "var(--ink-light)", lineHeight: 1.6 }}>
                         {errorMsg}
                       </p>
                     </div>
@@ -408,13 +324,8 @@ export default function DetectorSection() {
                 </motion.div>
               )}
 
-              {/* Success */}
               {status === "success" && result && (
-                <motion.div
-                  key="result"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
+                <motion.div key="result" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <ResultCard result={result} />
                 </motion.div>
               )}
@@ -423,38 +334,21 @@ export default function DetectorSection() {
           </div>
 
           {/* Model stats */}
-          <div style={{ borderTop: "1px solid #d8d4ce" }}>
+          <div style={{ borderTop: "1px solid var(--rule)" }}>
             {[
-              { label: "Model",    value: "DistilBERT-Base Uncased"  },
-              { label: "Corpus",   value: "LIAR + WELFake · 44K"     },
-              { label: "Accuracy", value: "94.2% F1 weighted"        },
+              { label: "Model",    value: "DistilBERT-Base Uncased" },
+              { label: "Corpus",   value: "LIAR + WELFake · 44K"   },
+              { label: "Accuracy", value: "94.2% F1 weighted"       },
             ].map(({ label, value }, i) => (
               <div
                 key={label}
                 className="flex items-center justify-between px-8 py-3"
-                style={{
-                  borderBottom: i < 2 ? "1px solid #d8d4ce" : "none",
-                }}
+                style={{ borderBottom: i < 2 ? "1px solid var(--rule)" : "none" }}
               >
-                <span
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "#7a766f",
-                  }}
-                >
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)" }}>
                   {label}
                 </span>
-                <span
-                  style={{
-                    fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontWeight: 300,
-                    fontSize: "0.8rem",
-                    color: "#1a1a18",
-                  }}
-                >
+                <span style={{ fontFamily: "var(--font-body)", fontWeight: 300, fontSize: "0.8rem", color: "var(--ink)" }}>
                   {value}
                 </span>
               </div>
@@ -465,9 +359,7 @@ export default function DetectorSection() {
 
       <style>{`
         @media (max-width: 900px) {
-          #detector > div:last-child {
-            grid-template-columns: 1fr !important;
-          }
+          #detector > div:last-child { grid-template-columns: 1fr !important; }
         }
         @keyframes blink {
           0%, 100% { opacity: 1; }

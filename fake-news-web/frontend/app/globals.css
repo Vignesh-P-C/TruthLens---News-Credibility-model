@@ -1,10 +1,7 @@
 /* ============================================================
-   TruthLens — Editorial Redesign
-   BEFORE: neon/glass/gradient AI SaaS
-   AFTER:  museum/print editorial, restraint over effect
+   TruthLens — Editorial Design System
    ============================================================ */
 
-/* Google Fonts — Playfair Display + IBM Plex Sans + IBM Plex Mono */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 
 @tailwind base;
@@ -12,60 +9,97 @@
 @tailwind utilities;
 
 /* ============================================================
-   CSS CUSTOM PROPERTIES — the entire palette lives here
+   LIGHT THEME (default)
    ============================================================ */
 :root {
-  /* Core palette */
-  --paper:       #f5f4f0;   /* warm off-white — uncoated paper */
-  --paper-dark:  #eeede8;   /* slightly darker for section contrast */
-  --ink:         #1a1a18;   /* near-black, not pure — more human */
-  --ink-light:   #4a4a46;   /* secondary text */
-  --sidebar:     #0a0a0a;   /* sidebar background */
-  --sidebar-text:#f0ede8;   /* text on dark sidebar */
-  --rule:        #d8d4ce;   /* borders, dividers */
-  --rule-dark:   #c0bbb4;   /* stronger border */
-  --muted:       #7a766f;   /* tertiary text, labels */
-  --accent:      #c8b89a;   /* warm sand — used sparingly */
+  /* Surfaces */
+  --paper:          #f5f4f0;   /* main background — warm off-white */
+  --paper-dark:     #eeede8;   /* slightly darker sections */
+  --surface:        #ffffff;   /* cards, textarea — pure white */
+  --hero-bg:        #1c1c1a;   /* hero is always dark regardless of theme */
 
-  /* Semantic */
-  --real-fg:     #1e4d36;   /* verified/real — forest green */
-  --real-bg:     #eaf2ec;   /* real card tint */
-  --real-border: #a3c4ab;
-  --fake-fg:     #8b2318;   /* misinformation — muted red */
-  --fake-bg:     #f5ecea;
-  --fake-border: #d4a09a;
-  --error:       #8b2318;
+  /* Ink */
+  --ink:            #1a1a18;
+  --ink-light:      #4a4a46;
+  --muted:          #7a766f;
 
-  /* Typography scale */
-  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-body:    'IBM Plex Sans', -apple-system, Helvetica, sans-serif;
-  --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+  /* Sidebar — always dark */
+  --sidebar-bg:     #0a0a0a;
+  --sidebar-border: #1e1e1e;
+  --sidebar-text:   #f0ede8;
+  --sidebar-muted:  #4a4a46;
+  --sidebar-dim:    rgba(240,237,232,0.4);
+  --sidebar-stack:  #2a2a26;
 
-  /* Spacing */
-  --sidebar-w:   260px;
-  --content-pad: 64px;
+  /* Rules / borders */
+  --rule:           #d8d4ce;
+  --rule-dark:      #c0bbb4;
+
+  /* Accent */
+  --accent:         #c8b89a;
+
+  /* Semantic — real */
+  --real-fg:        #1e4d36;
+  --real-bg:        #eaf2ec;
+  --real-border:    #a3c4ab;
+
+  /* Semantic — fake */
+  --fake-fg:        #8b2318;
+  --fake-bg:        #f5ecea;
+  --fake-border:    #d4a09a;
+
+  /* About section — always dark */
+  --about-bg:       #0a0a0a;
+  --about-border:   #1e1e1e;
+  --about-text:     #f0ede8;
+  --about-muted:    #4a4a46;
+  --about-dim:      rgba(240,237,232,0.5);
+  --about-accent:   #c8b89a;
+
+  /* Typography */
+  --font-display:   'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:      'IBM Plex Sans', -apple-system, Helvetica, sans-serif;
+  --font-mono:      'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Layout */
+  --sidebar-w:      260px;
+  --content-pad:    64px;
 }
+
+/* ============================================================
+   DARK THEME
+   ============================================================ */
 .dark {
-  --paper:       #0f0f0d;
-  --paper-dark:  #1a1a18;
-  --ink:         #f0ede8;
-  --ink-light:   #c8c4be;
-  --rule:        #2a2a26;
-  --rule-dark:   #3a3a36;
-  --muted:       #6a6660;
-  --accent:      #4a3828;
+  /* Surfaces */
+  --paper:          #0f0f0d;
+  --paper-dark:     #1a1a18;
+  --surface:        #1e1e1c;   /* cards/textarea — slightly lifted dark */
 
-  --real-fg:     #6abf7e;
-  --real-bg:     #0e2018;
-  --real-border: #2a5038;
-  --fake-fg:     #d4706a;
-  --fake-bg:     #200e0e;
-  --fake-border: #5a2a28;
+  /* Ink flips */
+  --ink:            #f0ede8;
+  --ink-light:      #c8c4be;
+  --muted:          #6a6660;
+
+  /* Rules lighten on dark */
+  --rule:           #2a2a26;
+  --rule-dark:      #3a3a36;
+
+  /* Accent darkens */
+  --accent:         #8a7060;
+
+  /* Semantic — real (lighter for dark bg) */
+  --real-fg:        #6abf7e;
+  --real-bg:        #0e2018;
+  --real-border:    #2a5038;
+
+  /* Semantic — fake (lighter for dark bg) */
+  --fake-fg:        #d4706a;
+  --fake-bg:        #200e0e;
+  --fake-border:    #5a2a28;
+
+  /* Sidebar and About stay dark either way — no changes needed */
 }
 
-.dark body {
-  background-color: var(--paper);
-}
 /* ============================================================
    BASE RESET
    ============================================================ */
@@ -89,9 +123,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-
-  /* REMOVED: noise overlay, gradient backgrounds */
-  /* REMOVED: backdrop-filter global defaults */
 }
 
 /* ============================================================
@@ -99,14 +130,12 @@ body {
    ============================================================ */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 400;      /* BEFORE: 700-800. Serifs read better at normal weight */
+  font-weight: 400;
   line-height: 1.05;
   color: var(--ink);
   letter-spacing: -0.01em;
 }
 
-/* BEFORE: gradient-text animation on h1
-   AFTER:  plain ink on paper — the typography IS the design */
 h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
 h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
 h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
@@ -118,7 +147,6 @@ p {
   line-height: 1.75;
 }
 
-/* Label / eyebrow text — editorial pattern */
 .label-caps {
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -128,7 +156,6 @@ p {
   color: var(--muted);
 }
 
-/* Serif italic for accent text */
 .serif-italic {
   font-family: var(--font-display);
   font-style: italic;
@@ -136,7 +163,7 @@ p {
 }
 
 /* ============================================================
-   SCROLLBAR — minimal
+   SCROLLBAR
    ============================================================ */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--paper-dark); }
@@ -151,26 +178,11 @@ p {
 }
 
 /* ============================================================
-   LAYOUT — sidebar + content shell
+   LAYOUT
    ============================================================ */
 .app-shell {
   display: flex;
   min-height: 100vh;
-}
-
-/* BEFORE: no sidebar, all centered
-   AFTER: fixed 260px sidebar */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: var(--sidebar-w);
-  height: 100vh;
-  background: var(--sidebar);
-  display: flex;
-  flex-direction: column;
-  z-index: 100;
-  border-right: 1px solid #1e1e1e;
 }
 
 .main-content {
@@ -180,128 +192,12 @@ p {
   background: var(--paper);
 }
 
-/* Mobile: sidebar collapses to top bar */
 @media (max-width: 768px) {
   :root { --sidebar-w: 0px; }
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    flex-direction: row;
-    padding: 16px 24px;
-  }
-  .sidebar-nav { display: none; }
-  .sidebar-social { display: none; }
   .main-content {
     margin-left: 0;
     width: 100%;
   }
-}
-
-/* ============================================================
-   SECTION DIVIDERS
-   ============================================================ */
-.section-rule {
-  height: 1px;
-  background: var(--rule);
-  width: 100%;
-}
-
-/* ============================================================
-   CARDS — BEFORE: glass + blur + glow. AFTER: flat + border
-   ============================================================ */
-
-/* REMOVED: .glass { backdrop-filter: blur(20px); ... } */
-
-.card-flat {
-  background: #ffffff;
-  border: 1px solid var(--rule);
-  /* REMOVED: box-shadow: 0 0 20px rgba(cyan, 0.3) */
-  /* REMOVED: backdrop-filter: blur(20px) */
-}
-
-.card-paper {
-  background: var(--paper);
-  border: 1px solid var(--rule);
-}
-
-/* ============================================================
-   BUTTONS — BEFORE: pill-shaped gradient glow. AFTER: flat outlines
-   ============================================================ */
-
-/* Primary: solid black */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: 1px solid var(--ink);
-  border-radius: 0;          /* BEFORE: rounded-full. AFTER: sharp */
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-
-  /* REMOVED: bg-gradient-to-r from-cyan to-violet */
-  /* REMOVED: box-shadow: 0 0 20px rgba(cyan) */
-}
-
-.btn-primary:hover {
-  background: transparent;
-  color: var(--ink);
-}
-
-/* Secondary: outlined */
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: 1px solid var(--ink);
-  border-radius: 0;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.btn-outline:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-/* Ghost / minimal on dark background */
-.btn-ghost-dark {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: transparent;
-  color: var(--sidebar-text);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border: 1px solid rgba(240, 237, 232, 0.2);
-  border-radius: 0;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-
-.btn-ghost-dark:hover {
-  border-color: rgba(240, 237, 232, 0.6);
-  background: rgba(240, 237, 232, 0.05);
 }
 
 /* ============================================================
@@ -312,21 +208,17 @@ textarea, input {
   font-size: 1rem;
   font-weight: 300;
   color: var(--ink);
-  background: #ffffff;
+  background: var(--surface);
   border: 1px solid var(--rule-dark);
-  border-radius: 0;         /* BEFORE: rounded-2xl. AFTER: sharp */
+  border-radius: 0;
   padding: 20px;
   width: 100%;
   transition: border-color 0.15s ease;
-
-  /* REMOVED: backdrop-filter, glassmorphism, glow ring */
 }
 
 textarea:focus, input:focus {
   outline: none;
   border-color: var(--ink);
-  /* BEFORE: box-shadow: 0 0 0 2px rgba(cyan, 0.4) */
-  /* AFTER:  no glow, just border color change */
 }
 
 textarea::placeholder {
@@ -335,94 +227,40 @@ textarea::placeholder {
 }
 
 /* ============================================================
-   RESULT STATES
-   BEFORE: neon green/red glow
-   AFTER: muted, culturally legible
+   ANIMATIONS
    ============================================================ */
-.result-real {
-  background: var(--real-bg);
-  border: 1px solid var(--real-border);
-  /* REMOVED: shadow-glow-green */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.result-fake {
-  background: var(--fake-bg);
-  border: 1px solid var(--fake-border);
-  /* REMOVED: shadow-glow-red */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* ============================================================
-   PROGRESS BAR — editorial
-   ============================================================ */
-.progress-track {
-  height: 2px;                  /* BEFORE: h-2.5 (10px). AFTER: 2px — a line */
-  background: var(--rule);
-  width: 100%;
-}
-
-.progress-fill-real {
-  height: 100%;
-  background: var(--real-fg);   /* BEFORE: gradient cyan→teal. AFTER: flat forest green */
-  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.progress-fill-fake {
-  height: 100%;
-  background: var(--fake-fg);   /* BEFORE: gradient red→orange. AFTER: flat muted red */
-  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ============================================================
-   HERO SECTION
-   ============================================================ */
-.hero-section {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-end;
-  padding: 80px var(--content-pad);
-  overflow: hidden;
-  background: #1c1c1a;         /* BEFORE: Three.js aurora. AFTER: dark neutral */
-}
-
-/* Newspaper-style column rule */
-.column-rule {
-  width: 1px;
-  background: var(--rule);
-  align-self: stretch;
-}
-
-/* ============================================================
-   NAV LINK — sidebar style
-   ============================================================ */
-.nav-link {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 1rem;
-  color: rgba(240, 237, 232, 0.55);
-  text-decoration: none;
-  padding: 10px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #1e1e1e;
-  transition: color 0.15s ease;
-  letter-spacing: 0.01em;
-}
-
-.nav-link:hover, .nav-link.active {
-  color: var(--sidebar-text);
-}
-
-/* ============================================================
-   LOADING STATE — editorial
-   BEFORE: orbital neon spinner
-   AFTER: simple typographic indicator
-   ============================================================ */
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
+  50%       { opacity: 0.2; }
 }
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+.reveal {
+  opacity: 0;
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.35s; }
+.reveal-delay-4 { animation-delay: 0.5s; }
+
+.animate-shake { animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both; }
 
 .loading-cursor::after {
   content: '▋';
@@ -433,54 +271,14 @@ textarea::placeholder {
 }
 
 /* ============================================================
-   ANIMATIONS — restrained, purposeful
-   BEFORE: shimmer, glow-pulse, aurora, float, bounce
-   AFTER: fade-up only, used sparingly
+   UTILITIES
    ============================================================ */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* One-time page reveal — not looping */
-.reveal {
-  opacity: 0;
-  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.reveal-delay-1 { animation-delay: 0.1s; }
-.reveal-delay-2 { animation-delay: 0.2s; }
-.reveal-delay-3 { animation-delay: 0.35s; }
-.reveal-delay-4 { animation-delay: 0.5s; }
-
-/* Shake for FAKE result — kept, it has meaning */
-@keyframes shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0); }
-  20%, 80% { transform: translate3d(2px, 0, 0); }
-  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
-  40%, 60% { transform: translate3d(3px, 0, 0); }
-}
-.animate-shake { animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both; }
-
-/* ============================================================
-   UTILITY — editorial specifics
-   ============================================================ */
-.text-muted   { color: var(--muted); }
-.text-ink     { color: var(--ink); }
-.border-rule  { border-color: var(--rule); }
-.bg-paper     { background-color: var(--paper); }
-.bg-paper-dark{ background-color: var(--paper-dark); }
-.bg-sidebar   { background-color: var(--sidebar); }
-.font-serif   { font-family: var(--font-display); }
-.font-sans    { font-family: var(--font-body); }
-.font-mono    { font-family: var(--font-mono); }
+.text-muted    { color: var(--muted); }
+.text-ink      { color: var(--ink); }
+.border-rule   { border-color: var(--rule); }
+.bg-paper      { background-color: var(--paper); }
+.bg-paper-dark { background-color: var(--paper-dark); }
+.bg-sidebar    { background-color: var(--sidebar-bg); }
+.font-serif    { font-family: var(--font-display); }
+.font-sans     { font-family: var(--font-body); }
+.font-mono     { font-family: var(--font-mono); }

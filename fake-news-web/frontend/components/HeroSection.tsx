@@ -15,7 +15,7 @@ export default function HeroSection() {
     <section
       className="relative flex flex-col justify-end overflow-hidden"
       style={{
-        background: "#1c1c1a",
+        background: "var(--hero-bg)",
         minHeight: "100vh",
         backgroundImage: `
           radial-gradient(ellipse 120% 60% at 70% 0%, rgba(200,184,154,0.06) 0%, transparent 60%),
@@ -35,7 +35,7 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Top bar — dateline only, no PREV/NEXT */}
+      {/* Top bar — dateline */}
       <div
         className="absolute top-0 left-0 right-0 flex items-center px-16 py-8"
         style={{ borderBottom: "1px solid rgba(240,237,232,0.08)" }}
@@ -45,7 +45,7 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.68rem",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
@@ -59,17 +59,17 @@ export default function HeroSection() {
       {/* Hero body */}
       <div className="relative z-10 px-16 pb-24 max-w-3xl">
 
-        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
+            fontFamily: "var(--font-display)",
             fontWeight: 400,
             fontSize: "clamp(3.5rem, 7vw, 6.5rem)",
             lineHeight: 0.95,
             letterSpacing: "-0.02em",
+            /* Hero text is always on dark bg — use fixed light colour */
             color: "#f0ede8",
             marginBottom: "28px",
           }}
@@ -82,13 +82,12 @@ export default function HeroSection() {
           Detection
         </motion.h1>
 
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6 }}
           style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             fontWeight: 300,
             fontSize: "0.95rem",
             lineHeight: 1.75,
@@ -102,13 +101,13 @@ export default function HeroSection() {
           a second. Paste any text below.
         </motion.p>
 
-        {/* CTAs — both wired up */}
         <motion.div
           className="flex flex-wrap gap-4"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
+          {/* Primary CTA — always on dark hero */}
           <button
             onClick={scrollToDetector}
             style={{
@@ -117,7 +116,7 @@ export default function HeroSection() {
               padding: "14px 32px",
               border: "1px solid #f0ede8",
               borderRadius: 0,
-              fontFamily: "'IBM Plex Mono', monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.72rem",
               fontWeight: 500,
               letterSpacing: "0.1em",
@@ -145,7 +144,7 @@ export default function HeroSection() {
               padding: "14px 32px",
               border: "1px solid rgba(240,237,232,0.3)",
               borderRadius: 0,
-              fontFamily: "'IBM Plex Mono', monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.72rem",
               fontWeight: 400,
               letterSpacing: "0.1em",
@@ -154,12 +153,10 @@ export default function HeroSection() {
               transition: "border-color 0.15s",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor =
-                "rgba(240,237,232,0.7)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(240,237,232,0.7)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor =
-                "rgba(240,237,232,0.3)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(240,237,232,0.3)";
             }}
           >
             Read Methodology
@@ -167,7 +164,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Stats row — bottom right */}
+      {/* Stats — always on dark hero, fixed colours */}
       <motion.div
         className="absolute bottom-8 right-16 flex items-center gap-12"
         initial={{ opacity: 0 }}
@@ -182,7 +179,7 @@ export default function HeroSection() {
           <div key={label} className="text-right">
             <div
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "1.6rem",
                 fontWeight: 400,
                 color: "#f0ede8",
@@ -193,7 +190,7 @@ export default function HeroSection() {
             </div>
             <div
               style={{
-                fontFamily: "'IBM Plex Mono', monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.6rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",

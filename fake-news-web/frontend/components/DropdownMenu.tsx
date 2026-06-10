@@ -1,8 +1,3 @@
-// BEFORE: glassmorphism popup (glass border border-border shadow-glass),
-//         animated color icons, rounded-2xl, rounded-xl items
-//
-// AFTER:  flat white panel with 1px border, sharp, monospaced labels
-
 'use client';
 
 import { useState, useRef, useEffect } from "react";
@@ -16,24 +11,18 @@ interface DropdownMenuProps {
 }
 
 const items = [
-  { id: "clear", label: "Clear text",              sub: "Remove all content"       },
-  { id: "real",  label: "Load — credible example", sub: "Factual journalism sample" },
-  { id: "fake",  label: "Load — false example",    sub: "Misinformation sample"    },
+  { id: "clear", label: "Clear text",              sub: "Remove all content"        },
+  { id: "real",  label: "Load — credible example", sub: "Factual journalism sample"  },
+  { id: "fake",  label: "Load — false example",    sub: "Misinformation sample"      },
 ] as const;
 
-export default function DropdownMenu({
-  onClear,
-  onLoadReal,
-  onLoadFake,
-}: DropdownMenuProps) {
+export default function DropdownMenu({ onClear, onLoadReal, onLoadFake }: DropdownMenuProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -42,8 +31,8 @@ export default function DropdownMenu({
   const handle = (id: typeof items[number]["id"]) => {
     setOpen(false);
     if (id === "clear") onClear();
-    if (id === "real") onLoadReal();
-    if (id === "fake") onLoadFake();
+    if (id === "real")  onLoadReal();
+    if (id === "fake")  onLoadFake();
   };
 
   return (
@@ -55,25 +44,20 @@ export default function DropdownMenu({
           alignItems: "center",
           gap: "6px",
           padding: "6px 12px",
-          // BEFORE: glass border-border rounded-xl, cyan glow on open
-          // AFTER:  flat, 1px border, sharp — color changes only
           background: "transparent",
-          border: `1px solid ${open ? "#1a1a18" : "#d8d4ce"}`,
+          border: `1px solid ${open ? "var(--ink)" : "var(--rule)"}`,
           borderRadius: 0,
           cursor: "pointer",
-          fontFamily: "'IBM Plex Mono', monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "0.62rem",
           letterSpacing: "0.08em",
           textTransform: "uppercase",
-          color: open ? "#1a1a18" : "#7a766f",
+          color: open ? "var(--ink)" : "var(--muted)",
           transition: "border-color 0.15s, color 0.15s",
         }}
       >
         <span>Examples</span>
-        <motion.div
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.15 }}
-        >
+        <motion.div animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.15 }}>
           <ChevronDown size={11} />
         </motion.div>
       </button>
@@ -90,10 +74,8 @@ export default function DropdownMenu({
               right: 0,
               top: "calc(100% + 4px)",
               width: "260px",
-              // BEFORE: glass border-border shadow-glass rounded-2xl
-              // AFTER:  solid white, 1px border, zero radius
-              background: "#ffffff",
-              border: "1px solid #d8d4ce",
+              background: "var(--surface)",
+              border: "1px solid var(--rule)",
               borderRadius: 0,
               zIndex: 50,
               overflow: "hidden",
@@ -109,13 +91,13 @@ export default function DropdownMenu({
                   padding: "12px 16px",
                   background: "transparent",
                   border: "none",
-                  borderBottom: i < items.length - 1 ? "1px solid #eeede8" : "none",
+                  borderBottom: i < items.length - 1 ? "1px solid var(--rule)" : "none",
                   cursor: "pointer",
                   display: "block",
                   transition: "background 0.1s",
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#f5f4f0")
+                  (e.currentTarget.style.background = "var(--paper-dark)")
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.background = "transparent")
@@ -124,12 +106,10 @@ export default function DropdownMenu({
                 <span
                   style={{
                     display: "block",
-                    fontFamily: "'IBM Plex Sans', sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontWeight: 400,
                     fontSize: "0.85rem",
-                    color: "#1a1a18",
-                    // BEFORE: color-coded (green/red) per action type
-                    // AFTER:  uniform ink — let labels carry the meaning
+                    color: "var(--ink)",
                   }}
                 >
                   {item.label}
@@ -137,10 +117,10 @@ export default function DropdownMenu({
                 <span
                   style={{
                     display: "block",
-                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "0.6rem",
                     letterSpacing: "0.06em",
-                    color: "#7a766f",
+                    color: "var(--muted)",
                     marginTop: "2px",
                   }}
                 >
