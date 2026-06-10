@@ -1,9 +1,3 @@
-// BEFORE: GlowingEffect wrapper, glassmorphism textarea, gradient submit button,
-//         LoadingSpinner with orbital neon rings, rounded-3xl containers
-//
-// AFTER:  flat white card with 1px border, sharp textarea, monospaced button,
-//         typographic loading indicator, no rounded corners
-
 'use client';
 
 import { useState, useCallback } from "react";
@@ -51,13 +45,11 @@ export default function DetectorSection() {
     <section
       id="detector"
       style={{
-        // BEFORE: dark background with cyber-grid overlay
-        // AFTER:  pure paper white — the form IS the focus
         background: "#f5f4f0",
         borderTop: "1px solid #d8d4ce",
       }}
     >
-      {/* Section header — newspaper-style column layout */}
+      {/* Section header */}
       <div
         className="flex items-start"
         style={{ borderBottom: "1px solid #d8d4ce" }}
@@ -106,8 +98,6 @@ export default function DetectorSection() {
                 marginBottom: "16px",
               }}
             >
-              {/* BEFORE: <Sparkles> icon + "Real-time Inference" neon badge
-                  AFTER:  plain monospaced eyebrow, no icon */}
               Real-time Inference Engine
             </span>
             <h2
@@ -131,7 +121,6 @@ export default function DetectorSection() {
       <div
         className="grid"
         style={{
-          // Two-column: form left, result right
           gridTemplateColumns: "1fr 420px",
           minHeight: "70vh",
         }}
@@ -158,11 +147,8 @@ export default function DetectorSection() {
                 color: "#7a766f",
               }}
             >
-              {/* BEFORE: "news_content.txt" in muted font — fine but kept */}
               Input — Article or excerpt
             </span>
-            {/* BEFORE: DropdownMenu with glassmorphism popup
-                AFTER:  same dropdown but flat styling (see DropdownMenu.tsx) */}
             <DropdownMenu
               onClear={() => {
                 setText("");
@@ -182,21 +168,20 @@ export default function DetectorSection() {
             />
           </div>
 
-          {/* Textarea — BEFORE: glass/blur, rounded-2xl, cyan focus ring
-                        AFTER:  plain white, 1px border, sharp, ink focus */}
+          {/* Textarea */}
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={status === "loading"}
-            placeholder="Paste news content here for analysis…&#10;&#10;Any article, headline, or social media post.&#10;Press ⌘+Enter to submit."
+            placeholder={
+              "Paste news content here for analysis…\n\nAny article, headline, or social media post.\nPress Ctrl/⌘+Enter to submit."
+            }
             style={{
               flex: 1,
               resize: "none",
               background: "#ffffff",
               border: "none",
-              // BEFORE: border border-cyan-400/20 focus:border-cyan-400/40 rounded-2xl
-              // AFTER:  no border on textarea itself — container provides it
               outline: "none",
               padding: "40px 64px",
               fontFamily: "'IBM Plex Sans', sans-serif",
@@ -224,11 +209,9 @@ export default function DetectorSection() {
               {isReady ? (
                 <span style={{ color: "#1e4d36" }}>Ready · </span>
               ) : null}
-              {wordCount} words · ⌘+Enter to submit
+              {wordCount} words · Ctrl/⌘+Enter to submit
             </span>
 
-            {/* Submit button — BEFORE: gradient pill with glow and shine
-                              AFTER: flat solid, sharp, monospaced */}
             <button
               onClick={handleSubmit}
               disabled={!isReady || status === "loading"}
@@ -237,10 +220,10 @@ export default function DetectorSection() {
                 alignItems: "center",
                 gap: "8px",
                 padding: "10px 24px",
-                // BEFORE: bg-gradient-to-r from-cyan to-violet, rounded-full
-                // AFTER:  ink fill, no radius
-                background: isReady && status !== "loading" ? "#1a1a18" : "#d8d4ce",
-                color: isReady && status !== "loading" ? "#f5f4f0" : "#7a766f",
+                background:
+                  isReady && status !== "loading" ? "#1a1a18" : "#d8d4ce",
+                color:
+                  isReady && status !== "loading" ? "#f5f4f0" : "#7a766f",
                 border: "none",
                 borderRadius: 0,
                 fontFamily: "'IBM Plex Mono', monospace",
@@ -248,14 +231,13 @@ export default function DetectorSection() {
                 fontWeight: 500,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                cursor: isReady && status !== "loading" ? "pointer" : "not-allowed",
+                cursor:
+                  isReady && status !== "loading" ? "pointer" : "not-allowed",
                 transition: "background 0.15s",
               }}
             >
               {status === "loading" ? (
                 <>
-                  {/* BEFORE: orbital neon spinner animation
-                      AFTER:  text cursor blink — editorial, typographic */}
                   <span>Analyzing</span>
                   <span
                     style={{
@@ -306,7 +288,7 @@ export default function DetectorSection() {
           <div className="flex-1 p-8 flex flex-col justify-center">
             <AnimatePresence mode="wait">
 
-              {/* Idle state */}
+              {/* Idle */}
               {status === "idle" && (
                 <motion.div
                   key="idle"
@@ -315,7 +297,6 @@ export default function DetectorSection() {
                   exit={{ opacity: 0 }}
                   style={{ textAlign: "center", padding: "40px 20px" }}
                 >
-                  {/* Decorative element — not a spinner, a rule */}
                   <div
                     style={{
                       width: "40px",
@@ -349,8 +330,6 @@ export default function DetectorSection() {
                   exit={{ opacity: 0 }}
                   style={{ textAlign: "center", padding: "40px 20px" }}
                 >
-                  {/* BEFORE: orbital neon spinner (three rings)
-                      AFTER:  a simple animated rule — typographic */}
                   <motion.div
                     style={{
                       width: "0%",
@@ -359,7 +338,12 @@ export default function DetectorSection() {
                       margin: "0 auto 24px",
                     }}
                     animate={{ width: "60%" }}
-                    transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+                    transition={{
+                      duration: 1.5,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
                   />
                   <p
                     style={{
@@ -383,8 +367,6 @@ export default function DetectorSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   style={{
-                    // BEFORE: glass border-red-400/20 bg-red-400/5 rounded-2xl
-                    // AFTER:  flat, 1px border, sharp
                     background: "#f5ecea",
                     border: "1px solid #d4a09a",
                     padding: "24px",
@@ -392,7 +374,11 @@ export default function DetectorSection() {
                   }}
                 >
                   <div className="flex items-start gap-3">
-                    <AlertCircle size={16} color="#8b2318" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <AlertCircle
+                      size={16}
+                      color="#8b2318"
+                      style={{ flexShrink: 0, marginTop: 2 }}
+                    />
                     <div>
                       <p
                         style={{
@@ -436,13 +422,12 @@ export default function DetectorSection() {
             </AnimatePresence>
           </div>
 
-          {/* Model stats — BEFORE: three glass cards with gradient bars
-                          AFTER:  simple text list, no cards */}
+          {/* Model stats */}
           <div style={{ borderTop: "1px solid #d8d4ce" }}>
             {[
-              { label: "Model",    value: "BERT-Base Uncased" },
-              { label: "Corpus",   value: "LIAR + WELFake · 44K" },
-              { label: "Accuracy", value: "94.2% F1 weighted" },
+              { label: "Model",    value: "DistilBERT-Base Uncased"  },
+              { label: "Corpus",   value: "LIAR + WELFake · 44K"     },
+              { label: "Accuracy", value: "94.2% F1 weighted"        },
             ].map(({ label, value }, i) => (
               <div
                 key={label}
@@ -478,7 +463,6 @@ export default function DetectorSection() {
         </div>
       </div>
 
-      {/* Responsive: stack columns on mobile */}
       <style>{`
         @media (max-width: 900px) {
           #detector > div:last-child {
@@ -487,7 +471,7 @@ export default function DetectorSection() {
         }
         @keyframes blink {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+          50%       { opacity: 0; }
         }
       `}</style>
     </section>

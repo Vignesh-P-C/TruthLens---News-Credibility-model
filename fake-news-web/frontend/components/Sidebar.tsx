@@ -2,22 +2,18 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Twitter, Github, Rss } from "lucide-react";
+import { Twitter, Github } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
+// Only sections that actually exist on the page
 const navItems = [
-  { label: "Analysis",    href: "#detector", hasChildren: false },
-  { label: "Technology",  href: "#about",    hasChildren: true  },
-  { label: "Methodology", href: "#about",    hasChildren: false },
-  { label: "Open Data",   href: "#",         hasChildren: false },
-  { label: "API Access",  href: "#",         hasChildren: false },
-  { label: "Contact",     href: "#",         hasChildren: false },
+  { label: "Analysis",   href: "#detector", active: true  },
+  { label: "Technology", href: "#about",    active: false },
 ];
 
 const socialLinks = [
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Github,  href: "#", label: "GitHub"  },
-  { icon: Rss,     href: "#", label: "RSS"     },
+  { icon: Twitter, href: "https://twitter.com",              label: "Twitter" },
+  { icon: Github,  href: "https://github.com/Vignesh-P-C",   label: "GitHub"  },
 ];
 
 export default function Sidebar() {
@@ -49,9 +45,9 @@ export default function Sidebar() {
           <div className="mb-1">
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
               <rect width="36" height="36" fill="#f5f4f0" />
-              <rect x="6" y="6" width="10" height="24" fill="#0a0a0a" />
-              <rect x="20" y="6" width="10" height="10" fill="#0a0a0a" />
-              <rect x="20" y="22" width="10" height="8" fill="#0a0a0a" />
+              <rect x="6"  y="6"  width="10" height="24" fill="#0a0a0a" />
+              <rect x="20" y="6"  width="10" height="10" fill="#0a0a0a" />
+              <rect x="20" y="22" width="10" height="8"  fill="#0a0a0a" />
             </svg>
           </div>
           <div className="mt-4">
@@ -84,7 +80,7 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* Nav links */}
+        {/* Nav — only real destinations */}
         <nav className="flex-1 flex flex-col pt-4">
           {navItems.map((item, i) => (
             <motion.button
@@ -93,7 +89,7 @@ export default function Sidebar() {
                 setActiveItem(item.label);
                 scrollTo(item.href);
               }}
-              className="text-left w-full flex items-center justify-between px-8 py-3 transition-colors duration-150"
+              className="text-left w-full flex items-center px-8 py-3"
               style={{
                 borderBottom: "1px solid #1e1e1e",
                 color:
@@ -113,15 +109,32 @@ export default function Sidebar() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.06, duration: 0.4 }}
             >
-              <span>{item.label}</span>
-              {item.hasChildren && (
-                <Plus size={12} style={{ color: "rgba(240,237,232,0.3)" }} />
-              )}
+              {item.label}
             </motion.button>
           ))}
+
+          {/* Spacer with a note — honest about what the project is */}
+          <div
+            className="px-8 py-6"
+            style={{ borderBottom: "1px solid #1e1e1e" }}
+          >
+            <p
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.58rem",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#2a2a26",
+                lineHeight: 1.8,
+              }}
+            >
+              DistilBERT · FastAPI<br />
+              Next.js · Vercel · Render
+            </p>
+          </div>
         </nav>
 
-        {/* Bottom row — social icons + theme toggle */}
+        {/* Bottom row — social + theme toggle */}
         <div
           className="px-8 py-6 flex items-center justify-between"
           style={{ borderTop: "1px solid #1e1e1e" }}
@@ -131,6 +144,8 @@ export default function Sidebar() {
               <a
                 key={label}
                 href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
                 className="transition-colors duration-150"
                 style={{ color: "rgba(240,237,232,0.3)" }}
@@ -145,8 +160,6 @@ export default function Sidebar() {
               </a>
             ))}
           </div>
-
-          {/* Theme toggle — flush right, always on dark sidebar bg */}
           <ThemeToggle forceDark />
         </div>
       </aside>

@@ -1,39 +1,29 @@
-// BEFORE: AuroraBackground (Three.js GLSL shader), centered text,
-//         gradient headline, floating stat cards with glow,
-//         neon CTA buttons (rounded-full + gradient)
-//
-// AFTER:  Dark full-bleed image section (#1c1c1a),
-//         bottom-anchored left-aligned headline (serif),
-//         Prev/Next navigation like museum reference,
-//         outlined minimal buttons
-
 'use client';
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
   const scrollToDetector = () => {
     document.getElementById("detector")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const scrollToAbout = () => {
+    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section
       className="relative flex flex-col justify-end overflow-hidden"
       style={{
-        // BEFORE: background handled by Three.js AuroraBackground canvas
-        // AFTER:  dark neutral — the image is the atmosphere, not a shader
         background: "#1c1c1a",
         minHeight: "100vh",
-        // Subtle paper texture via CSS only — no external image dependency
         backgroundImage: `
           radial-gradient(ellipse 120% 60% at 70% 0%, rgba(200,184,154,0.06) 0%, transparent 60%),
           radial-gradient(ellipse 80% 80% at 20% 80%, rgba(30,77,54,0.04) 0%, transparent 50%)
         `,
       }}
     >
-      {/* Grain texture — CSS only, not a PNG overlay
-          Very subtle — just enough to feel printed, not digital */}
+      {/* Grain texture */}
       <div
         aria-hidden="true"
         style={{
@@ -45,11 +35,9 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Top row: eyebrow + prev/next */}
-      {/* BEFORE: animated badge with cyan dot pulse
-          AFTER:  plain monospaced label, no animation */}
+      {/* Top bar — dateline only, no PREV/NEXT */}
       <div
-        className="absolute top-0 left-0 right-0 flex items-center justify-between px-16 py-8"
+        className="absolute top-0 left-0 right-0 flex items-center px-16 py-8"
         style={{ borderBottom: "1px solid rgba(240,237,232,0.08)" }}
       >
         <motion.span
@@ -64,87 +52,14 @@ export default function HeroSection() {
             color: "rgba(240,237,232,0.35)",
           }}
         >
-          {/* BEFORE: "Powered by Transformer AI" badge with glowing dot
-              AFTER:  publication-style dateline */}
           Credibility Research — Est. 2024
         </motion.span>
-
-        {/* Prev / Next — from reference image */}
-        <div className="flex items-center gap-8">
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex items-center gap-2 transition-colors duration-150"
-            style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: "0.68rem",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "rgba(240,237,232,0.35)",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-            }}
-            whileHover={{ color: "rgba(240,237,232,0.9)" }}
-          >
-            <ArrowLeft size={12} />
-            <span>Prev</span>
-          </motion.button>
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.45 }}
-            className="flex items-center gap-2 transition-colors duration-150"
-            style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: "0.68rem",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "rgba(240,237,232,0.35)",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-            }}
-            whileHover={{ color: "rgba(240,237,232,0.9)" }}
-          >
-            <span>Next</span>
-            <ArrowRight size={12} />
-          </motion.button>
-        </div>
       </div>
 
-      {/* Hero body — bottom aligned, left-offset
-          BEFORE: text-center, max-w-5xl mx-auto
-          AFTER:  bottom-left anchor, asymmetric positioning */}
+      {/* Hero body */}
       <div className="relative z-10 px-16 pb-24 max-w-3xl">
 
-        {/* Category tag — museum placard style */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          style={{ marginBottom: "24px" }}
-        >
-          <span
-            style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: "0.68rem",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              // BEFORE: text-cyan-400 with glowing dot
-              // AFTER:  warm sand, no dot, no glow
-              color: "#c8b89a",
-            }}
-          >
-            Enjoy\art<sup>space</sup>
-            {/* ^ keeping the reference's quirky notation — it feels human */}
-          </span>
-        </motion.div>
-
-        {/* Headline — the BIG serif moment
-            BEFORE: gradient-text animation, Syne font 700-800 weight
-            AFTER:  Playfair Display 400 weight — the serif does the work */}
+        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -152,8 +67,6 @@ export default function HeroSection() {
           style={{
             fontFamily: "'Playfair Display', Georgia, serif",
             fontWeight: 400,
-            // BEFORE: font-size 5rem-8rem, gradient
-            // AFTER:  large but not overwhelming, plain off-white
             fontSize: "clamp(3.5rem, 7vw, 6.5rem)",
             lineHeight: 0.95,
             letterSpacing: "-0.02em",
@@ -184,15 +97,12 @@ export default function HeroSection() {
             marginBottom: "40px",
           }}
         >
-          {/* BEFORE: "Leveraging BERT-based transformer..." — marketing speak
-              AFTER:  editorial voice, measured and precise */}
-          TruthLens runs BERT-base against a 44,000-article corpus of verified
+          TruthLens runs DistilBERT against a 44,000-article corpus of verified
           and flagged news sources — returning a credibility verdict in under
           a second. Paste any text below.
         </motion.p>
 
-        {/* CTAs — BEFORE: gradient pill buttons with glow
-                   AFTER:  sharp outlined buttons, monospaced labels */}
+        {/* CTAs — both wired up */}
         <motion.div
           className="flex flex-wrap gap-4"
           initial={{ opacity: 0, y: 12 }}
@@ -202,8 +112,6 @@ export default function HeroSection() {
           <button
             onClick={scrollToDetector}
             style={{
-              // BEFORE: bg-gradient-to-r from-cyan-400 to-violet-500 rounded-full
-              // AFTER:  flat #f0ede8 background, sharp corners
               background: "#f0ede8",
               color: "#0a0a0a",
               padding: "14px 32px",
@@ -230,6 +138,7 @@ export default function HeroSection() {
           </button>
 
           <button
+            onClick={scrollToAbout}
             style={{
               background: "transparent",
               color: "#f0ede8",
@@ -258,9 +167,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Stats row — bottom right
-          BEFORE: floating animated cards with gradient progress bars
-          AFTER:  inline text stats, no cards, no animation */}
+      {/* Stats row — bottom right */}
       <motion.div
         className="absolute bottom-8 right-16 flex items-center gap-12"
         initial={{ opacity: 0 }}
@@ -268,9 +175,9 @@ export default function HeroSection() {
         transition={{ delay: 0.8 }}
       >
         {[
-          { value: "44K+", label: "Articles" },
-          { value: "94.2%", label: "F1 Score" },
-          { value: "<1s", label: "Inference" },
+          { value: "44K+",  label: "Articles"  },
+          { value: "94.2%", label: "F1 Score"  },
+          { value: "<1s",   label: "Inference" },
         ].map(({ value, label }) => (
           <div key={label} className="text-right">
             <div
@@ -278,8 +185,6 @@ export default function HeroSection() {
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "1.6rem",
                 fontWeight: 400,
-                // BEFORE: gradient-text
-                // AFTER:  plain off-white
                 color: "#f0ede8",
                 lineHeight: 1,
               }}

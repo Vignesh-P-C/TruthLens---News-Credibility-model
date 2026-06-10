@@ -1,6 +1,3 @@
-// New section: editorial two-column text layout
-// Reference: museum "about" placard — structured, measured
-
 'use client';
 
 import { motion } from "framer-motion";
@@ -14,7 +11,7 @@ export default function AboutSection() {
         borderTop: "1px solid #1e1e1e",
       }}
     >
-      {/* Section header bar */}
+      {/* Section header */}
       <div
         className="flex items-center"
         style={{
@@ -44,7 +41,7 @@ export default function AboutSection() {
           padding: "80px 64px",
         }}
       >
-        {/* Left: Heading */}
+        {/* Left: heading + stats table */}
         <motion.div
           style={{ paddingRight: "64px", borderRight: "1px solid #1e1e1e" }}
           initial={{ opacity: 0, y: 20 }}
@@ -64,20 +61,17 @@ export default function AboutSection() {
             }}
           >
             How the model{" "}
-            <em style={{ fontStyle: "italic", color: "#c8b89a" }}>
-              works
-            </em>
+            <em style={{ fontStyle: "italic", color: "#c8b89a" }}>works</em>
           </h2>
 
-          {/* Stats — plain text, no cards */}
           <div style={{ borderTop: "1px solid #1e1e1e", paddingTop: "32px" }}>
             {[
-              { label: "Architecture",  value: "BERT-Base Uncased" },
-              { label: "Training data", value: "LIAR + WELFake combined" },
-              { label: "Articles",      value: "44,000+" },
-              { label: "F1 Score",      value: "0.942 weighted avg" },
-              { label: "Inference",     value: "< 1 second" },
-            ].map(({ label, value }, i) => (
+              { label: "Architecture",  value: "DistilBERT-Base Uncased" },
+              { label: "Training data", value: "LIAR + WELFake combined"  },
+              { label: "Articles",      value: "44,000+"                  },
+              { label: "F1 Score",      value: "0.942 weighted avg"        },
+              { label: "Inference",     value: "< 1 second"                },
+            ].map(({ label, value }) => (
               <div
                 key={label}
                 className="flex justify-between"
@@ -112,7 +106,7 @@ export default function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Right: Body text */}
+        {/* Right: body text */}
         <motion.div
           style={{ paddingLeft: "64px" }}
           initial={{ opacity: 0, y: 20 }}
@@ -123,15 +117,15 @@ export default function AboutSection() {
           {[
             {
               title: "Fine-tuned Classification",
-              body: "The model is a BERT-Base Uncased transformer pre-trained on BookCorpus and Wikipedia, fine-tuned on a balanced dataset of verified and fabricated news articles. Classification head outputs a binary label with a softmax confidence score.",
+              body:  "The model is a DistilBERT-Base Uncased transformer pre-trained on BookCorpus and Wikipedia, fine-tuned on a balanced dataset of verified and fabricated news articles. The classification head outputs a binary label with a softmax confidence score.",
             },
             {
               title: "Dataset Composition",
-              body: "Training data combines LIAR (politifact.com, 12K statements) and WELFake (Kaggle, 72K articles fused to 44K after deduplication). Both REAL and FAKE classes are balanced at approximately 50/50 to prevent label bias.",
+              body:  "Training data combines LIAR (politifact.com, 12K statements) and WELFake (Kaggle, 72K articles fused to 44K after deduplication). Both REAL and FAKE classes are balanced at approximately 50/50 to prevent label bias.",
             },
             {
               title: "Limitations",
-              body: "The model performs best on English-language political and social news. It has reduced sensitivity to satire, opinion pieces, and highly technical domains. AI analysis is a signal, not a verdict — human editorial judgment remains essential.",
+              body:  "The model performs best on English-language political and social news. It has reduced sensitivity to satire, opinion pieces, and highly technical domains. AI analysis is a signal, not a verdict — human editorial judgment remains essential.",
             },
           ].map(({ title, body }) => (
             <div key={title} style={{ marginBottom: "36px" }}>
@@ -161,7 +155,6 @@ export default function AboutSection() {
             </div>
           ))}
 
-          {/* Footer note */}
           <div
             style={{
               borderTop: "1px solid #1e1e1e",
@@ -184,7 +177,7 @@ export default function AboutSection() {
         </motion.div>
       </div>
 
-      {/* Footer */}
+      {/* Footer — clean, no dead nav links */}
       <div
         style={{
           borderTop: "1px solid #1e1e1e",
@@ -204,17 +197,28 @@ export default function AboutSection() {
         >
           TruthLens · News Credibility Analysis
         </span>
-        <span
+        <a
+          href="https://github.com/Vignesh-P-C"
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             fontFamily: "'IBM Plex Mono', monospace",
             fontSize: "0.58rem",
             letterSpacing: "0.1em",
             textTransform: "uppercase",
             color: "#3a3a36",
+            textDecoration: "none",
+            transition: "color 0.15s",
           }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = "rgba(240,237,232,0.5)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "#3a3a36")
+          }
         >
-          Next.js · BERT · FastAPI
-        </span>
+          GitHub ↗
+        </a>
       </div>
     </section>
   );
