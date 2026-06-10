@@ -1,14 +1,9 @@
-// BEFORE: Navbar.tsx — horizontal top bar, glassmorphism, scroll-aware opacity,
-//          cyan logo glow, gradient CTA button
-//
-// AFTER:  Sidebar.tsx — vertical fixed panel, 260px, pure black (#0a0a0a),
-//          serif logotype, plain nav links, social icons bottom
-
 'use client';
 
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus, Twitter, Github, Rss } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   { label: "Analysis",    href: "#detector", hasChildren: false },
@@ -46,15 +41,12 @@ export default function Sidebar() {
           borderRight: "1px solid #1e1e1e",
         }}
       >
-        {/* Logo — top */}
+        {/* Logo */}
         <div
           className="px-8 py-8"
           style={{ borderBottom: "1px solid #1e1e1e" }}
         >
-          {/* BEFORE: animated gradient logo with Zap icon glow
-              AFTER:  serif logotype — typography IS the brand */}
           <div className="mb-1">
-            {/* Minimalist sigil — a simple lettermark */}
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
               <rect width="36" height="36" fill="#f5f4f0" />
               <rect x="6" y="6" width="10" height="24" fill="#0a0a0a" />
@@ -92,7 +84,7 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* Nav links — middle, grows to fill */}
+        {/* Nav links */}
         <nav className="flex-1 flex flex-col pt-4">
           {navItems.map((item, i) => (
             <motion.button
@@ -104,8 +96,6 @@ export default function Sidebar() {
               className="text-left w-full flex items-center justify-between px-8 py-3 transition-colors duration-150"
               style={{
                 borderBottom: "1px solid #1e1e1e",
-                // BEFORE: nav links with hover glow
-                // AFTER:  color transition only, no glow
                 color:
                   activeItem === item.label
                     ? "#f0ede8"
@@ -125,39 +115,39 @@ export default function Sidebar() {
             >
               <span>{item.label}</span>
               {item.hasChildren && (
-                <Plus
-                  size={12}
-                  style={{ color: "rgba(240,237,232,0.3)" }}
-                />
+                <Plus size={12} style={{ color: "rgba(240,237,232,0.3)" }} />
               )}
             </motion.button>
           ))}
         </nav>
 
-        {/* Social icons — bottom */}
-        {/* BEFORE: no social links in navbar
-            AFTER:  bottom of sidebar like the museum reference */}
+        {/* Bottom row — social icons + theme toggle */}
         <div
-          className="px-8 py-6 flex items-center gap-5"
+          className="px-8 py-6 flex items-center justify-between"
           style={{ borderTop: "1px solid #1e1e1e" }}
         >
-          {socialLinks.map(({ icon: Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={label}
-              className="transition-colors duration-150"
-              style={{ color: "rgba(240,237,232,0.3)" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "rgba(240,237,232,0.9)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "rgba(240,237,232,0.3)")
-              }
-            >
-              <Icon size={15} />
-            </a>
-          ))}
+          <div className="flex items-center gap-5">
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="transition-colors duration-150"
+                style={{ color: "rgba(240,237,232,0.3)" }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color = "rgba(240,237,232,0.9)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = "rgba(240,237,232,0.3)")
+                }
+              >
+                <Icon size={15} />
+              </a>
+            ))}
+          </div>
+
+          {/* Theme toggle — flush right, always on dark sidebar bg */}
+          <ThemeToggle forceDark />
         </div>
       </aside>
 
@@ -179,22 +169,25 @@ export default function Sidebar() {
         >
           TruthLens
         </span>
-        <button
-          onClick={() => scrollTo("#detector")}
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "0.65rem",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: "#f0ede8",
-            padding: "8px 16px",
-            border: "1px solid rgba(240,237,232,0.3)",
-            background: "transparent",
-            cursor: "pointer",
-          }}
-        >
-          Analyze
-        </button>
+        <div className="flex items-center gap-3">
+          <ThemeToggle forceDark />
+          <button
+            onClick={() => scrollTo("#detector")}
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: "0.65rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#f0ede8",
+              padding: "8px 16px",
+              border: "1px solid rgba(240,237,232,0.3)",
+              background: "transparent",
+              cursor: "pointer",
+            }}
+          >
+            Analyze
+          </button>
+        </div>
       </header>
     </>
   );
