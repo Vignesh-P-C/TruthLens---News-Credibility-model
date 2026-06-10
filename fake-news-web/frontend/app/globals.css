@@ -29,29 +29,32 @@
   /* Accent */
   --accent:         #c8b89a;
 
-  /* Sidebar — always dark regardless of theme */
-  --sidebar-bg:     #0a0a0a;
-  --sidebar-border: #1e1e1e;
-  --sidebar-text:   #f0ede8;
-  --sidebar-muted:  #4a4a46;
-  --sidebar-dim:    rgba(240,237,232,0.4);
-  --sidebar-stack:  #2a2a26;
+  /* Sidebar — light mode: warm brown */
+  --sidebar-bg:         #2c2318;
+  --sidebar-border:     #3d3228;
+  --sidebar-text:       #f0ede8;
+  --sidebar-muted:      #8a7a68;
+  --sidebar-dim:        rgba(240,237,232,0.4);
+  --sidebar-stack:      #4a3c2e;
+  --sidebar-nav-border: #3d3228;
+  --sidebar-icon:       rgba(240,237,232,0.3);
+  --sidebar-icon-hover: rgba(240,237,232,0.9);
 
-  /* Hero section — light mode: warm dark brown, not pure black */
-  --hero-bg:        #1c1c1a;
-  --hero-text:      #f0ede8;
-  --hero-text-em:   #e8e0d4;
-  --hero-subtitle:  rgba(240,237,232,0.5);
-  --hero-border:    rgba(240,237,232,0.08);
-  --hero-dateline:  rgba(240,237,232,0.35);
-  --hero-stat:      #f0ede8;
-  --hero-stat-label:rgba(240,237,232,0.3);
-  --hero-btn-bg:    #f0ede8;
-  --hero-btn-fg:    #0a0a0a;
+  /* Hero — light mode: warm brown matching sidebar */
+  --hero-bg:             #2c2318;
+  --hero-text:           #f0ede8;
+  --hero-text-em:        #e8d8c0;
+  --hero-subtitle:       rgba(240,237,232,0.5);
+  --hero-border:         rgba(240,237,232,0.08);
+  --hero-dateline:       rgba(240,237,232,0.35);
+  --hero-stat:           #f0ede8;
+  --hero-stat-label:     rgba(240,237,232,0.3);
+  --hero-btn-bg:         #f0ede8;
+  --hero-btn-fg:         #2c2318;
   --hero-btn-outline-border: rgba(240,237,232,0.3);
   --hero-btn-outline-hover:  rgba(240,237,232,0.7);
 
-  /* About/Technology section — light mode: warm parchment */
+  /* About/Technology — light mode: warm parchment */
   --about-bg:       #f0ede6;
   --about-border:   #dcd8d0;
   --about-text:     #1a1a18;
@@ -84,12 +87,12 @@
    DARK THEME
    ============================================================ */
 .dark {
-  /* Main surfaces flip */
+  /* Main surfaces */
   --paper:          #0f0f0d;
   --paper-dark:     #1a1a18;
   --surface:        #1e1e1c;
 
-  /* Ink flips */
+  /* Ink */
   --ink:            #f0ede8;
   --ink-light:      #c8c4be;
   --muted:          #6a6660;
@@ -101,17 +104,28 @@
   /* Accent */
   --accent:         #8a7060;
 
-  /* Hero — dark mode: same near-black as before */
-  --hero-bg:        #1c1c1a;
-  --hero-text:      #f0ede8;
-  --hero-text-em:   #e8e0d4;
-  --hero-subtitle:  rgba(240,237,232,0.5);
-  --hero-border:    rgba(240,237,232,0.08);
-  --hero-dateline:  rgba(240,237,232,0.35);
-  --hero-stat:      #f0ede8;
-  --hero-stat-label:rgba(240,237,232,0.3);
-  --hero-btn-bg:    #f0ede8;
-  --hero-btn-fg:    #0a0a0a;
+  /* Sidebar — dark mode: near-black */
+  --sidebar-bg:         #0a0a0a;
+  --sidebar-border:     #1e1e1e;
+  --sidebar-text:       #f0ede8;
+  --sidebar-muted:      #4a4a46;
+  --sidebar-dim:        rgba(240,237,232,0.4);
+  --sidebar-stack:      #2a2a26;
+  --sidebar-nav-border: #1e1e1e;
+  --sidebar-icon:       rgba(240,237,232,0.3);
+  --sidebar-icon-hover: rgba(240,237,232,0.9);
+
+  /* Hero — dark mode: near-black */
+  --hero-bg:             #1c1c1a;
+  --hero-text:           #f0ede8;
+  --hero-text-em:        #e8e0d4;
+  --hero-subtitle:       rgba(240,237,232,0.5);
+  --hero-border:         rgba(240,237,232,0.08);
+  --hero-dateline:       rgba(240,237,232,0.35);
+  --hero-stat:           #f0ede8;
+  --hero-stat-label:     rgba(240,237,232,0.3);
+  --hero-btn-bg:         #f0ede8;
+  --hero-btn-fg:         #0a0a0a;
   --hero-btn-outline-border: rgba(240,237,232,0.3);
   --hero-btn-outline-hover:  rgba(240,237,232,0.7);
 
@@ -215,11 +229,6 @@ p {
 /* ============================================================
    LAYOUT
    ============================================================ */
-.app-shell {
-  display: flex;
-  min-height: 100vh;
-}
-
 .main-content {
   margin-left: var(--sidebar-w);
   min-height: 100vh;
@@ -229,10 +238,7 @@ p {
 
 @media (max-width: 768px) {
   :root { --sidebar-w: 0px; }
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-  }
+  .main-content { margin-left: 0; width: 100%; }
 }
 
 /* ============================================================
