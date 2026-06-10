@@ -12,18 +12,24 @@
    LIGHT THEME (default)
    ============================================================ */
 :root {
-  /* Surfaces */
-  --paper:          #f5f4f0;   /* main background — warm off-white */
-  --paper-dark:     #eeede8;   /* slightly darker sections */
-  --surface:        #ffffff;   /* cards, textarea — pure white */
-  --hero-bg:        #1c1c1a;   /* hero is always dark regardless of theme */
+  /* Main surfaces */
+  --paper:          #f5f4f0;
+  --paper-dark:     #eeede8;
+  --surface:        #ffffff;
 
   /* Ink */
   --ink:            #1a1a18;
   --ink-light:      #4a4a46;
   --muted:          #7a766f;
 
-  /* Sidebar — always dark */
+  /* Rules */
+  --rule:           #d8d4ce;
+  --rule-dark:      #c0bbb4;
+
+  /* Accent */
+  --accent:         #c8b89a;
+
+  /* Sidebar — always dark regardless of theme */
   --sidebar-bg:     #0a0a0a;
   --sidebar-border: #1e1e1e;
   --sidebar-text:   #f0ede8;
@@ -31,12 +37,28 @@
   --sidebar-dim:    rgba(240,237,232,0.4);
   --sidebar-stack:  #2a2a26;
 
-  /* Rules / borders */
-  --rule:           #d8d4ce;
-  --rule-dark:      #c0bbb4;
+  /* Hero section — light mode: warm dark brown, not pure black */
+  --hero-bg:        #1c1c1a;
+  --hero-text:      #f0ede8;
+  --hero-text-em:   #e8e0d4;
+  --hero-subtitle:  rgba(240,237,232,0.5);
+  --hero-border:    rgba(240,237,232,0.08);
+  --hero-dateline:  rgba(240,237,232,0.35);
+  --hero-stat:      #f0ede8;
+  --hero-stat-label:rgba(240,237,232,0.3);
+  --hero-btn-bg:    #f0ede8;
+  --hero-btn-fg:    #0a0a0a;
+  --hero-btn-outline-border: rgba(240,237,232,0.3);
+  --hero-btn-outline-hover:  rgba(240,237,232,0.7);
 
-  /* Accent */
-  --accent:         #c8b89a;
+  /* About/Technology section — light mode: warm parchment */
+  --about-bg:       #f0ede6;
+  --about-border:   #dcd8d0;
+  --about-text:     #1a1a18;
+  --about-muted:    #7a766f;
+  --about-dim:      #4a4a46;
+  --about-accent:   #8a6a40;
+  --about-footer:   #6a6660;
 
   /* Semantic — real */
   --real-fg:        #1e4d36;
@@ -47,14 +69,6 @@
   --fake-fg:        #8b2318;
   --fake-bg:        #f5ecea;
   --fake-border:    #d4a09a;
-
-  /* About section — always dark */
-  --about-bg:       #0a0a0a;
-  --about-border:   #1e1e1e;
-  --about-text:     #f0ede8;
-  --about-muted:    #4a4a46;
-  --about-dim:      rgba(240,237,232,0.5);
-  --about-accent:   #c8b89a;
 
   /* Typography */
   --font-display:   'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -70,22 +84,45 @@
    DARK THEME
    ============================================================ */
 .dark {
-  /* Surfaces */
+  /* Main surfaces flip */
   --paper:          #0f0f0d;
   --paper-dark:     #1a1a18;
-  --surface:        #1e1e1c;   /* cards/textarea — slightly lifted dark */
+  --surface:        #1e1e1c;
 
   /* Ink flips */
   --ink:            #f0ede8;
   --ink-light:      #c8c4be;
   --muted:          #6a6660;
 
-  /* Rules lighten on dark */
+  /* Rules */
   --rule:           #2a2a26;
   --rule-dark:      #3a3a36;
 
-  /* Accent darkens */
+  /* Accent */
   --accent:         #8a7060;
+
+  /* Hero — dark mode: same near-black as before */
+  --hero-bg:        #1c1c1a;
+  --hero-text:      #f0ede8;
+  --hero-text-em:   #e8e0d4;
+  --hero-subtitle:  rgba(240,237,232,0.5);
+  --hero-border:    rgba(240,237,232,0.08);
+  --hero-dateline:  rgba(240,237,232,0.35);
+  --hero-stat:      #f0ede8;
+  --hero-stat-label:rgba(240,237,232,0.3);
+  --hero-btn-bg:    #f0ede8;
+  --hero-btn-fg:    #0a0a0a;
+  --hero-btn-outline-border: rgba(240,237,232,0.3);
+  --hero-btn-outline-hover:  rgba(240,237,232,0.7);
+
+  /* About — dark mode: near-black */
+  --about-bg:       #0a0a0a;
+  --about-border:   #1e1e1e;
+  --about-text:     #f0ede8;
+  --about-muted:    #4a4a46;
+  --about-dim:      rgba(240,237,232,0.5);
+  --about-accent:   #c8b89a;
+  --about-footer:   #4a4a46;
 
   /* Semantic — real (lighter for dark bg) */
   --real-fg:        #6abf7e;
@@ -96,8 +133,6 @@
   --fake-fg:        #d4706a;
   --fake-bg:        #200e0e;
   --fake-border:    #5a2a28;
-
-  /* Sidebar and About stay dark either way — no changes needed */
 }
 
 /* ============================================================

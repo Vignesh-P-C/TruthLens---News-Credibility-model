@@ -2,10 +2,6 @@
 
 import { motion } from "framer-motion";
 
-// The About/Technology section is intentionally always dark —
-// it creates a visual anchor at the bottom of the page in both themes.
-// It uses --about-* variables which are fixed (not theme-switched).
-
 export default function AboutSection() {
   return (
     <section
@@ -61,21 +57,26 @@ export default function AboutSection() {
             }}
           >
             How the model{" "}
-            <em style={{ fontStyle: "italic", color: "var(--about-accent)" }}>works</em>
+            <em style={{ fontStyle: "italic", color: "var(--about-accent)" }}>
+              works
+            </em>
           </h2>
 
           <div style={{ borderTop: "1px solid var(--about-border)", paddingTop: "32px" }}>
             {[
-              { label: "Architecture",  value: "DistilBERT-Base Uncased"  },
-              { label: "Training data", value: "LIAR + WELFake combined"  },
-              { label: "Articles",      value: "44,000+"                  },
-              { label: "F1 Score",      value: "0.942 weighted avg"        },
-              { label: "Inference",     value: "< 1 second"                },
+              { label: "Architecture",  value: "DistilBERT-Base Uncased" },
+              { label: "Training data", value: "LIAR + WELFake combined" },
+              { label: "Articles",      value: "44,000+"                 },
+              { label: "F1 Score",      value: "0.942 weighted avg"       },
+              { label: "Inference",     value: "< 1 second"               },
             ].map(({ label, value }) => (
               <div
                 key={label}
                 className="flex justify-between"
-                style={{ padding: "14px 0", borderBottom: "1px solid var(--about-border)" }}
+                style={{
+                  padding: "14px 0",
+                  borderBottom: "1px solid var(--about-border)",
+                }}
               >
                 <span
                   style={{
@@ -152,7 +153,13 @@ export default function AboutSection() {
             </div>
           ))}
 
-          <div style={{ borderTop: "1px solid var(--about-border)", paddingTop: "24px", marginTop: "8px" }}>
+          <div
+            style={{
+              borderTop: "1px solid var(--about-border)",
+              paddingTop: "24px",
+              marginTop: "8px",
+            }}
+          >
             <p
               style={{
                 fontFamily: "var(--font-mono)",
@@ -183,7 +190,7 @@ export default function AboutSection() {
             fontFamily: "var(--font-display)",
             fontStyle: "italic",
             fontSize: "0.9rem",
-            color: "var(--about-muted)",
+            color: "var(--about-footer)",
           }}
         >
           TruthLens · News Credibility Analysis
@@ -197,12 +204,16 @@ export default function AboutSection() {
             fontSize: "0.58rem",
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: "var(--about-muted)",
+            color: "var(--about-footer)",
             textDecoration: "none",
             transition: "color 0.15s",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--about-text)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--about-muted)")}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = "var(--about-text)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "var(--about-footer)")
+          }
         >
           GitHub ↗
         </a>

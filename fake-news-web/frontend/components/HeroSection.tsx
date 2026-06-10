@@ -35,10 +35,10 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Top bar — dateline */}
+      {/* Top bar */}
       <div
         className="absolute top-0 left-0 right-0 flex items-center px-16 py-8"
-        style={{ borderBottom: "1px solid rgba(240,237,232,0.08)" }}
+        style={{ borderBottom: "1px solid var(--hero-border)" }}
       >
         <motion.span
           initial={{ opacity: 0 }}
@@ -49,7 +49,7 @@ export default function HeroSection() {
             fontSize: "0.68rem",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
-            color: "rgba(240,237,232,0.35)",
+            color: "var(--hero-dateline)",
           }}
         >
           Credibility Research — Est. 2024
@@ -58,7 +58,6 @@ export default function HeroSection() {
 
       {/* Hero body */}
       <div className="relative z-10 px-16 pb-24 max-w-3xl">
-
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,13 +68,12 @@ export default function HeroSection() {
             fontSize: "clamp(3.5rem, 7vw, 6.5rem)",
             lineHeight: 0.95,
             letterSpacing: "-0.02em",
-            /* Hero text is always on dark bg — use fixed light colour */
-            color: "#f0ede8",
+            color: "var(--hero-text)",
             marginBottom: "28px",
           }}
         >
           AI-Powered<br />
-          <em style={{ fontStyle: "italic", color: "#e8e0d4" }}>
+          <em style={{ fontStyle: "italic", color: "var(--hero-text-em)" }}>
             News Credibility
           </em>
           <br />
@@ -91,7 +89,7 @@ export default function HeroSection() {
             fontWeight: 300,
             fontSize: "0.95rem",
             lineHeight: 1.75,
-            color: "rgba(240,237,232,0.5)",
+            color: "var(--hero-subtitle)",
             maxWidth: "520px",
             marginBottom: "40px",
           }}
@@ -107,14 +105,14 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          {/* Primary CTA — always on dark hero */}
+          {/* Primary CTA */}
           <button
             onClick={scrollToDetector}
             style={{
-              background: "#f0ede8",
-              color: "#0a0a0a",
+              background: "var(--hero-btn-bg)",
+              color: "var(--hero-btn-fg)",
               padding: "14px 32px",
-              border: "1px solid #f0ede8",
+              border: "1px solid var(--hero-btn-bg)",
               borderRadius: 0,
               fontFamily: "var(--font-mono)",
               fontSize: "0.72rem",
@@ -122,27 +120,32 @@ export default function HeroSection() {
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               cursor: "pointer",
-              transition: "background 0.15s, color 0.15s",
+              transition: "background 0.15s, color 0.15s, border-color 0.15s",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "transparent";
-              (e.currentTarget as HTMLElement).style.color = "#f0ede8";
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "transparent";
+              el.style.color = "var(--hero-btn-bg)";
+              el.style.borderColor = "var(--hero-btn-bg)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#f0ede8";
-              (e.currentTarget as HTMLElement).style.color = "#0a0a0a";
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "var(--hero-btn-bg)";
+              el.style.color = "var(--hero-btn-fg)";
+              el.style.borderColor = "var(--hero-btn-bg)";
             }}
           >
             Analyze Article
           </button>
 
+          {/* Secondary CTA */}
           <button
             onClick={scrollToAbout}
             style={{
               background: "transparent",
-              color: "#f0ede8",
+              color: "var(--hero-text)",
               padding: "14px 32px",
-              border: "1px solid rgba(240,237,232,0.3)",
+              border: "1px solid var(--hero-btn-outline-border)",
               borderRadius: 0,
               fontFamily: "var(--font-mono)",
               fontSize: "0.72rem",
@@ -153,10 +156,12 @@ export default function HeroSection() {
               transition: "border-color 0.15s",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(240,237,232,0.7)";
+              (e.currentTarget as HTMLElement).style.borderColor =
+                "var(--hero-btn-outline-hover)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(240,237,232,0.3)";
+              (e.currentTarget as HTMLElement).style.borderColor =
+                "var(--hero-btn-outline-border)";
             }}
           >
             Read Methodology
@@ -164,7 +169,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Stats — always on dark hero, fixed colours */}
+      {/* Stats row */}
       <motion.div
         className="absolute bottom-8 right-16 flex items-center gap-12"
         initial={{ opacity: 0 }}
@@ -182,7 +187,7 @@ export default function HeroSection() {
                 fontFamily: "var(--font-display)",
                 fontSize: "1.6rem",
                 fontWeight: 400,
-                color: "#f0ede8",
+                color: "var(--hero-stat)",
                 lineHeight: 1,
               }}
             >
@@ -194,7 +199,7 @@ export default function HeroSection() {
                 fontSize: "0.6rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "rgba(240,237,232,0.3)",
+                color: "var(--hero-stat-label)",
                 marginTop: "4px",
               }}
             >
