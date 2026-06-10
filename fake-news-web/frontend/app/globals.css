@@ -45,7 +45,27 @@
   --sidebar-w:   260px;
   --content-pad: 64px;
 }
+.dark {
+  --paper:       #0f0f0d;
+  --paper-dark:  #1a1a18;
+  --ink:         #f0ede8;
+  --ink-light:   #c8c4be;
+  --rule:        #2a2a26;
+  --rule-dark:   #3a3a36;
+  --muted:       #6a6660;
+  --accent:      #4a3828;
 
+  --real-fg:     #6abf7e;
+  --real-bg:     #0e2018;
+  --real-border: #2a5038;
+  --fake-fg:     #d4706a;
+  --fake-bg:     #200e0e;
+  --fake-border: #5a2a28;
+}
+
+.dark body {
+  background-color: var(--paper);
+}
 /* ============================================================
    BASE RESET
    ============================================================ */
