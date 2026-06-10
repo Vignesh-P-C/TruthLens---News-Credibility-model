@@ -1,32 +1,28 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import torch
+import torch.nn.functional as F
+import numpy as np
 import os
-from transformers import DistilBertForSequenceClassification, AutoTokenizer
+from transformers import AutoModelForSequenceClassification, AutoTokenizer  # ← changed
 
 app = FastAPI()
 
-# ---------------------------
-# CORS Configuration
-# ---------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Change this to frontend domain later
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ---------------------------
-# Model Configuration
-# ---------------------------
-MODEL_NAME = "V1gnesh/fake-news-model"
+MODEL_NAME = "V1gnesh/fake-news-model"  # ← same, no change
 HF_TOKEN = os.getenv("HF_TOKEN")
 
 device = torch.device("cpu")
 
-model = DistilBertForSequenceClassification.from_pretrained(
+model = AutoModelForSequenceClassification.from_pretrained(  # ← changed
     MODEL_NAME,
     token=HF_TOKEN
 )
@@ -39,15 +35,9 @@ tokenizer = AutoTokenizer.from_pretrained(
 model.to(device)
 model.eval()
 
-# ---------------------------
-# Request Schema
-# ---------------------------
 class NewsRequest(BaseModel):
     text: str
 
-# ---------------------------
-# Prediction Endpoint
-# ---------------------------
 @app.post("/predict")
 def predict(news: NewsRequest):
     inputs = tokenizer(
@@ -57,26 +47,21 @@ def predict(news: NewsRequest):
         max_length=256,
         return_tensors="pt"
     )
-
     inputs = {k: v.to(device) for k, v in inputs.items()}
 
     with torch.no_grad():
-        outputs = model(**inputs)
-        probs = torch.softmax(outputs.logits, dim=1)
-        pred = torch.argmax(probs, dim=1).item()
+        logits = model(**inputs).logits
+        probs = F.softmax(logits, dim=-1)[0].cpu().numpy()  # ← changed
 
-    label = "REAL" if pred == 1 else "FAKE"
-    confidence = probs[0][pred].item()
+    pred_id = int(np.argmax(probs))
+    label = "REAL" if pred_id == 1 else "FAKE"
 
     return {
         "label": label,
-        "confidence": confidence
+        "confidence": round(float(probs[pred_id]), 4),
+        "prob_fake":  round(float(probs[0]), 4),   # ← new
+        "prob_real":  round(float(probs[1]), 4),   # ← new
     }
-
-# ---------------------------
-# Health Check Route
-# ---------------------------
-from fastapi import Request
 
 @app.api_route("/", methods=["GET", "HEAD"])
 async def home(request: Request):
