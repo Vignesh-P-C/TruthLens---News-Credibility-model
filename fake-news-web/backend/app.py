@@ -37,7 +37,9 @@ tokenizer = AutoTokenizer.from_pretrained(
 
 model.to(device)
 model.eval()
-
+import gc
+torch.set_num_threads(1)
+gc.collect()
 class NewsRequest(BaseModel):
     text: str
 
