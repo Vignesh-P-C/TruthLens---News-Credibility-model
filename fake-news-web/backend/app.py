@@ -24,22 +24,22 @@ device = torch.device("cpu")
 
 # This line stays exactly the same — AutoModel handles RoBERTa automatically
 model = AutoModelForSequenceClassification.from_pretrained(
-    MODEL_NAME,  # "V1gnesh/fake-news-model"
-    token=HF_TOKEN,
-        low_cpu_mem_usage=True   # ← add this
-
-)
-
-tokenizer = AutoTokenizer.from_pretrained(
     MODEL_NAME,
-    token=HF_TOKEN
+    token=HF_TOKEN,
+    low_cpu_mem_usage=True
 )
 
-model.to(device)
-model.eval()
+# Quantize to int8 — reduces memory from ~268MB to ~67MB
+model = torch.quantization.quantize_dynamic(
+    model, {torch.nn.Linear}, dtype=torch.qint8
+)
+
 import gc
 torch.set_num_threads(1)
 gc.collect()
+
+model.to(device)
+model.eval()
 class NewsRequest(BaseModel):
     text: str
 
