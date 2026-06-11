@@ -26,6 +26,8 @@ device = torch.device("cpu")
 model = AutoModelForSequenceClassification.from_pretrained(
     MODEL_NAME,  # "V1gnesh/fake-news-model"
     token=HF_TOKEN
+        low_cpu_mem_usage=True   # ← add this
+
 )
 
 tokenizer = AutoTokenizer.from_pretrained(
