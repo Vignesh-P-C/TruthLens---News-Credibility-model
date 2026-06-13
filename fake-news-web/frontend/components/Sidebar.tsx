@@ -231,9 +231,9 @@ export default function Sidebar() {
                 lineHeight:    2,
               }}
             >
-              DistilBERT · FastAPI
+              DISTILBERT · FASTAPI
               <br />
-              Next.js · Vercel · Render
+              NEXT.JS · VERCEL · HUGGINGFACE
             </p>
           </motion.div>
         </nav>

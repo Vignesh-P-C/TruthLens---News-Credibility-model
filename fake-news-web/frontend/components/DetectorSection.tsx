@@ -163,7 +163,7 @@ export default function DetectorSection() {
             onKeyDown={handleKeyDown}
             disabled={status === "loading"}
             placeholder={
-              "Paste news content here for analysis…\n\nAny article, headline, or social media post.\nPress Ctrl/⌘+Enter to submit."
+              "Paste news content here for analysis…\n\nAny news article or excerpt in English.\nPress Ctrl/⌘+Enter to submit."
             }
             style={{
               flex: 1,
@@ -337,8 +337,8 @@ export default function DetectorSection() {
           <div style={{ borderTop: "1px solid var(--rule)" }}>
             {[
               { label: "Model",    value: "DistilBERT-Base Uncased" },
-              { label: "Corpus",   value: "LIAR + WELFake · 44K"   },
-              { label: "Accuracy", value: "94.2% F1 weighted"       },
+              { label: "Corpus",   value: "LIAR + WELFake · 71K"   },
+              { label: "Accuracy", value: "95.05% F1 weighted"       },
             ].map(({ label, value }, i) => (
               <div
                 key={label}

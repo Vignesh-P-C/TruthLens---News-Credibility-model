@@ -261,9 +261,9 @@ export default function HeroSection() {
             marginBottom: '40px',
           }}
         >
-          TruthLens runs DistilBERT against a 44,000-article corpus of verified
+          TruthLens runs DistilBERT against a 71,744-article corpus of verified
           and flagged news sources — returning a credibility verdict in under a
-          second. Paste any text below.
+          second after cold start. Paste any text below.
         </motion.p>
 
         {/* ── CTAs ───────────────────────────────────────────── */}
@@ -346,9 +346,9 @@ export default function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.85, duration: 0.6 }}
       >
-        <AnimatedStat numeric={44} suffix="K+" decimals={0} label="Articles" />
+        <AnimatedStat numeric={71} suffix="K+" decimals={0} label="Articles" />
         <AnimatedStat
-          numeric={94.2}
+          numeric={95.05}
           suffix="%"
           decimals={1}
           label="F1 Score"

@@ -20,25 +20,34 @@ const staggerContainer = (stagger = 0.08, delay = 0.05) => ({
 
 /* ─── Data ───────────────────────────────────────────────────────────────── */
 const STATS = [
-  { label: 'Architecture',  value: 'DistilBERT-Base Uncased'  },
-  { label: 'Training data', value: 'LIAR + WELFake combined'  },
-  { label: 'Articles',      value: '44,000+'                  },
-  { label: 'F1 Score',      value: '0.942 weighted avg'        },
-  { label: 'Inference',     value: '< 1 second'                },
+  { label: 'Architecture',     value: 'DistilBERT-Base Uncased'          },
+  { label: 'Training corpus',  value: 'Fake/True · LIAR · WELFake'       },
+  { label: 'Total articles',   value: '71,744 after deduplication'        },
+  { label: 'Test accuracy',    value: '95.05%'                            },
+  { label: 'Test F1 Score',    value: '0.9505 weighted avg'               },
+  { label: 'Precision',        value: '0.9476 FAKE · 0.9535 REAL'         },
+  { label: 'Recall',           value: '0.9541 FAKE · 0.9469 REAL'         },
+  { label: 'Inference',        value: '< 1 second on warm instance'       },
+  { label: 'Backend',          value: 'FastAPI · HuggingFace Spaces'      },
+  { label: 'Frontend',         value: 'Next.js 15 · Vercel'               },
 ];
 
 const TEXT_BLOCKS = [
   {
-    title: 'Fine-tuned Classification',
-    body:  'The model is a DistilBERT-Base Uncased transformer pre-trained on BookCorpus and Wikipedia, fine-tuned on a balanced dataset of verified and fabricated news articles. The classification head outputs a binary label with a softmax confidence score.',
+    title: 'What TruthLens Does',
+    body:  'TruthLens is a fine-tuned transformer model that classifies news text as real or fabricated by detecting linguistic patterns associated with misinformation. When you paste an article, the text is tokenised and passed through a DistilBERT encoder pre-trained on BookCorpus and English Wikipedia. A two-class classification head outputs a softmax probability over FAKE and REAL labels. The higher probability becomes the verdict; the gap between the two probabilities determines the confidence score. A narrow gap — anything under roughly 70% — means the model is uncertain and the verdict should be treated as a signal to investigate further, not a definitive conclusion.',
   },
   {
-    title: 'Dataset Composition',
-    body:  'Training data combines LIAR (politifact.com, 12K statements) and WELFake (Kaggle, 72K articles fused to 44K after deduplication). Both REAL and FAKE classes are balanced at approximately 50/50 to prevent label bias.',
+    title: 'Model Architecture',
+    body:  'DistilBERT-Base Uncased is a distilled version of BERT that retains 97% of its language understanding capability at 40% fewer parameters and 60% faster inference. It uses 6 transformer layers, 12 attention heads, and a hidden size of 768 — producing contextual token embeddings that capture nuance, tone, and sentence structure simultaneously. The [CLS] token embedding is passed through a dropout layer and a linear classification head during fine-tuning. Training used the AdamW optimiser with a learning rate of 2e-5, weight decay of 0.01, warmup over 10% of steps, gradient clipping at 1.0, and mixed precision (fp16) on a T4 GPU. Early stopping with patience of 2 epochs was used to select the best checkpoint by F1 score.',
   },
   {
-    title: 'Limitations',
-    body:  'The model performs best on English-language political and social news. It has reduced sensitivity to satire, opinion pieces, and highly technical domains. AI analysis is a signal, not a verdict — human editorial judgment remains essential.',
+    title: 'Training Data & Pipeline',
+    body:  'Three datasets were combined into a single corpus. The Fake/True CSV dataset contains approximately 39,000 political news articles from 2016–2017, balanced between fabricated and verified reporting. The LIAR dataset contributes around 8,000 PolitiFact-verified political statements across six credibility labels, filtered and remapped to binary classes. WELFake adds 63,000 deduplicated articles spanning politics, health, science, business, and entertainment from four sources including Reuters and BuzzFeed News. Before training, all text went through a cleaning pipeline that strips Reuters and AP datelines, removes embedded source tags, normalises whitespace, and drops HTML artifacts — this prevents the model from learning publisher identity as a shortcut rather than genuine linguistic signals. All three datasets were deduplicated against each other, class-balanced to 50/50, and shuffled before splitting 80/10/10 into train, validation, and test sets.',
+  },
+  {
+    title: 'What TruthLens Cannot Do',
+    body:  'TruthLens detects stylistic and linguistic patterns associated with misinformation — it is not a fact-checker and cannot verify specific claims, statistics, dates, or quotes against external sources. It has no knowledge of events after its training data cutoff and cannot assess whether a named study, person, or organisation actually exists. The model performs best on English-language political and general news in a journalistic style. Performance is reduced on satire, opinion and editorial content, highly technical scientific writing, and content from domains not well-represented in the training data. Professionally written disinformation that closely mimics legitimate journalism may receive high credibility scores. The confidence score is a linguistic signal produced by a statistical model — it should augment editorial judgment, not replace it. Always cross-reference high-stakes claims with primary sources.',
   },
 ];
 

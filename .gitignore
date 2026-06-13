@@ -1,5 +1,6 @@
 # Ignore trained model folder
 final_model/
+
 # Python
 __pycache__/
 *.pyc
@@ -14,3 +15,7 @@ venv/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Datasets (too large for GitHub)
+data/*.csv
+data/*.tsv
