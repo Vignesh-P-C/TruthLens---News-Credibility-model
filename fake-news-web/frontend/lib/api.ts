@@ -1,4 +1,4 @@
-const API_BASE = "https://fake-news-detection-transformers-2.onrender.com";
+const API_BASE = "https://v1gnesh-truthlens.hf.space";
 
 export interface PredictionResult {
   label: "REAL" | "FAKE";
