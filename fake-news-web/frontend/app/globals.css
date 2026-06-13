@@ -12,35 +12,24 @@
    LIGHT THEME (default)
    ============================================================ */
 :root {
-  /* Main surfaces */
   --paper:          #f5f4f0;
   --paper-dark:     #eeede8;
   --surface:        #ffffff;
-
-  /* Ink */
   --ink:            #1a1a18;
   --ink-light:      #4a4a46;
   --muted:          #7a766f;
-
-  /* Rules */
   --rule:           #d8d4ce;
   --rule-dark:      #c0bbb4;
-
-  /* Accent */
   --accent:         #c8b89a;
-
-  /* Sidebar — light mode: warm brown */
   --sidebar-bg:     #72583c;
---sidebar-border:     #4a3828;
---sidebar-text:       #0a0a0a;        /* brighter cream, was #f0ede8 */
---sidebar-muted:      #d2a4a4;        /* warmer, more visible tan */
+  --sidebar-border:     #4a3828;
+  --sidebar-text:       #0a0a0a;
+  --sidebar-muted:      #d2a4a4;
   --sidebar-dim:        rgba(141, 126, 100, 0.4);
---sidebar-stack:      #fffbf7;        /* visible but subtle */
---sidebar-nav-border: #4a3828;
---sidebar-icon:       rgba(240,230,210,0.45);
+  --sidebar-stack:      #fffbf7;
+  --sidebar-nav-border: #4a3828;
+  --sidebar-icon:       rgba(240,230,210,0.45);
   --sidebar-icon-hover: rgba(240,237,232,0.9);
-
-  /* Hero — light mode: warm brown matching sidebar */
   --hero-bg:        #4e3c29;
   --hero-text:           #f0ede8;
   --hero-text-em:        #e8d8c0;
@@ -53,8 +42,6 @@
   --hero-btn-fg:         #2c2318;
   --hero-btn-outline-border: rgba(240,237,232,0.3);
   --hero-btn-outline-hover:  rgba(240,237,232,0.7);
-
-  /* About/Technology — light mode: warm parchment */
   --about-bg:       #f0ede6;
   --about-border:   #dcd8d0;
   --about-text:     #1a1a18;
@@ -62,23 +49,15 @@
   --about-dim:      #4a4a46;
   --about-accent:   #8a6a40;
   --about-footer:   #6a6660;
-
-  /* Semantic — real */
   --real-fg:        #1e4d36;
   --real-bg:        #eaf2ec;
   --real-border:    #a3c4ab;
-
-  /* Semantic — fake */
   --fake-fg:        #8b2318;
   --fake-bg:        #f5ecea;
   --fake-border:    #d4a09a;
-
-  /* Typography */
   --font-display:   'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-body:      'IBM Plex Sans', -apple-system, Helvetica, sans-serif;
   --font-mono:      'IBM Plex Mono', 'Courier New', monospace;
-
-  /* Layout */
   --sidebar-w:      260px;
   --content-pad:    64px;
 }
@@ -87,24 +66,15 @@
    DARK THEME
    ============================================================ */
 .dark {
-  /* Main surfaces */
   --paper:          #0f0f0d;
   --paper-dark:     #1a1a18;
   --surface:        #1e1e1c;
-
-  /* Ink */
   --ink:            #f0ede8;
   --ink-light:      #c8c4be;
   --muted:          #6a6660;
-
-  /* Rules */
   --rule:           #2a2a26;
   --rule-dark:      #3a3a36;
-
-  /* Accent */
   --accent:         #8a7060;
-
-  /* Sidebar — dark mode: near-black */
   --sidebar-bg:         #0a0a0a;
   --sidebar-border:     #1e1e1e;
   --sidebar-text:       #f0ede8;
@@ -114,8 +84,6 @@
   --sidebar-nav-border: #1e1e1e;
   --sidebar-icon:       rgba(240,237,232,0.3);
   --sidebar-icon-hover: rgba(240,237,232,0.9);
-
-  /* Hero — dark mode: near-black */
   --hero-bg:             #1c1c1a;
   --hero-text:           #f0ede8;
   --hero-text-em:        #e8e0d4;
@@ -128,8 +96,6 @@
   --hero-btn-fg:         #0a0a0a;
   --hero-btn-outline-border: rgba(240,237,232,0.3);
   --hero-btn-outline-hover:  rgba(240,237,232,0.7);
-
-  /* About — dark mode: near-black */
   --about-bg:       #0a0a0a;
   --about-border:   #1e1e1e;
   --about-text:     #f0ede8;
@@ -137,13 +103,9 @@
   --about-dim:      rgba(240,237,232,0.5);
   --about-accent:   #c8b89a;
   --about-footer:   #4a4a46;
-
-  /* Semantic — real (lighter for dark bg) */
   --real-fg:        #6abf7e;
   --real-bg:        #0e2018;
   --real-border:    #2a5038;
-
-  /* Semantic — fake (lighter for dark bg) */
   --fake-fg:        #d4706a;
   --fake-bg:        #200e0e;
   --fake-border:    #5a2a28;
@@ -152,16 +114,9 @@
 /* ============================================================
    BASE RESET
    ============================================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
   background-color: var(--paper);
@@ -184,7 +139,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--ink);
   letter-spacing: -0.01em;
 }
-
 h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
 h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
 h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
@@ -221,10 +175,7 @@ p {
 /* ============================================================
    SELECTION
    ============================================================ */
-::selection {
-  background: var(--ink);
-  color: var(--paper);
-}
+::selection { background: var(--ink); color: var(--paper); }
 
 /* ============================================================
    LAYOUT
@@ -256,16 +207,8 @@ textarea, input {
   width: 100%;
   transition: border-color 0.15s ease;
 }
-
-textarea:focus, input:focus {
-  outline: none;
-  border-color: var(--ink);
-}
-
-textarea::placeholder {
-  color: var(--muted);
-  font-style: italic;
-}
+textarea:focus, input:focus { outline: none; border-color: var(--ink); }
+textarea::placeholder { color: var(--muted); font-style: italic; }
 
 /* ============================================================
    ANIMATIONS
@@ -274,17 +217,14 @@ textarea::placeholder {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.2; }
 }
-
 @keyframes shake {
   10%, 90% { transform: translate3d(-1px, 0, 0); }
   20%, 80% { transform: translate3d(2px, 0, 0); }
@@ -300,9 +240,7 @@ textarea::placeholder {
 .reveal-delay-2 { animation-delay: 0.2s; }
 .reveal-delay-3 { animation-delay: 0.35s; }
 .reveal-delay-4 { animation-delay: 0.5s; }
-
 .animate-shake { animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both; }
-
 .loading-cursor::after {
   content: '▋';
   display: inline-block;
@@ -323,3 +261,74 @@ textarea::placeholder {
 .font-serif    { font-family: var(--font-display); }
 .font-sans     { font-family: var(--font-body); }
 .font-mono     { font-family: var(--font-mono); }
+
+
+/* ============================================================
+   MOTION & INTERACTIVITY  ← new additions
+   ============================================================ */
+
+/* ── Keyframes ───────────────────────────────────────────── */
+
+/* Warm shimmer — sweeps a bright highlight across italic text */
+@keyframes shimmer-warm {
+  0%   { background-position: -220% center; }
+  100% { background-position:  220% center; }
+}
+
+/* Float — gentle oscillation for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Orb drift — large blurred ambient background blobs */
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0,     0)    scale(1);    }
+  33%       { transform: translate(22px, -14px) scale(1.04); }
+  66%       { transform: translate(-14px, 10px) scale(0.97); }
+}
+
+/* Pulse glow — soft opacity throb for accent marks */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1;    }
+}
+
+/* ── Utility classes ─────────────────────────────────────── */
+
+/*
+  Warm shimmer on display italic text.
+  Usage: <em className="shimmer-text">News Credibility</em>
+  Requires the element to be on a dark background so the gradient reads.
+*/
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #e8d8c0  0%,
+    #f8edd8 38%,
+    #fffaf2 50%,
+    #f8edd8 62%,
+    #e8d8c0 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-warm 4s linear infinite;
+}
+
+.animate-float      { animation: float      4.5s ease-in-out infinite; }
+.animate-orb        { animation: orb-drift  11s  ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2.2s ease-in-out infinite; }
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-text {
+    animation: none;
+    -webkit-text-fill-color: var(--hero-text-em, #e8d8c0);
+    background: none;
+  }
+  .animate-float,
+  .animate-orb,
+  .animate-pulse-glow { animation: none; }
+}

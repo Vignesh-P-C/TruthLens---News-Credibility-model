@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import CursorSpotlight from "@/components/CursorSpotlight";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export const metadata: Metadata = {
   title: "TruthLens — News Credibility Analysis",
@@ -14,8 +16,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // suppressHydrationWarning is required — next-themes adds the .dark class
-    // server-side and React would otherwise warn about the mismatch.
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,6 +28,12 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
+          {/* Warm amber radial gradient that follows the mouse */}
+          <CursorSpotlight />
+
+          {/* Spring-damped scroll progress bar at the top of the viewport */}
+          <ScrollProgress />
+
           {children}
         </ThemeProvider>
       </body>
