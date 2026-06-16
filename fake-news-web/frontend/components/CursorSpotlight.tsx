@@ -2,11 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 
-/**
- * CursorSpotlight
- * Drop into layout.tsx inside <body>. A warm amber radial gradient follows
- * the mouse across the full page — barely perceptible, never distracting.
- */
 export default function CursorSpotlight() {
   const ref = useRef<HTMLDivElement>(null);
   const rafId = useRef<number>(0);
@@ -19,10 +14,10 @@ export default function CursorSpotlight() {
       cancelAnimationFrame(rafId.current);
       rafId.current = requestAnimationFrame(() => {
         el.style.background = `radial-gradient(
-          650px circle at ${e.clientX}px ${e.clientY}px,
-          rgba(200,160,106,0.06) 0%,
-          rgba(200,160,106,0.025) 30%,
-          transparent 55%
+          280px circle at ${e.clientX}px ${e.clientY}px,
+          rgba(200,160,106,0.07) 0%,
+          rgba(200,160,106,0.025) 40%,
+          transparent 70%
         )`;
       });
     };
@@ -43,8 +38,7 @@ export default function CursorSpotlight() {
         inset: 0,
         zIndex: 9,
         pointerEvents: 'none',
-        transition: 'background 0.08s ease',
-        mixBlendMode: 'normal',
+        transition: 'background 0.06s ease',
       }}
     />
   );

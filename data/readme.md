@@ -25,7 +25,7 @@ Real articles sourced from Reuters. Fake articles sourced from flagged domains i
 | Property | Detail |
 |---|---|
 | Source | William Yang Wang, ACL 2017 |
-| URL | https://huggingface.co/datasets/liar |
+| URL | https://www.kaggle.com/datasets/doanquanvietnamca/liar-dataset |
 | Files | `train.tsv`, `test.tsv` |
 | Size | ~8,000 statements after filtering |
 | Labels | Remapped from 6-class to binary (pants-fire/false/barely-true → 0, mostly-true/true → 1) |
