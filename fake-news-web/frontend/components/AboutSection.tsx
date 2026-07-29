@@ -30,8 +30,8 @@ const stagger = (delay = 0.05, staggerChildren = 0.08) => ({
 const STATS = [
   { label: 'Architecture',  value: 'DistilBERT-Base Uncased'  },
   { label: 'Training data', value: 'LIAR + WELFake combined'  },
-  { label: 'Articles',      value: '44,000+'                  },
-  { label: 'F1 Score',      value: '0.9505 weighted avg'       },
+  { label: 'Articles',      value: '71,744'                  },
+  { label: 'F1 Score',      value: '95.05% weighted avg'      },
   { label: 'Inference',     value: '< 1 second'                },
 ];
 
@@ -42,7 +42,7 @@ const TEXT_BLOCKS = [
   },
   {
     title: 'Dataset Composition',
-    body:  'Training data combines LIAR (politifact.com, 12K statements) and WELFake (Kaggle, 72K articles fused to 44K after deduplication). Both REAL and FAKE classes are balanced at approximately 50/50 to prevent label bias.',
+    body:  'Training data combines LIAR (politifact.com, 12K statements) and WELFake (Kaggle, 72K articles fused to 71,744 after deduplication). Both REAL and FAKE classes are balanced at approximately 50/50 to prevent label bias.',
   },
   {
     title: 'Limitations',
