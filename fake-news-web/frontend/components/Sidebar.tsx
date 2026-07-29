@@ -379,7 +379,7 @@ export default function Sidebar() {
                   >
                     DistilBERT · FastAPI
                     <br />
-                    Next.js · Vercel · Render
+                    Next.js · Vercel · Hugging Face
                   </p>
                 </motion.div>
               </nav>
