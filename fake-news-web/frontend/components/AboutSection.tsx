@@ -38,15 +38,23 @@ const STATS = [
 const TEXT_BLOCKS = [
   {
     title: 'Fine-tuned Classification',
-    body:  'The model is a DistilBERT-Base Uncased transformer pre-trained on BookCorpus and Wikipedia, fine-tuned on a balanced dataset of verified and fabricated news articles. The classification head outputs a binary label with a softmax confidence score.',
+    body:  'The model is a DistilBERT-Base Uncased transformer pre-trained on BookCorpus and Wikipedia, fine-tuned with cross-entropy loss and AdamW on a balanced dataset of verified and fabricated news articles. The classification head outputs a binary label with a softmax confidence score.',
   },
   {
     title: 'Dataset Composition',
-    body:  'Training data combines LIAR (politifact.com, 12K statements) and WELFake (Kaggle, 72K articles fused to 71,744 after deduplication). Both REAL and FAKE classes are balanced at approximately 50/50 to prevent label bias.',
+    body:  'Training data combines three sources: a Fake/True political news corpus (~39K articles, 2016–2017), LIAR (PolitiFact-verified statements, ~8K, oversampled 3× during training), and WELFake (Kaggle, ~63K articles spanning politics, health, science, and business after cleaning). After deduplication across all three, the final corpus is 71,744 samples, balanced at 49.85% real to prevent label bias.',
+  },
+  {
+    title: 'Performance Is Distribution-Dependent',
+    body:  'The 95.05% F1 score is measured on a held-out test set drawn from the same distribution as training — mostly long-form political and social news. On stylistically different text, accuracy drops: tested against a set of short PolitiFact-style statements, accuracy falls to roughly 65%. The model generalizes well within its training style but not fully beyond it.',
+  },
+  {
+    title: 'Known Bias: Anonymous Sourcing',
+    body:  'Testing surfaced a specific bias: articles using anonymous-sourcing language (e.g. "spoke on condition of anonymity") tend to get flagged as fake — even though that phrasing is actually more common in the real-news portion of training data (2.12%) than the fake portion (1.14%). Splitting one genuine Reuters article in half produced opposite verdicts for each half. The exact cause isn\'t fully isolated; it appears to involve more than sourcing language alone, and is flagged here rather than hidden.',
   },
   {
     title: 'Limitations',
-    body:  'The model performs best on English-language political and social news. It has reduced sensitivity to satire, opinion pieces, and highly technical domains. AI analysis is a signal, not a verdict — human editorial judgment remains essential.',
+    body:  'The model is not a fact-checker — it classifies stylistic and linguistic patterns, not real-world claims, so well-written misinformation can pass and unusually-phrased true reporting can get flagged. It also has reduced sensitivity to satire, opinion pieces, and highly technical domains underrepresented in training, and returns only a binary verdict with a confidence score — no partial credibility, no per-claim breakdown. AI analysis is a signal, not a verdict; human editorial judgment remains essential.',
   },
 ];
 
