@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 /* ─── Body copy ──────────────────────────────────────────────────────────── */
 const COL_A = `Recent advances in transformer-based language processing have produced systems capable of detecting fabricated content with unprecedented accuracy. Researchers confirm automated classification now outpaces traditional editorial review in both speed and consistency.`;
 
-const COL_B = `Independent audits confirmed a weighted F1 score of 0.942 across a balanced dataset drawn from verified and disputed sources spanning six years — the highest recorded benchmark for binary credibility classification.`;
+const COL_B = `Independent audits confirmed a weighted F1 score of 0.9505 across a balanced dataset drawn from verified and disputed sources spanning six years — the highest recorded benchmark for binary credibility classification.`;
 
 const COL_C = `A newly published benchmark places automated credibility systems above experienced journalists in controlled trials, though researchers caution against overreliance on algorithmic verdicts without human editorial oversight.`;
 
@@ -105,7 +105,7 @@ export default function NewspaperCollage() {
 
             {/* Deck */}
             <div style={{ fontFamily: 'var(--font-display)', fontSize: '8px', fontStyle: 'italic', color: '#4a4a40', lineHeight: 1.4, marginBottom: '5px' }}>
-              DistilBERT system trained on 44,000 articles achieves 94.2% accuracy in independent peer review
+              DistilBERT system trained on 71,744 articles achieves 95.05% accuracy in independent peer review
             </div>
 
             {/* Byline */}
@@ -221,7 +221,7 @@ export default function NewspaperCollage() {
             </div>
 
             <div style={{ fontFamily: 'var(--font-display)', fontSize: '13.5px', fontWeight: 400, lineHeight: 1.1, color: '#1a1a18', marginBottom: '5px' }}>
-              AI ACHIEVES 94.2% IN TRUTHFULNESS BENCHMARK
+              AI ACHIEVES 95.05% IN TRUTHFULNESS BENCHMARK
             </div>
 
             <div style={{ borderTop: '1px solid #b8b0a0', paddingTop: '5px', marginBottom: '8px' }}>

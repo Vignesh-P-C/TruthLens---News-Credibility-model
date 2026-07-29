@@ -31,7 +31,7 @@ const STATS = [
   { label: 'Architecture',  value: 'DistilBERT-Base Uncased'  },
   { label: 'Training data', value: 'LIAR + WELFake combined'  },
   { label: 'Articles',      value: '44,000+'                  },
-  { label: 'F1 Score',      value: '0.942 weighted avg'        },
+  { label: 'F1 Score',      value: '0.9505 weighted avg'       },
   { label: 'Inference',     value: '< 1 second'                },
 ];
 
