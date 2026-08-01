@@ -33,8 +33,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
-
+const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s instead of 15s
     const response = await fetch(`${API_BASE}/predict`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -113,7 +112,7 @@ export async function checkNews(text: string): Promise<PredictionResponse> {
         return {
           success: false,
           error: {
-            message: "Cannot reach http://127.0.0.1:8000 — start the FastAPI server.",
+            message: "Cannot reach the analysis server. It may be waking up — try again in a moment.",
             type: "network",
           },
         };
