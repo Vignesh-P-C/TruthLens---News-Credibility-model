@@ -242,7 +242,7 @@ export default function Sidebar() {
                 animate={mounted ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.15, duration: 0.5 }}
               >
-                <LogoMark size={44} />
+                <LogoMark size={44} onClick={scrollToHome} />
 
                 <div style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
                   {/* Wordmark — 1.55rem, clear and bold */}

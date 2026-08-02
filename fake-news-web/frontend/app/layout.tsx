@@ -5,7 +5,7 @@ import CursorSpotlight from "@/components/CursorSpotlight";
 import ScrollProgress from "@/components/ScrollProgress";
 
 export const metadata: Metadata = {
-  title: "TruthLens — News Credibility Analysis",
+  title: "TruthLens",
   description:
     "DistilBERT-based transformer model for detecting misinformation. Paste any article for instant credibility analysis.",
 };
