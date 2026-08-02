@@ -9,7 +9,7 @@ Built with Next.js 15 (App Router), TypeScript, Tailwind CSS, Framer Motion, and
 
 - **Aurora Shader Background** — Custom GLSL fragment shader via Three.js, no external service needed
 - **Glassmorphism UI** — Frosted glass cards with dynamic glow effects
-- **Live API Integration** — Connects to FastAPI backend at `http://127.0.0.1:8000/predict`
+- **Live API Integration** — Connects to FastAPI backend hosted on Hugging Face Spaces at `https://v1gnesh-truthlens.hf.space/predict`
 - **Animated Results** — Green glow for REAL, red glow + shake for FAKE, animated confidence bar
 - **Dropdown Examples** — Load pre-written real/fake news samples instantly
 - **Dark/Light Mode** — Smooth animated theme toggle via `next-themes`
@@ -68,7 +68,7 @@ Centralizing reusable primitives in `/components/ui` provides:
 
 - **Node.js** ≥ 18.17  
 - **npm** ≥ 9 (or pnpm/yarn)  
-- **FastAPI backend** running at `http://127.0.0.1:8000`
+- **FastAPI backend** — already deployed at `https://v1gnesh-truthlens.hf.space` (Hugging Face Spaces); running it locally is optional
 
 ### 2. Create the project (if starting fresh)
 
@@ -114,18 +114,18 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### 5. Start the FastAPI backend (separately)
 
-Make sure your FastAPI server is running:
+The deployed backend is already running at `https://v1gnesh-truthlens.hf.space`, so this step is only needed if you're developing/testing the backend locally:
 
 ```bash
 uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-The frontend will call `POST http://127.0.0.1:8000/predict` with:
+The frontend calls `POST https://v1gnesh-truthlens.hf.space/predict` with:
 ```json
 { "text": "..." }
 ```
 
-And expect:
+And expects:
 ```json
 { "label": "REAL" | "FAKE", "confidence": 0.94 }
 ```
@@ -134,7 +134,13 @@ And expect:
 
 ## ✦ Environment Variables (optional)
 
-To point at a different backend URL, add to `.env.local`:
+`API_BASE` in `lib/api.ts` is currently hardcoded to the deployed backend:
+
+```ts
+const API_BASE = "https://v1gnesh-truthlens.hf.space";
+```
+
+To point at a different backend URL instead (e.g. local development), add to `.env.local`:
 
 ```
 NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
@@ -142,7 +148,7 @@ NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
 
 Then update `lib/api.ts`:
 ```ts
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://v1gnesh-truthlens.hf.space";
 ```
 
 ---

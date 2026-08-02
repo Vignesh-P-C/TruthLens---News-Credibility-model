@@ -97,6 +97,9 @@ export default function Sidebar() {
     if (href.startsWith('#') && href.length > 1)
       document.getElementById(href.slice(1))?.scrollIntoView({ behavior: 'smooth' });
   };
+  const scrollToHome = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   /* ─── Shared sidebar shell ─────────────────────────────────────────────── */
   return (
@@ -141,7 +144,7 @@ export default function Sidebar() {
               }}
             >
               {/* Logo — click to expand */}
-              <LogoMark size={40} onClick={() => setCollapsed(false)} />
+              <LogoMark size={40} onClick={() => { setCollapsed(false); scrollToHome(); }} />
 
               {/* Amber hairline */}
               <div

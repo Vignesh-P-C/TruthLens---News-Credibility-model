@@ -125,7 +125,21 @@ const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s instead of
 }
 
 export const EXAMPLE_TEXTS = {
-  real: `Scientists at the Johns Hopkins Bloomberg School of Public Health have published new research in the journal Nature Medicine showing that consistent aerobic exercise for at least 150 minutes per week significantly reduces inflammation markers in adults over 50. The study, which followed 2,400 participants over five years, found that those who maintained regular cardiovascular activity had 34% lower levels of C-reactive protein compared to sedentary individuals. The findings align with previous research from the Mayo Clinic and support current guidelines from the American Heart Association.`,
+  real: `Company News for July 31, 2026
 
-  fake: `BREAKING: Government scientists have SECRETLY confirmed that 5G towers are being used to beam mind-control frequencies directly into the brains of citizens who received COVID vaccines. A leaked document from the CDC, obtained exclusively by this outlet, reveals that nanoparticles in the vaccine activate when exposed to 5G signals, giving authorities the ability to alter human behavior. Multiple whistleblowers have come forward with proof that major tech companies and pharmaceutical giants coordinated this plan at a secret meeting in Davos last year. Share this before it gets deleted!`,
+Shares of Mastercard Incorporated (MA) gained 2.5% after the company reported second-quarter 2026 earnings of $5.04 per share, beating the Zacks Consensus Estimate of $4.77 per share.
+
+Bristol-Myers Squibb Company's (BMY) shares increased 2.8% after the company reported second-quarter 2026 earnings of $2.04 per share, surpassing the Zacks Consensus Estimate of $1.59 per share.
+
+Shares of Altria Group, Inc. (MO) plunged 9.2% after the company reported second-quarter 2026 earnings of $1.48 per share, missing the Zacks Consensus Estimate of $1.5 per share.
+
+Regeneron Pharmaceuticals, Inc.'s (REGN) shares jumped 6.2% after the company reported second-quarter 2026 earnings of $14.29 per share, outpacing the Zacks Consensus Estimate of $10 per share.`,
+
+  fake: `Regional Utility Reports First Fully Autonomous Grid Segment in North America
+
+BOISE, Idaho (Reuters) — Meridian Grid Solutions said Tuesday it had completed an 18-month pilot in which a segment of its regional power network operated without any human oversight, using an AI system to manage load balancing, fault detection, and repair scheduling independently.
+
+Dana Whitfield, the company's vice president of operations, told reporters the system reduced maintenance costs by roughly 40 percent compared to conventionally managed segments and responded to two equipment failures during the pilot without triggering any customer-facing outage. "We didn't expect it to handle edge cases this cleanly," Whitfield said. "It's made decisions in the last six months that our own engineers wouldn't have made as quickly."
+
+The company said federal regulators were briefed on the pilot's results last month and that Meridian plans to expand the program to three additional states by the end of next year, pending a standard safety review. Industry analysts said the approach, if replicated, could meaningfully lower operating costs across the utility sector, though several cautioned that full autonomy over critical infrastructure raises oversight questions that regulators have not yet fully addressed.`,
 };
