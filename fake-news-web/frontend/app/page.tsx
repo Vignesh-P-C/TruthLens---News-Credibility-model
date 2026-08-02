@@ -16,10 +16,7 @@ export default function Home() {
       <Sidebar />
 
       {/* Main content — offset by sidebar width */}
-      <main
-        className="flex-1"
-        style={{ marginLeft: "260px", background: "#f5f4f0" }}
-      >
+      <main className="main-content">
         <HeroSection />
         <DetectorSection />
         <AboutSection />
