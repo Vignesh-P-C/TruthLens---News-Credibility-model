@@ -7,6 +7,8 @@ import { ArrowRight, AlertCircle } from "lucide-react";
 import { checkNews, EXAMPLE_TEXTS, type PredictionResult } from "@/lib/api";
 import ResultCard from "./ResultCard";
 import DropdownMenu from "./DropdownMenu";
+import ColdStartLoader from "./ColdStartLoader";
+import InfoTooltip from "./InfoTooltip";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -249,7 +251,7 @@ export default function DetectorSection() {
         >
           {/* Column header */}
           <div
-            className="px-8 py-4"
+            className="px-8 py-4 flex items-center justify-between"
             style={{ borderBottom: "1px solid var(--rule)" }}
           >
             <span
@@ -263,6 +265,15 @@ export default function DetectorSection() {
             >
               Verdict
             </span>
+            <InfoTooltip title="How to read this">
+              REAL/FAKE is the model's best guess from language patterns — it's
+              not a fact-check. Confidence reflects how sure the model is
+              about its own prediction, not how true the article is.
+              <br />
+              <br />
+              90%+ is a strong signal. Under 70% is closer to a coin flip.
+              Always verify with primary sources before sharing.
+            </InfoTooltip>
           </div>
 
           {/* Result area */}
@@ -290,16 +301,8 @@ export default function DetectorSection() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  style={{ textAlign: "center", padding: "40px 20px" }}
                 >
-                  <motion.div
-                    style={{ width: "0%", height: "1px", background: "var(--ink)", margin: "0 auto 24px" }}
-                    animate={{ width: "60%" }}
-                    transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
-                  />
-                  <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)" }}>
-                    Processing
-                  </p>
+                  <ColdStartLoader />
                 </motion.div>
               )}
 

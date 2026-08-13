@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { PredictionResult } from "@/lib/api";
+import InfoTooltip from "./InfoTooltip";
 
 interface ResultCardProps {
   result: PredictionResult;
@@ -90,17 +91,30 @@ export default function ResultCard({ result }: ResultCardProps) {
         {/* Confidence */}
         <div style={{ marginBottom: "20px" }}>
           <div className="flex items-center justify-between" style={{ marginBottom: "10px" }}>
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.6rem",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-              }}
-            >
-              Model confidence
-            </span>
+            <div className="flex items-center" style={{ gap: "6px" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "var(--muted)",
+                }}
+              >
+                Model confidence
+              </span>
+              <InfoTooltip title="About this score" align="left">
+                This is how sure the model is about its own answer — not a
+                measure of objective truth. A {confidence.toFixed(0)}%{" "}
+                {isReal ? "REAL" : "FAKE"} score means the model's language
+                patterns leaned that way {confidence.toFixed(0)}% as
+                strongly as they could, based only on the writing itself.
+                <br />
+                <br />
+                It doesn't check facts, sources, or events — treat it as one
+                signal, not a verdict.
+              </InfoTooltip>
+            </div>
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
