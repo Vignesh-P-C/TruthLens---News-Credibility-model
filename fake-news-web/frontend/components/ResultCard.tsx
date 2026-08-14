@@ -32,7 +32,6 @@ export default function ResultCard({ result }: ResultCardProps) {
         background: isReal ? "var(--real-bg)" : "var(--fake-bg)",
         border: `1px solid ${isReal ? "var(--real-border)" : "var(--fake-border)"}`,
         borderRadius: 0,
-        overflow: "hidden",
       }}
     >
       {/* Top accent rule */}
