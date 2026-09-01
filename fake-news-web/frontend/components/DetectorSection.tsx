@@ -1,7 +1,7 @@
 //DetectionSection
 'use client';
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, AlertCircle } from "lucide-react";
 import { checkNews, EXAMPLE_TEXTS, type PredictionResult } from "@/lib/api";
@@ -17,9 +17,28 @@ export default function DetectorSection() {
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const [liveMessage, setLiveMessage] = useState("");
 
   const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
   const isReady = text.trim().length >= 20;
+
+  // Screen-reader announcement text — mirrors `status` (and the data that
+  // goes with it) so assistive tech gets the same information sighted users
+  // get from the animated result card, without duplicating that markup.
+  useEffect(() => {
+    if (status === "idle") {
+      setLiveMessage("");
+    } else if (status === "loading") {
+      setLiveMessage("Analyzing article for credibility…");
+    } else if (status === "success" && result) {
+      const verdict = result.label === "REAL" ? "Real" : "Fake";
+      setLiveMessage(
+        `Analysis complete. Verdict: ${verdict}, ${Math.round(result.confidence)} percent confidence.`
+      );
+    } else if (status === "error") {
+      setLiveMessage(`Analysis failed. ${errorMsg}`);
+    }
+  }, [status, result, errorMsg]);
 
   const handleSubmit = useCallback(async () => {
     if (!isReady || status === "loading") return;
@@ -52,6 +71,12 @@ export default function DetectorSection() {
         borderTop: "1px solid var(--rule)",
       }}
     >
+      {/* Screen-reader-only live announcer — always mounted (not inside
+          AnimatePresence, which unmounts/remounts and can eat the update) */}
+      <div role="status" aria-live="polite" className="sr-only">
+        {liveMessage}
+      </div>
+
       {/* Section header */}
       <div
         className="flex items-start"
@@ -183,6 +208,23 @@ export default function DetectorSection() {
               opacity: status === "loading" ? 0.5 : 1,
             }}
           />
+
+          {/* Truncation warning — model only sees the first ~190 words */}
+          {wordCount > 190 && (
+            <div
+              style={{
+                padding: "8px 16px",
+                background: "var(--fake-bg)",
+                borderTop: "1px solid var(--fake-border)",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.62rem",
+                letterSpacing: "0.04em",
+                color: "var(--fake-fg)",
+              }}
+            >
+              Only the first ~190 words will be analyzed — trim for best accuracy.
+            </div>
+          )}
 
           {/* Footer bar */}
           <div

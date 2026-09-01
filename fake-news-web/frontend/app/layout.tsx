@@ -4,10 +4,33 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import CursorSpotlight from "@/components/CursorSpotlight";
 import ScrollProgress from "@/components/ScrollProgress";
 
+const title = "TruthLens — AI News Credibility Analyzer";
+const description =
+  "DistilBERT-based transformer model for detecting misinformation. Paste any article for instant credibility analysis.";
+
 export const metadata: Metadata = {
-  title: "TruthLens",
-  description:
-    "DistilBERT-based transformer model for detecting misinformation. Paste any article for instant credibility analysis.",
+  title,
+  description,
+  // Next infers this from Vercel's VERCEL_URL env var in production, and
+  // falls back to localhost in dev — no need to hardcode a domain here.
+  // Override with NEXT_PUBLIC_SITE_URL if you deploy somewhere other than
+  // Vercel's default preview/production URL.
+  metadataBase: process.env.NEXT_PUBLIC_SITE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
+    : undefined,
+  openGraph: {
+    title,
+    description,
+    siteName: "TruthLens",
+    type: "website",
+    // og:image comes from app/opengraph-image.tsx — no manual `images` entry needed.
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    // twitter:image falls back to the Open Graph image automatically.
+  },
 };
 
 export default function RootLayout({

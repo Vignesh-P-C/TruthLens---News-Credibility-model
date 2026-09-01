@@ -1,6 +1,8 @@
 'use client';
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Copy, Check, Share2 } from "lucide-react";
 import type { PredictionResult } from "@/lib/api";
 import InfoTooltip from "./InfoTooltip";
 
@@ -11,6 +13,45 @@ interface ResultCardProps {
 export default function ResultCard({ result }: ResultCardProps) {
   const isReal = result.label === "REAL";
   const confidence = result.confidence;
+
+  const [copied, setCopied] = useState(false);
+  // Web Share API is mobile-first and not present during SSR — default to
+  // the copy fallback on first render, then upgrade after mount so we don't
+  // risk a hydration mismatch.
+  const [canShare, setCanShare] = useState(false);
+
+  useEffect(() => {
+    setCanShare(typeof navigator !== "undefined" && !!navigator.share);
+  }, []);
+
+  const buildShareText = () => {
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    return `TruthLens verdict: ${isReal ? "REAL" : "FAKE"} (${confidence.toFixed(
+      1
+    )}% model confidence)${origin ? `\n\nChecked with TruthLens — ${origin}` : ""}`;
+  };
+
+  const handleShare = async () => {
+    const text = buildShareText();
+
+    if (canShare) {
+      try {
+        await navigator.share({ text, title: "TruthLens result" });
+      } catch {
+        // User dismissed the native share sheet — not an error, no-op.
+      }
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard permission denied or unavailable — fail silently rather
+      // than surfacing a scary error for a non-critical convenience action.
+    }
+  };
 
   return (
     <motion.div
@@ -175,20 +216,54 @@ export default function ResultCard({ result }: ResultCardProps) {
           }}
         />
 
-        {/* Contextual note */}
-        <p
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.6rem",
-            letterSpacing: "0.05em",
-            color: "var(--muted)",
-            lineHeight: 1.6,
-          }}
-        >
-          {isReal
-            ? "Note — AI analysis augments, not replaces, editorial judgment."
-            : "Patterns associated with fabricated or misleading content were detected."}
-        </p>
+        {/* Contextual note + share action */}
+        <div className="flex items-center justify-between" style={{ gap: "16px" }}>
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.05em",
+              color: "var(--muted)",
+              lineHeight: 1.6,
+            }}
+          >
+            {isReal
+              ? "Note — AI analysis augments, not replaces, editorial judgment."
+              : "Patterns associated with fabricated or misleading content were detected."}
+          </p>
+
+          <button
+            onClick={handleShare}
+            aria-label={canShare ? "Share result" : "Copy result to clipboard"}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexShrink: 0,
+              gap: "5px",
+              padding: "6px 10px",
+              background: "transparent",
+              border: `1px solid ${isReal ? "var(--real-border)" : "var(--fake-border)"}`,
+              borderRadius: 0,
+              cursor: "pointer",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.58rem",
+              fontWeight: 500,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: isReal ? "var(--real-fg)" : "var(--fake-fg)",
+              transition: "background 0.15s",
+            }}
+          >
+            {copied ? (
+              <Check size={11} />
+            ) : canShare ? (
+              <Share2 size={11} />
+            ) : (
+              <Copy size={11} />
+            )}
+            {copied ? "Copied" : canShare ? "Share" : "Copy"}
+          </button>
+        </div>
       </div>
     </motion.div>
   );
